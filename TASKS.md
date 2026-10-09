@@ -15,6 +15,17 @@ Legend: ✅ done and checked · 🟡 done, partly verified · ⬜ not started ·
 - ✅ Lazy three.js trophy room with SVG/CSS fallback
 - ✅ Production build; unit tests pass
 
+## v2 — story & motion pass (2026-10-09)
+- ✅ Your photos (Goa, two kicks, garden, bakery, GitHub avatar) converted to ink art with `scripts/ink.py` (subject cut-out + hatching + pen lines). The suit photo was deliberately **not** used.
+- ✅ Chapter I is now a pinned horizontal photo essay: prints develop out of ASCII as they reach the centre; ghost negatives drift behind in parallax; a yellow line draws across the track
+- ✅ One yellow line threads down the whole site as you scroll
+- ✅ Big hand-drawn ink characters (Ash, Rhea): blink, follow the pointer, talk (mouth sync to replies), react, think. Original designs; the hooded wallpaper was used only for mood
+- ✅ Companion is now a full-screen stage (character ~94vh) with speech bubble + typewriter
+- ✅ Finale: a pinned horizontal sequence where glyph streams assemble into the full-height character, who then greets you and chats inline
+- ✅ Fireworks in the Trophy Room (on arrival, on hovering milestones, and a "Celebrate anyway" button that gets increasingly tired)
+- ✅ Humour in Transmissions (reading-time jokes, rejected titles, writer's-block countdown); kinetic marquees and caution tape between chapters; scroll reveals; ring cursor; lab cards tilt
+- ⛔ AI-generated portraits were requested but the connected Higgsfield account has 0 credits; the characters accept generated frames later (docs/ASSETS.md)
+
 ## Partly verified
 - 🟡 Visual QA: headless Chromium at 1440×900, 1200×800 and 390×844; opening, choice, all chapters, dossier, deep link, companion chat, keyboard (Enter/arrows/1–5/strip), reduced motion, WebGL trophy room and its fallback; console clean. Not tested on real phones, Safari or Firefox.
 - 🟡 Voice: code written, **not exercised** (headless browser has no mic/speech).

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { links } from '../content/profile'
+import { AsciiDevelop } from '../fx/AsciiDevelop'
 
 export function Contact() {
   const [photo, setPhoto] = useState(true)
@@ -10,17 +11,9 @@ export function Contact() {
           {photo ? (
             <img src={`${import.meta.env.BASE_URL}portrait.jpg`} alt="Portrait of K S Pankaj" onError={() => setPhoto(false)} />
           ) : (
-            <div className="portrait-ph mono" role="img" aria-label="Placeholder: portrait to be added">
-              <pre aria-hidden="true">{`+----------------+
-|                |
-|    (  ?  )     |
-|     \\___/      |
-|   /|     |\\    |
-|                |
-+----------------+`}</pre>
-              <figcaption>PORTRAIT — awaiting photograph<br /><span className="dim">drop public/portrait.jpg</span></figcaption>
-            </div>
+            <AsciiDevelop src={`${import.meta.env.BASE_URL}photos/garden.webp`} alt="Ink drawing of Pankaj standing with arms crossed" cell={8} className="portrait-ink" />
           )}
+          <figcaption className="mono dim">the human, arms crossed, waiting for your message</figcaption>
         </figure>
         <div>
           <p className="mono dim">CHAPTER VI — THE BOUNDARY</p>

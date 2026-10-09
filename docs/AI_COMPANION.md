@@ -11,3 +11,5 @@
 **Privacy & memory:** off by default. Checkbox "remember this chat on this device" stores ≤40 messages in `localStorage` after explicit consent; "what's saved?" shows the count; "delete saved chat" and "end chat" erase it. No server storage exists. No sensitive-trait inference. The companion states it is an AI in the greeting, header badge and aria-labels.
 
 **Provider abstraction:** implement `ChatProvider.reply(history, ctx, signal)`; the UI does not change. Production use needs a serverless proxy holding the key, input validation and rate limiting. Do not claim free unrestricted production voice.
+
+**v2 presentation:** `useConversation` holds all chat state and is shared by the full-screen overlay (`Companion.tsx`) and the finale (`world/Finale.tsx`). `CharacterStage` renders the big `InkCharacter`, a speech bubble with a typewriter, suggestions, input, voice and memory controls. Clicking the character pokes it (REACTING).

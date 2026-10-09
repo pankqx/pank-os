@@ -21,6 +21,8 @@ Requires Node 20+. No environment variables are needed; see `.env.example` for t
 | Piece | Where |
 |---|---|
 | ASCII opening (canvas, skippable, adaptive) | `src/opening/` |
+| Pinned horizontal scenes, ASCII-developing photos, yellow line, marquees, fireworks | `src/fx/` |
+| Ink characters | `src/character/` |
 | HIM / HER choice + two character configs | `src/choice/`, `src/content/characters.ts` |
 | Editorial world (chapters I–V) | `src/world/` |
 | Project facts (verified against repos) | `src/content/projects.ts` |

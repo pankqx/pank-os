@@ -8,9 +8,11 @@
 | 0D | Interruption (4.4–5.8) | The python edits him | letters scramble in its wake | — |
 | 0E | Stabilise (6–7.2) | Composed typographic moment | auto-advance, or Skip/Enter/Space/Esc | — |
 | 1 | Choice | "Another presence" — consent to meet an AI | click, ←/→, Tab/Enter | two avatar configs |
-| 2 | I The Person | Who, said plainly | — | portrait later |
+| 2 | I Field notes (pinned horizontal) | Six photo "specimens" with jokes | vertical scroll moves sideways; prints develop from ASCII; yellow line draws | `public/photos/*` |
+| 2b | I continued | Who, said plainly | — | — |
 | 3 | II Laboratory | Projects as artifacts | strip scroll, dossier pages | six compositions |
 | 4 | III Transmissions | Writing, unfinished things | filter, expand, newsletter | real posts |
 | 5 | IV Trophy Room | Honesty as humour; evidence ledger | spotlight follows pointer | optional WebGL |
-| 6 | V Boundary | Quiet ending, links | — | `public/portrait.jpg` |
+| 6 | V Finale (pinned horizontal) | The AI human arrives | glyph streams assemble a full-height character, who greets and chats inline | ink characters |
+| 7 | VI Boundary | Quiet ending, links | — | garden ink print (or `public/portrait.jpg`) |
 | ∞ | Companion | A character who answers from evidence | text, mic, voice replies (opt-in) | models later |

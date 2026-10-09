@@ -9,7 +9,16 @@
 | three.js 0.170 | npm | MIT | lazy chunk |
 | Vite, Vitest, TypeScript | npm | MIT / Apache-2.0 | dev only |
 
-No images, textures, models or audio are bundled. Everything visual is procedural (canvas/SVG/CSS). GSAP and Theatre.js are **not** used, so their licences do not apply.
+| Photos in `public/photos/` | supplied by K S Pankaj, converted with `scripts/ink.py` | his own | suit/ID-lanyard photo excluded at his request |
+| Ink characters (Ash, Rhea) | drawn in code, `src/character/InkCharacter.tsx` | project code (MIT) | original designs |
+
+No textures, 3D models or audio are bundled. The "hooded girl" desktop wallpaper he shared shows a real person, so it was used only as a mood reference (hood, warm rim light, close framing) — never traced.
+
+### Regenerating photo art
+`pip install rembg onnxruntime opencv-python-headless pillow numpy`, then `python3 scripts/ink.py photo.jpg name 1400`, and copy `name.webp` + `name-cut.webp` into `public/photos/` and `src/content/photos.ts`.
+
+### Swapping in generated portraits later
+Generate per character: neutral, eyes closed, mouth open (same seed/reference). Add a frames renderer next to `InkCharacter` and switch on `avatar.kind`. The state machine already drives blink/speak timing. GSAP and Theatre.js are **not** used, so their licences do not apply.
 
 ## Replacing placeholders
 - **Portrait:** put `public/portrait.jpg` (≈1200×1500, ≤300 kB). It is shown greyscale.

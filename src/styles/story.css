@@ -181,3 +181,9 @@
 
 .comp-fab[data-hidden='true'] { opacity: 0; pointer-events: none; transform: translateY(20px); }
 .comp-fab { transition: opacity 0.4s, transform 0.4s; }
+
+/* contact portrait + lab tilt */
+.portrait-ink { aspect-ratio: 3 / 4; height: auto; box-shadow: 0 30px 60px rgba(0,0,0,.6); transform: rotate(-1.5deg); }
+.portrait figcaption { font-size: 10px; margin-top: 12px; }
+.artifact { transition: transform 0.5s var(--ease), border-color 0.3s; transform: perspective(1200px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)); }
+.artifact:hover { border-color: var(--yellow); }

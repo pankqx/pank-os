@@ -53,7 +53,9 @@ export function Lab() {
         </div>
         <div className="strip" ref={strip} tabIndex={0} role="region" aria-label="Project artifacts, scrolls horizontally" onScroll={onScroll}>
           {featured.map((p, i) => (
-            <article key={p.slug} className="artifact" data-art={p.art} style={{ ['--n' as string]: i }}>
+            <article key={p.slug} className="artifact" data-art={p.art} style={{ ['--n' as string]: i }}
+              onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); e.currentTarget.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - 0.5) * 6}deg`); e.currentTarget.style.setProperty('--rx', `${-((e.clientY - r.top) / r.height - 0.5) * 6}deg`) }}
+              onPointerLeave={(e) => { e.currentTarget.style.setProperty('--ry', '0deg'); e.currentTarget.style.setProperty('--rx', '0deg') }}>
               <div className="artifact-art"><Art kind={p.art} /></div>
               <div className="artifact-text">
                 <p className="mono tag" data-status={p.status}>{String(i + 1).padStart(2, '0')} · {STATUS[p.status]}</p>
