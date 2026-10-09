@@ -15,5 +15,5 @@ Read `docs/DESIGN.md` first. One palette (void, bone, acid, signal), three type 
 
 ## Testing expectations
 - `npm run typecheck && npm test && npm run build` must pass.
-- For UI changes, open the real site (Playwright scripts in `scripts/`: `qa.mjs`, `gl.mjs`, `shoot.mjs`) and inspect screenshots at 1440×900 and 390×844; check the console for errors.
+- For UI changes, open the real site (Playwright scripts in `scripts/`: `qa.mjs`, `qa2.mjs`, `gl.mjs`, `shoot.mjs`) and inspect screenshots at 1440×900 and 390×844; check the console for errors.
 - Do not claim something was tested if it was not.

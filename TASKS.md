@@ -16,7 +16,7 @@ Legend: ✅ done and checked · 🟡 done, partly verified · ⬜ not started ·
 - ✅ Production build; unit tests pass
 
 ## Partly verified
-- 🟡 Visual QA: Chromium (headless) at desktop and phone sizes, console clean. Not tested on real phones, Safari or Firefox.
+- 🟡 Visual QA: headless Chromium at 1440×900, 1200×800 and 390×844; opening, choice, all chapters, dossier, deep link, companion chat, keyboard (Enter/arrows/1–5/strip), reduced motion, WebGL trophy room and its fallback; console clean. Not tested on real phones, Safari or Firefox.
 - 🟡 Voice: code written, **not exercised** (headless browser has no mic/speech).
 - 🟡 Remote companion provider: written, **never run against a real endpoint**.
 - 🟡 Accessibility: semantic landmarks, focus handling, labels, reduced motion; **no screen-reader or axe pass yet**.
