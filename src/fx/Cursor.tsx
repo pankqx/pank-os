@@ -17,9 +17,10 @@ export function Cursor() {
     const size = () => { const d = Math.min(devicePixelRatio || 1, 2); c.width = innerWidth * d; c.height = innerHeight * d; g.setTransform(d, 0, 0, d, 0, 0) }
     size(); addEventListener('resize', size)
     const pts: { x: number; y: number; t: number }[] = []
-    let x = -100, y = -100, px = x, py = y, shake = 0, hot = false, raf = 0, text = false
+    let x = -100, y = -100, px = x, py = y, shake = 0, hot = false, raf = 0, text = false, seen = false
     const move = (e: PointerEvent) => {
-      x = e.clientX; y = e.clientY
+      if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return
+      x = e.clientX; y = e.clientY; seen = true
       const tgt = e.target as HTMLElement
       hot = !!tgt.closest?.('a, button, [role="link"], label, .piece, .artifact')
       text = !!tgt.closest?.('input, textarea')
@@ -46,7 +47,7 @@ export function Cursor() {
       const sx = (Math.random() - 0.5) * shake * 0.35, sy = (Math.random() - 0.5) * shake * 0.35
       const el = bolt.current!
       el.style.transform = `translate3d(${x + sx}px, ${y + sy}px, 0) rotate(${(Math.random() - 0.5) * shake * 0.6}deg) scale(${hot ? 1.5 : 1})`
-      el.style.opacity = text ? '0' : '1'
+      el.style.opacity = text || !seen ? '0' : '1'
       el.classList.toggle('charged', shake > 8 || hot)
       // lightning trail
       g.clearRect(0, 0, innerWidth, innerHeight)

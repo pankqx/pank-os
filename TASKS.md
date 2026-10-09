@@ -26,6 +26,19 @@ Legend: ✅ done and checked · 🟡 done, partly verified · ⬜ not started ·
 - ✅ Humour in Transmissions (reading-time jokes, rejected titles, writer's-block countdown); kinetic marquees and caution tape between chapters; scroll reveals; ring cursor; lab cards tilt
 - ⛔ AI-generated portraits were requested but the connected Higgsfield account has 0 credits; the characters accept generated frames later (docs/ASSETS.md)
 
+## v3 — his story, in his voice (2026-10-10)
+- ✅ All black-and-white photo prints removed. His photos are now red-ink "poster" cut-outs (`scripts/redink.py`) on a boiling red splatter + speed-line background
+- ✅ Chapter I opens with a scroll-driven stop-motion story told in first person (fly → kick → Goa → rizz → enough showing off), with SFX, flashes and yellow electricity
+- ✅ First-person rewrite; yellow highlighter headline with gaps; BSc removed; "things I make"; team player / collaboration; draggable hobby pieces with jokes (trading lesson, no amounts)
+- ✅ AlgoPath section (marketing) + AlgoPath dossier (from its README; repo stays private)
+- ✅ Blog posts open as photo-essay pages (`#post/slug`): NAAC freelance, school drama prize (marked unverified), DAT Community, trading lesson
+- ✅ Characters renamed Roman and Reenu; Reenu redrawn (open hair, jhumkas, coral saree) inspired by his sister, with permission; figure centre-left with fire, electricity and crackers; the intro explains how to use the guide
+- ✅ Thunder cursor (yellow bolt that shakes with speed and leaves lightning)
+- ✅ Python head is now a snake head that enters from the left and eats the name
+- ✅ Lab: whole card clickable, python-shaped scroller with numbered stops; dossiers have step-by-step "how it works" and real screenshots (PEECE, Paroh design references, Brownie Press)
+- ✅ Royal Trophy (3D gold cup / SVG fallback) "in the making"; shorter ending; line-drawn portrait
+- ⛔ Screenshots missing for: EventZee, Paroh Twin, AlgoPath, QuizApp, Leaflet, zextractor, Flow & Magic (concept)
+
 ## Partly verified
 - 🟡 Visual QA: headless Chromium at 1440×900, 1200×800 and 390×844; opening, choice, all chapters, dossier, deep link, companion chat, keyboard (Enter/arrows/1–5/strip), reduced motion, WebGL trophy room and its fallback; console clean. Not tested on real phones, Safari or Firefox.
 - 🟡 Voice: code written, **not exercised** (headless browser has no mic/speech).
