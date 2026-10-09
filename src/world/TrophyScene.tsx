@@ -1,97 +1,71 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 
-/** Enhancement only: three empty plinths under a spotlight that follows the pointer. Renders on demand, pauses off-screen. */
+/** The Royal Trophy: one huge gold cup, slowly turning under a spotlight. Renders only while visible. */
 export default function TrophyScene({ onFail }: { onFail: () => void }) {
   const host = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     const el = host.current!
     let renderer: THREE.WebGLRenderer
-    try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' })
-    } catch {
-      onFail()
-      return
-    }
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' }) } catch { onFail(); return }
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75))
-    el.appendChild(renderer.domElement)
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.domElement.setAttribute('aria-hidden', 'true')
-
+    el.appendChild(renderer.domElement)
     const scene = new THREE.Scene()
-    const cam = new THREE.PerspectiveCamera(32, 1, 0.1, 50)
-    cam.position.set(0, 2.2, 9)
-    const mat = new THREE.MeshStandardMaterial({ color: 0x2a2d2b, roughness: 0.55, metalness: 0.1 })
-    const edge = new THREE.LineBasicMaterial({ color: 0x7d807a })
-    const group = new THREE.Group()
-    for (const x of [-5.8, 0, 5.8]) {
-      const g = new THREE.BoxGeometry(1.6, 2.2, 1.6)
-      const m = new THREE.Mesh(g, mat)
-      m.position.set(x, 0, 0)
-      group.add(m)
-      const l = new THREE.LineSegments(new THREE.EdgesGeometry(g), edge)
-      l.position.copy(m.position)
-      group.add(l)
-      const cap = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.14, 1.9), mat)
-      cap.position.set(x, 1.17, 0)
-      group.add(cap)
-    }
-    scene.add(group)
-    scene.add(new THREE.AmbientLight(0x404440, 0.9))
-    const spot = new THREE.SpotLight(0xece7da, 90, 22, 0.35, 0.6, 1.4)
-    spot.position.set(0, 8, 4)
-    scene.add(spot, spot.target)
+    const pm = new THREE.PMREMGenerator(renderer)
+    scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture
+    const cam = new THREE.PerspectiveCamera(30, 1, 0.1, 100)
+    cam.position.set(0, 1.6, 11)
 
-    const N = 260
-    const pos = new Float32Array(N * 3)
-    for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - 0.5) * 12; pos[i * 3 + 1] = Math.random() * 6 - 1.5; pos[i * 3 + 2] = (Math.random() - 0.5) * 6 }
-    const dust = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pos, 3)), new THREE.PointsMaterial({ size: 0.03, color: 0xece7da, transparent: true, opacity: 0.5 }))
-    scene.add(dust)
+    const gold = new THREE.MeshStandardMaterial({ color: 0xffc83a, metalness: 1, roughness: 0.22 })
+    const dark = new THREE.MeshStandardMaterial({ color: 0x15100c, metalness: 0.4, roughness: 0.5 })
+    const trophy = new THREE.Group()
+    // cup profile (lathe)
+    const pts = [[0, 0], [0.55, 0], [0.6, 0.08], [0.25, 0.2], [0.18, 0.9], [0.32, 1.05], [0.95, 1.3], [1.28, 1.9], [1.42, 2.8], [1.46, 3.3], [1.38, 3.32], [1.3, 2.85], [1.16, 2.0], [0.8, 1.5], [0.2, 1.3], [0, 1.28]].map(([x, y]) => new THREE.Vector2(x, y))
+    const cup = new THREE.Mesh(new THREE.LatheGeometry(pts, 96), gold)
+    trophy.add(cup)
+    for (const s of [-1, 1]) {
+      const h = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.09, 16, 48, Math.PI * 1.15), gold)
+      h.position.set(s * 1.45, 2.45, 0)
+      h.rotation.z = s > 0 ? -Math.PI * 0.55 : Math.PI * 1.55
+      trophy.add(h)
+    }
+    const star = new THREE.Mesh(new THREE.OctahedronGeometry(0.28), gold)
+    star.position.y = 3.75
+    trophy.add(star)
+    const base1 = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.45, 2.2), dark); base1.position.y = -0.22
+    const base2 = new THREE.Mesh(new THREE.BoxGeometry(2.7, 0.35, 2.7), dark); base2.position.y = -0.62
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.24, 0.02), gold); plate.position.set(0, -0.22, 1.11)
+    trophy.add(base1, base2, plate)
+    trophy.position.y = -1.6
+    scene.add(trophy)
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25))
+    const spot = new THREE.SpotLight(0xfff1c4, 160, 30, 0.38, 0.5, 1.2)
+    spot.position.set(0, 9, 5); spot.target = trophy
+    const red = new THREE.PointLight(0xff2244, 30, 20); red.position.set(-4, 1, 3)
+    scene.add(spot, red)
 
-    const ptr = { x: 0, y: 0 }
-    const move = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect()
-      ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1
-      ptr.y = ((e.clientY - r.top) / r.height) * 2 - 1
-    }
-    const size = () => {
-      const w = el.clientWidth, h = el.clientHeight
-      renderer.setSize(w, h)
-      cam.aspect = w / h
-      cam.updateProjectionMatrix()
-    }
+    const size = () => { const w = el.clientWidth, h = el.clientHeight; renderer.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix() }
     size()
-    const ro = new ResizeObserver(size)
-    ro.observe(el)
-    window.addEventListener('pointermove', move)
-
-    let raf = 0, visible = true
-    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting })
-    io.observe(el)
+    const ro = new ResizeObserver(size); ro.observe(el)
+    let raf = 0, visible = true, px = 0
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting }); io.observe(el)
+    const mv = (e: PointerEvent) => { px = (e.clientX / innerWidth) * 2 - 1 }
+    addEventListener('pointermove', mv)
     const t0 = performance.now()
     const tick = (now: number) => {
       raf = requestAnimationFrame(tick)
       if (!visible || document.hidden) return
       const t = (now - t0) / 1000
-      spot.target.position.set(ptr.x * 7, -0.5, 0)
-      cam.position.x += (ptr.x * 0.8 - cam.position.x) * 0.04
-      cam.lookAt(0, 0.3, 0)
-      dust.rotation.y = t * 0.03
-      dust.position.y = Math.sin(t * 0.3) * 0.1
+      trophy.rotation.y = t * 0.45 + px * 0.6
+      star.rotation.y = t * 2
+      trophy.position.y = -1.6 + Math.sin(t * 1.2) * 0.06
       renderer.render(scene, cam)
     }
     raf = requestAnimationFrame(tick)
-
-    return () => {
-      cancelAnimationFrame(raf)
-      io.disconnect(); ro.disconnect()
-      window.removeEventListener('pointermove', move)
-      scene.traverse((o) => { const m = o as THREE.Mesh; m.geometry?.dispose?.() })
-      mat.dispose(); edge.dispose()
-      renderer.dispose()
-      renderer.domElement.remove()
-    }
+    return () => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); removeEventListener('pointermove', mv); pm.dispose(); renderer.dispose(); renderer.domElement.remove() }
   }, [onFail])
-
   return <div ref={host} className="trophy-3d" />
 }

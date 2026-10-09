@@ -7,7 +7,9 @@ import { ErrorBoundary } from '../lib/ErrorBoundary'
 import { Nav } from './Nav'
 import { sections, type SectionId } from './sections'
 import { Prologue } from './Prologue'
-import { FieldGuide } from './FieldGuide'
+import { StopMotion } from './StopMotion'
+import { PostPage } from './PostPage'
+import { posts } from '../content/posts'
 import { YellowLine } from '../fx/YellowLine'
 import { Marquee } from '../fx/Marquee'
 import { Cursor } from '../fx/Cursor'
@@ -84,15 +86,16 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
   useReveal(character)
 
   const project = hash.section === 'lab' && hash.sub ? projectBySlug(hash.sub) : undefined
+  const post = hash.section === 'post' ? posts.find((p) => p.slug === hash.sub) : undefined
 
   return (
     <>
       <a className="skip-link" href="#person">Skip to content</a>
       <Cursor />
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
-      <main className="world" aria-hidden={project ? true : undefined}>
+      <main className="world" aria-hidden={project || post ? true : undefined}>
         <YellowLine />
-        <FieldGuide />
+        <StopMotion />
         <Prologue />
         <Marquee text="builds ✦ breaks ✦ writes it down ✦ repeats ✦" />
         <Lab />
@@ -105,6 +108,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
         <Contact />
       </main>
       {project && <ProjectPage project={project} />}
+      {post && <PostPage post={post} />}
       <ErrorBoundary label="the companion" fallback={null}>
         <Suspense fallback={null}>
           <Companion hidden={finaleOn} conv={conv} open={chatOpen} setOpen={setChatOpen} onSwitchCharacter={onSwitchCharacter} />

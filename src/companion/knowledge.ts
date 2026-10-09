@@ -13,7 +13,7 @@ export function buildKnowledge(): KnowledgeEntry[] {
       id: 'about',
       title: 'About Pankaj',
       keywords: ['who', 'pankaj', 'about', 'creator', 'person', 'study', 'student', 'education', 'mca', 'intern', 'internship', 'job', 'experience', 'work', 'role'],
-      text: `${profile.name} is a ${profile.role.toLowerCase()}. ${profile.study}. Before that: ${profile.priorStudy}. ${profile.roles.map((r) => `${r.title} at ${r.org} (${r.when})`).join('; ')}.`,
+      text: `${profile.name} is a ${profile.role.toLowerCase()}. ${profile.study}. ${profile.roles.map((r) => `${r.title} at ${r.org} (${r.when})`).join('; ')}.`,
       link: '#person',
     },
     {

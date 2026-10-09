@@ -6,6 +6,42 @@ const gh = (r: string) => `https://github.com/pankqx/${r}`
 // "built" = described by the repo as implemented. "planned" = the repo's own roadmap. Nothing else.
 export const projects: Project[] = [
   {
+    slug: 'algopath',
+    name: 'AlgoPath',
+    kicker: 'Learn DSA in Python from your first loop to FAANG-level problems — Python runs right inside your browser.',
+    status: 'in-progress',
+    statusNote: 'Private beta. The repo is private while I polish it — ask me for access.',
+    featured: true,
+    art: 'algopath',
+    idea: 'A free, minimal, browser-only platform for Data Structures & Algorithms in Python. No server and no sign-up: Python runs inside the browser through Pyodide, so even the compiler works offline.',
+    why: 'Most DSA courses assume you can already think like an interviewer. AlgoPath starts from zero and teaches the thinking, then throws real interview problems at you — with a story, a hero and a boss fight at the end of each module so you keep coming back.',
+    built: [
+      '52 modules, 400+ lessons and 900+ problems across three tracks: Python, DSA and AI & Data Science',
+      'LeetCode-style judge: run sample tests or submit against hidden and stress tests (catches Time Limit Exceeded)',
+      'Hint ladder: nudge → approach → pseudocode → almost there → full solution with complexity',
+      'Streaks, XP, levels and a GitHub-style activity heatmap; spaced repetition after 1, 3, 7, 16 and 35 days',
+      'Quiz Arena with 1,150+ questions, a 60-pattern Pattern Atlas, timed mock interviews, Blind 75 / NeetCode 150 coverage',
+      'A story mode: an anime-style hero (Veyra), seven realms, sword-slash effects — all respecting reduced motion',
+      'Works offline after the first visit; light and dark themes; progress stays in your browser with export/import',
+    ],
+    planned: ['An optional AI tutor', 'Public launch'],
+    stack: ['React 19', 'Vite', 'React Router', 'CodeMirror 6', 'Pyodide (Web Worker)', 'marked + highlight.js'],
+    decisions: [
+      'Python executes client-side in a Web Worker, so there is no server to pay for and nothing to sign up for.',
+      'Problems are original rewrites; curated lists are credited to their curators.',
+    ],
+    tradeoffs: ['Browser storage only — progress lives on one device unless you export it.', 'Data-science libraries download on first use unless bundled for offline.'],
+    evidence: 'AlgoPath README (private repo pankqx/PythonDSA).',
+    how: [
+      'Pick a track (Python, DSA or AI & Data Science) and a module — each one is a realm with a boss at the end.',
+      'Read a lesson in plain English, step through a visual trace, take a quick quiz.',
+      'Solve problems in the in-browser editor: Run for samples, Submit for hidden tests.',
+      'Stuck? Climb the hint ladder one rung at a time instead of jumping to the answer.',
+      'Come back tomorrow: your streak, XP and spaced-repetition reviews are waiting.',
+    ],
+    cta: { label: 'Want early access? Email me', href: 'mailto:pankqx@gmail.com?subject=AlgoPath%20access' },
+  },
+  {
     slug: 'eventzee',
     name: 'EventZee',
     kicker: 'Event chaos, filed into a grid, stamped with a QR code.',
@@ -42,6 +78,12 @@ export const projects: Project[] = [
     ],
     repo: gh('EventZee'),
     evidence: 'EventZee README (features, limitations, roadmap) and résumé.',
+    how: [
+      'A student opens the app and browses campus events, filtering by category.',
+      'They register, see the organiser’s UPI ID and mark the payment.',
+      'The app generates a QR e-ticket on the phone — no server round-trip.',
+      'The organiser watches registrations arrive live (paid vs pending) through Firestore listeners.',
+    ],
   },
   {
     slug: 'paroh',
@@ -73,6 +115,18 @@ export const projects: Project[] = [
     tradeoffs: ['Desktop-first; the phone app is a documented path rather than a store release.'],
     repo: gh('Paroh'),
     evidence: 'Paroh README and docs/tasks.md.',
+    how: [
+      'Pick a folder (your vault). Every day becomes a Markdown file inside it.',
+      'Write in the editor; it autosaves every 2 seconds through an atomic save so a crash can’t corrupt a file.',
+      'Search everything with full-text search, link days with [[wikilinks]], track habits, to-dos and audio logs.',
+      'Once a month, Chapters stitch the days together; Horizons lays your life out on a timeline.',
+    ],
+    gallery: [
+      { src: `${import.meta.env.BASE_URL}shots/paroh-dashboard.webp`, caption: 'Design reference the Canvas dashboard was built from (repo /references)' },
+      { src: `${import.meta.env.BASE_URL}shots/paroh-editor.webp`, caption: 'Design reference: the editor' },
+      { src: `${import.meta.env.BASE_URL}shots/paroh-monthly-planner.webp`, caption: 'Design reference: monthly planner' },
+      { src: `${import.meta.env.BASE_URL}shots/paroh-yearly-planner.webp`, caption: 'Design reference: yearly planner' },
+    ],
   },
   {
     slug: 'paroh-twin',
@@ -100,6 +154,13 @@ export const projects: Project[] = [
     repo: gh('paroh-twin'),
     live: 'https://paroh-twin.vercel.app',
     evidence: 'paroh-twin README; GitHub homepage field.',
+    how: [
+      'The twin asks you a question out loud (or you write a journal entry).',
+      'Your answer becomes candidate facts — a deadline, a habit, a goal.',
+      'You approve or reject each one. Nothing is learned without that click.',
+      'Approved facts become stars, tasks and goals; every number on the dashboard is recomputed and explained.',
+      'Ask “what if…?” and the twin simulates the choice with real numbers, then learns from whether you agreed.',
+    ],
   },
   {
     slug: 'flow-magic',
@@ -118,6 +179,10 @@ export const projects: Project[] = [
     tradeoffs: ['Nothing to ship yet — which is exactly why it sits in the lab and not in the trophy room.'],
     repo: gh('flow-magic'),
     evidence: 'Repository tree (LICENSE only) and the brief.',
+    how: [
+      'Idea: you speak, and the presentation draws what you mean — live.',
+      'Nothing is built yet. This is the first page of the notebook.',
+    ],
   },
   {
     slug: 'peece',
@@ -143,6 +208,24 @@ export const projects: Project[] = [
     tradeoffs: ['Play money only. Tokens have no cash value.'],
     repo: gh('peece'),
     evidence: 'peece README and STATUS.md.',
+    how: [
+      'Sign the guestbook, pick one of four games and a rival.',
+      'Before you bet, the shuffled deck is hashed with SHA-256 and the hash is shown on the table.',
+      'Bet blind, play the round, chat with your rival.',
+      'After the round the full deck is revealed — press Verify and your browser re-hashes it to prove nothing changed.',
+    ],
+    gallery: [
+      { src: `${import.meta.env.BASE_URL}shots/peece-loader.webp`, caption: 'The burning King of Spades loader' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-foyer.webp`, caption: 'The Foyer — pick a game and a rival' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-omen-pick.webp`, caption: 'The Omen — choosing' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-omen-reveal.webp`, caption: 'The Omen — reveal' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-vingt.webp`, caption: 'Vingt Duel' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-throne.webp`, caption: 'Liar’s Throne' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-showdown.webp`, caption: 'Three-Card Showdown' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-treasury.webp`, caption: 'The Treasury — the double-entry ledger' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-cards.webp`, caption: 'Hand-drawn SVG court cards' },
+      { src: `${import.meta.env.BASE_URL}shots/peece-mobile.webp`, caption: 'On a phone' },
+    ],
   },
   {
     slug: 'brownie-press',
@@ -166,6 +249,16 @@ export const projects: Project[] = [
     tradeoffs: ['Menu photos, prices and descriptions are samples. Demo mode has no real security by design.'],
     repo: gh('thebrowniepress'),
     evidence: 'thebrowniepress README and docs/TASKS.md.',
+    how: [
+      'Customers browse the menu and build one cart with several items.',
+      'Checkout writes a single, tidy WhatsApp message with everything in it.',
+      'The owner confirms the order on WhatsApp — the site never pretends an order is accepted.',
+      'The owner manages products from a dashboard protected by Supabase row-level security.',
+    ],
+    gallery: [
+      { src: `${import.meta.env.BASE_URL}shots/brownie-og.webp`, caption: 'Share image from the live site build' },
+      { src: `${import.meta.env.BASE_URL}shots/brownie-hero.webp`, caption: 'Hero image (sample content)' },
+    ],
   },
   {
     slug: 'portfolion',

@@ -1,5 +1,5 @@
 export type ProjectStatus = 'shipped' | 'in-progress' | 'experimental' | 'concept' | 'archived'
-export type ArtKey = 'eventzee' | 'paroh' | 'twin' | 'flow' | 'peece' | 'brownie' | 'none'
+export type ArtKey = 'algopath' | 'eventzee' | 'paroh' | 'twin' | 'flow' | 'peece' | 'brownie' | 'none'
 
 export interface Project {
   slug: string
@@ -16,25 +16,30 @@ export interface Project {
   stack: string[]
   decisions: string[]
   tradeoffs: string[] // honest limitations from the repo's own docs
-  repo: string
+  repo?: string // omitted for private repos
   live?: string
   evidence: string // where the facts above come from
+  how?: string[] // plain explanation of how it works, step by step
+  gallery?: { src: string; caption: string }[]
+  cta?: { label: string; href: string }
 }
 
 export interface Post {
   slug: string
   title: string
   date: string // ISO
-  category: 'Engineering' | 'Design' | 'Experiment' | 'Note'
+  category: 'Story' | 'Engineering' | 'Design' | 'Experiment' | 'Note' | 'Lesson'
   excerpt: string
+  /** paragraphs; a string starting with '## ' is a heading, '> ' a pull quote, '![caption](src)' an image */
   body: string[]
   cover?: string
   project?: string // project slug
+  readingJoke?: string
   status: 'published' | 'draft' | 'sample'
 }
 
 export interface Milestone {
-  kind: 'COMPLETED' | 'PARTICIPATED' | 'ORGANISED' | 'CERTIFIED' | 'FOUNDED'
+  kind: 'COMPLETED' | 'PARTICIPATED' | 'ORGANISED' | 'CERTIFIED' | 'FOUNDED' | 'WON (UNVERIFIED)' | 'LED'
   title: string
   detail: string
   when?: string

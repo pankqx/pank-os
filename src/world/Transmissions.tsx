@@ -1,12 +1,11 @@
 import { useState, type FormEvent } from 'react'
-import { posts, unfinished, readingJokes, rejectedTitles } from '../content/posts'
+import { posts, unfinished, rejectedTitles } from '../content/posts'
 
 const ENDPOINT = import.meta.env.VITE_NEWSLETTER_ENDPOINT as string | undefined
-const cats = ['All', 'Engineering', 'Design', 'Experiment', 'Note'] as const
 
 export function Transmissions() {
-  const [cat, setCat] = useState<(typeof cats)[number]>('All')
-  const [open, setOpen] = useState<string | null>(null)
+  const cats = ['All', ...Array.from(new Set(posts.map((p) => p.category)))]
+  const [cat, setCat] = useState('All')
   const [email, setEmail] = useState('')
   const [msg, setMsg] = useState('')
   const list = posts.filter((p) => p.status !== 'draft' && (cat === 'All' || p.category === cat))
@@ -17,7 +16,7 @@ export function Transmissions() {
     if (!ENDPOINT) return setMsg('The newsletter isn’t connected yet. Nothing was sent or stored.')
     try {
       const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) })
-      setMsg(r.ok ? 'Subscribed. (Check your inbox for a confirmation if the provider sends one.)' : `The provider answered ${r.status}. Not subscribed.`)
+      setMsg(r.ok ? 'Subscribed.' : `The provider answered ${r.status}. Not subscribed.`)
     } catch {
       setMsg('Network error — not subscribed. Try again later.')
     }
@@ -28,34 +27,27 @@ export function Transmissions() {
       <header>
         <p className="mono dim">CHAPTER III — TRANSMISSIONS</p>
         <h2 id="trans-h" className="display">Signals from inside the experiment.</h2>
-        <p className="serif lead">Notes, experiments and things worth revisiting. Nothing has been published here yet — the entries below are labelled layout samples.</p>
+        <p className="serif lead">Stories, lessons and things I got wrong in public. Click one — each opens as its own photo essay.</p>
       </header>
 
       <div className="trans-grid">
         <div>
           <div className="filters mono" role="group" aria-label="Filter by category">
-            {cats.map((c) => (
-              <button key={c} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
-            ))}
+            {cats.map((c) => <button key={c} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>)}
           </div>
           <ol className="posts">
-            {list.map((p) => (
-              <li key={p.slug} data-open={open === p.slug}>
-                <button className="post-row" aria-expanded={open === p.slug} onClick={() => setOpen(open === p.slug ? null : p.slug)}>
-                  <time className="mono dim" dateTime={p.date}>{p.date}</time>
+            {list.map((p, i) => (
+              <li key={p.slug}>
+                <a className="post-card" href={`#post/${p.slug}`} style={{ ['--i' as string]: i }}>
+                  {p.cover && <span className="post-cover" aria-hidden="true"><img src={p.cover} alt="" loading="lazy" /></span>}
+                  <span className="post-meta mono"><time dateTime={p.date}>{p.date}</time> · {p.category}</span>
                   <span className="serif post-title">{p.title}</span>
-                  <span className="mono dim">{p.category}</span>
-                  {p.status === 'sample' && <span className="ribbon mono">SAMPLE</span>}
-                </button>
-                <p className="mono joke">{readingJokes[posts.indexOf(p) % readingJokes.length]}</p>
-                <div className="post-body" hidden={open !== p.slug}>
-                  <p className="serif">{p.excerpt}</p>
-                  {p.body.map((b) => <p key={b} className="mono dim">{b}</p>)}
-                  {p.project && <a className="mono" href={`#lab/${p.project}`}>→ related project</a>}
-                </div>
+                  <span className="serif post-excerpt">{p.excerpt}</span>
+                  {p.readingJoke && <span className="mono joke">{p.readingJoke}</span>}
+                  <span className="mono read">read the essay →</span>
+                </a>
               </li>
             ))}
-            {!list.length && <li className="mono dim">Nothing in this category yet.</li>}
           </ol>
         </div>
 
@@ -67,11 +59,8 @@ export function Transmissions() {
           </div>
           <h3 id="unf-h" className="mono">THINGS NOT FINISHED</h3>
           <ul>
-            {unfinished.map((u) => (
-              <li key={u.title}><span className="serif">{u.title}</span><span className="mono dim"> — {u.note}</span></li>
-            ))}
+            {unfinished.map((u) => <li key={u.title}><span className="serif">{u.title}</span><span className="mono dim"> — {u.note}</span></li>)}
           </ul>
-
           <form className="news" onSubmit={submit} noValidate>
             <label htmlFor="nl" className="mono">NEWSLETTER</label>
             <div>

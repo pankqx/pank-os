@@ -1,5 +1,6 @@
 import { profile } from '../content/profile'
 import { projects } from '../content/projects'
+import { Hobbies } from './Hobbies'
 
 export function Prologue() {
   const real = projects.filter((p) => p.status !== 'concept').length
@@ -8,43 +9,51 @@ export function Prologue() {
       <div className="chapter-no display" aria-hidden="true">I</div>
       <div className="person-grid">
         <header className="person-head">
-          <p className="mono dim">CHAPTER I — THE PERSON, CONTINUED</p>
-          <h2 id="person-h" className="display person-title">
-            A human who builds things, then writes down what’s wrong with them.
+          <p className="mono dim">CHAPTER I — IN MY OWN WORDS</p>
+          <h2 id="person-h" className="display person-title hl">
+            <span>I build things,</span> <span>then write down</span> <span>what’s wrong</span> <span>with them.</span>
           </h2>
         </header>
 
         <div className="person-body">
           <p className="serif lead">
-            K&nbsp;S&nbsp;Pankaj is a developer studying for an MCA in Mangaluru. So far that has produced an Android ticketing app, a desktop journal that keeps every day as a plain file, a card lounge that proves its shuffles, and a digital twin that is not allowed to learn anything without asking first.
+            Hi, I’m Pankaj. Half developer, half storyteller, full-time collector of unfinished ideas. I write short-film scripts at midnight, code until the bug blinks first, and lose chess games with tremendous confidence.
           </p>
           <p className="serif">
-            This site is the first thing he has made that introduces <em>him</em> rather than his work. Most of it is documentation of experiments, a little is a joke, none of it is padded. When something doesn’t exist yet, it says so — see the Trophy Room, or the project called Flow&nbsp;&amp;&nbsp;Magic, which today is a licence file with ambitions.
+            I make <em>websites that feel like places</em> and <em>digital products people open twice</em>. Right now I’m doing an MCA in Mangaluru, building <a href="#algopath">AlgoPath</a>, and turning my mistakes into documentation — which is why the Trophy Room is empty and the blog is honest.
+          </p>
+          <p className="serif">
+            I like working in a team more than I like working alone. The best things I’ve made started as somebody else’s question. If you have one, <a href="#contact">ask me</a>.
           </p>
           <aside className="margin mono" aria-label="Note">
-            <span className="dim">↳ the python in the intro is a character, not a mascot: curiosity, code, chaos. It escaped.</span>
+            <span>↳ the python in the intro is mine too. It eats names. I’m working on it.</span>
           </aside>
         </div>
 
-        <dl className="specimen mono" aria-label="Specimen sheet">
+        <dl className="specimen mono" aria-label="Field data">
           <div><dt>SPECIMEN</dt><dd>{profile.name}</dd></div>
-          <div><dt>ROLE</dt><dd>{profile.role}</dd></div>
-          <div><dt>STUDYING</dt><dd>{profile.study}</dd></div>
-          <div><dt>BEFORE</dt><dd>{profile.priorStudy}</dd></div>
+          <div><dt>NOW</dt><dd>{profile.study}</dd></div>
           {profile.roles.map((r) => (
-            <div key={r.org}><dt>{r.when.toUpperCase()}</dt><dd>{r.title}, {r.org}</dd></div>
+            <div key={r.org + r.when}><dt>{r.when.toUpperCase()}</dt><dd>{r.title}, {r.org}</dd></div>
           ))}
-          <div><dt>ON RECORD</dt><dd>{real} projects in the lab, {projects.filter((p) => p.status === 'concept').length} concept</dd></div>
+          <div><dt>ON RECORD</dt><dd>{real} projects in the lab, 1 concept, 0 trophies (yet)</dd></div>
+          <div><dt>MODE</dt><dd>team player · open to collaborations</dd></div>
         </dl>
+
+        <div className="makes">
+          <p className="mono dim">THINGS I MAKE</p>
+          <ul>
+            {profile.makes.map((m, i) => (
+              <li key={m.what}><span className="mono num">0{i + 1}</span><b className="display">{m.what}</b><span className="serif">{m.note}</span></li>
+            ))}
+          </ul>
+        </div>
 
         <ul className="skills mono" aria-label="Tools">
           {profile.skills.map((s) => <li key={s}>{s}</li>)}
         </ul>
-
-        <ul className="community serif">
-          {profile.community.map((c) => <li key={c}>{c}</li>)}
-        </ul>
       </div>
+      <Hobbies />
     </section>
   )
 }
