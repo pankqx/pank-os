@@ -49,3 +49,17 @@ export const unfinished = [
   { title: 'PEECE online mode', note: 'specified in docs, not built' },
   { title: 'Real 3D companions', note: 'this site ships ASCII placeholders until models are chosen' },
 ]
+
+// Humour, clearly labelled as such in the UI.
+export const readingJokes = [
+  'reading time: 3 min · actual: 45 (rabbit holes included)',
+  'reading time: 2 min · comments: 1 (the python said “first”)',
+  'reading time: 4 min · written at 2 a.m., edited at 2:05 a.m.',
+]
+export const rejectedTitles = [
+  'Ten things I learned from kicking a signpost',
+  'My code works and I don’t know why: a memoir',
+  'Monads? In this economy?',
+  'A brief history of “just one more feature”',
+  'git push --force: a love story',
+]

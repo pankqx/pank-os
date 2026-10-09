@@ -9,7 +9,7 @@ export function Choice({ onChoose, previous }: { onChoose: (id: CharacterId) => 
   const first = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const on = () => setVh(Math.round(window.innerHeight * (window.innerWidth < 760 ? 0.42 : 0.66)))
+    const on = () => setVh(Math.round(window.innerHeight * (window.innerWidth < 760 ? 0.56 : 0.66)))
     on()
     window.addEventListener('resize', on)
     first.current?.focus()

@@ -33,6 +33,14 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
   const first = useRef(true)
   const conv = useConversation(character)
   const [chatOpen, setChatOpen] = useState(false)
+  const [finaleOn, setFinaleOn] = useState(false)
+  useEffect(() => {
+    const el = document.getElementById('meet')
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => setFinaleOn(e.isIntersecting), { threshold: 0 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
   const other = character === 'ash' ? 'rhea' : 'ash'
 
   // scroll to section on hash change (deep links)
@@ -99,7 +107,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
       {project && <ProjectPage project={project} />}
       <ErrorBoundary label="the companion" fallback={null}>
         <Suspense fallback={null}>
-          <Companion conv={conv} open={chatOpen} setOpen={setChatOpen} onSwitchCharacter={onSwitchCharacter} />
+          <Companion hidden={finaleOn} conv={conv} open={chatOpen} setOpen={setChatOpen} onSwitchCharacter={onSwitchCharacter} />
         </Suspense>
       </ErrorBoundary>
     </>

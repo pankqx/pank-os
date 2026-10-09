@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { posts, unfinished } from '../content/posts'
+import { posts, unfinished, readingJokes, rejectedTitles } from '../content/posts'
 
 const ENDPOINT = import.meta.env.VITE_NEWSLETTER_ENDPOINT as string | undefined
 const cats = ['All', 'Engineering', 'Design', 'Experiment', 'Note'] as const
@@ -47,6 +47,7 @@ export function Transmissions() {
                   <span className="mono dim">{p.category}</span>
                   {p.status === 'sample' && <span className="ribbon mono">SAMPLE</span>}
                 </button>
+                <p className="mono joke">{readingJokes[posts.indexOf(p) % readingJokes.length]}</p>
                 <div className="post-body" hidden={open !== p.slug}>
                   <p className="serif">{p.excerpt}</p>
                   {p.body.map((b) => <p key={b} className="mono dim">{b}</p>)}
@@ -59,6 +60,11 @@ export function Transmissions() {
         </div>
 
         <aside className="unfinished" aria-labelledby="unf-h">
+          <div className="rejected">
+            <h3 className="mono">REJECTED TITLES <span className="dim">(humour)</span></h3>
+            <ul>{rejectedTitles.map((t) => <li key={t} className="serif"><s>{t}</s></li>)}</ul>
+            <p className="mono blockstatus">status: writer’s block detected — retrying in <span className="count" aria-hidden="true" /></p>
+          </div>
           <h3 id="unf-h" className="mono">THINGS NOT FINISHED</h3>
           <ul>
             {unfinished.map((u) => (

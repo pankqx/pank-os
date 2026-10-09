@@ -1,4 +1,5 @@
-import { lazy, Suspense, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Fireworks, type FireworksHandle } from '../fx/Fireworks'
 import { useFx } from '../lib/fx'
 import { ErrorBoundary } from '../lib/ErrorBoundary'
 import { milestones, plinths } from '../content/achievements'
@@ -10,6 +11,19 @@ export function Trophy() {
   const { level, webgl } = useFx()
   const [failed, setFailed] = useState(false)
   const use3d = level === 'full' && webgl && !failed
+  const fw = useRef<FireworksHandle>(null)
+  const ledger = useRef<HTMLDivElement>(null)
+  const [cheers, setCheers] = useState(0)
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { fw.current?.show(5); io.disconnect() } }, { threshold: 0.35 })
+    if (ledger.current) io.observe(ledger.current)
+    return () => io.disconnect()
+  }, [])
+  const pop = (e: React.PointerEvent | React.FocusEvent, big = false) => {
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect()
+    fw.current?.burst(r.left + 60, r.top + r.height / 2, big)
+  }
+  const jokes = ['Celebrate anyway', 'Again?', 'Okay, one more', 'This is a lot of fireworks for zero trophies', 'He’ll win something eventually', 'Fine. Unlimited fireworks.']
   const move = (e: React.PointerEvent) => {
     const r = room.current!.getBoundingClientRect()
     room.current!.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`)
@@ -39,12 +53,14 @@ export function Trophy() {
         </ul>
       </div>
 
-      <div className="ledger">
+      <Fireworks ref={fw} />
+      <div className="ledger" ref={ledger}>
         <h3 className="mono">THINGS THAT HAVE ACTUALLY HAPPENED</h3>
-        <p className="mono dim sm">Participation is not winning, and a certificate is not a trophy. Each row names its source.</p>
+        <p className="mono dim sm">Participation is not winning, and a certificate is not a trophy. Each row names its source. Hover a row: small crackers for small wins.</p>
+        <button className="cheer mono" onClick={() => { fw.current?.show(7); setCheers((c) => c + 1) }}>🎆 {jokes[Math.min(cheers, jokes.length - 1)]}</button>
         <ul>
           {milestones.map((m) => (
-            <li key={m.title}>
+            <li key={m.title} onPointerEnter={(e) => pop(e)} onFocus={(e) => pop(e)} tabIndex={0}>
               <span className="mono badge" data-kind={m.kind}>{m.kind}</span>
               <span className="serif">{m.title}</span>
               <span className="mono dim">{m.detail}{m.when ? ` (${m.when})` : ''} · <i>{m.source}</i></span>
