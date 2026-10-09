@@ -11,10 +11,11 @@
 .rail { position: fixed; z-index: 50; left: 0; top: 0; bottom: 0; width: 76px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding: 18px 0 14px 16px; border-right: 1px solid var(--faint); background: linear-gradient(90deg, var(--void) 70%, transparent); }
 .rail-mark { font-size: 20px; text-decoration: none; color: var(--acid); }
 .rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+
 .rail a[data-key] { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--dim); white-space: nowrap; }
 .rail-num { font-size: 12px; width: 22px; }
 .rail-label { opacity: 0; transform: translateX(-6px); transition: 0.25s var(--ease); font-size: 12px; background: var(--void); padding: 2px 8px 2px 4px; }
-.rail a:hover .rail-label, .rail a:focus-visible .rail-label, .rail a[aria-current='true'] .rail-label { opacity: 1; transform: none; }
+.rail a:hover .rail-label, .rail a:focus-visible .rail-label { opacity: 1; transform: none; }
 .rail a[aria-current='true'] { color: var(--acid); }
 .rail-tools { display: grid; gap: 6px; font-size: 10px; text-align: left; }
 .rail-tools button { text-align: left; color: var(--dim); padding: 2px 0; white-space: nowrap; }
@@ -179,6 +180,11 @@
 .plinths svg { width: min(160px, 100%); fill: none; stroke: var(--dim); stroke-width: 1.2; opacity: 0.8; transition: 0.4s; }
 .plinths li:hover svg { stroke: var(--bone); }
 .plaque { font-size: 11px; border: 1px solid var(--faint); padding: 3px 10px; }
+.room { position: relative; }
+.trophy-3d { position: absolute; left: 0; right: 0; bottom: 40px; height: 380px; pointer-events: none; }
+.trophy-3d canvas { display: block; width: 100%; height: 100%; }
+.plinths[data-3d='true'] svg { opacity: 0; }
+.plinths[data-3d='true'] { position: relative; }
 .ledger { margin-top: 56px; max-width: 980px; }
 .ledger h3 { font-size: 12px; color: var(--dim); margin: 0 0 6px; font-weight: 500; }
 .ledger ul { list-style: none; padding: 0; margin: 18px 0 0; }
@@ -263,6 +269,7 @@
   .art-ez { height: 300px; }
 }
 @media (max-width: 520px) {
+  .ez-chaos span { font-size: 15px; transform: translate(calc(var(--x) * 0.3), var(--y)) rotate(var(--r)); }
   .rail-tools button:nth-child(2) { display: none; }
   .art-peece { grid-template-columns: 1fr; }
   .card-back { width: 80px; }

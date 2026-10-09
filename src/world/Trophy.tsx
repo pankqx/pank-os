@@ -1,8 +1,15 @@
-import { useRef } from 'react'
+import { lazy, Suspense, useRef, useState } from 'react'
+import { useFx } from '../lib/fx'
+import { ErrorBoundary } from '../lib/ErrorBoundary'
 import { milestones, plinths } from '../content/achievements'
+
+const TrophyScene = lazy(() => import('./TrophyScene'))
 
 export function Trophy() {
   const room = useRef<HTMLDivElement>(null)
+  const { level, webgl } = useFx()
+  const [failed, setFailed] = useState(false)
+  const use3d = level === 'full' && webgl && !failed
   const move = (e: React.PointerEvent) => {
     const r = room.current!.getBoundingClientRect()
     room.current!.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`)
@@ -14,7 +21,12 @@ export function Trophy() {
         <p className="mono dim">CHAPTER IV</p>
         <h2 id="trophy-h" className="display">The Trophy Room</h2>
         <p className="serif lead">Under construction. Apparently the trophies require evidence.</p>
-        <ul className="plinths" aria-label="Empty plinths">
+        {use3d && (
+          <ErrorBoundary label="the 3D room" fallback={null}>
+            <Suspense fallback={null}><TrophyScene onFail={() => setFailed(true)} /></Suspense>
+          </ErrorBoundary>
+        )}
+        <ul className="plinths" data-3d={use3d} aria-label="Empty plinths">
           {plinths.map((p, i) => (
             <li key={p.label} style={{ ['--i' as string]: i }}>
               <svg viewBox="0 0 120 150" aria-hidden="true">

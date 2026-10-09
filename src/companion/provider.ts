@@ -34,7 +34,16 @@ export const mockProvider: ChatProvider = {
     const hits = retrieve(q, knowledge, 1)
     if (!hits.length) return { text: s.uncertain + ' Try asking about a project by name, or "how do I contact him?".', source: 'none' }
     const e = hits[0]
-    return { text: `${pick(s.openers, seed)} ${e.text}`, link: e.link, source: e.id }
+    let body = e.text
+    if (e.facets) {
+      const f = e.facets
+      body = /limit|problem|weak|flaw|honest|issue|insecure|security|wrong/i.test(q) ? f.limits
+        : /stack|tech|language|framework|made with|built with/i.test(q) ? f.stack
+        : /plan|roadmap|next|future/i.test(q) ? f.planned
+        : /feature|does|implemented|built|work/i.test(q) ? f.built
+        : f.summary + ' Ask about its limits, stack, or what’s built.'
+    }
+    return { text: `${pick(s.openers, seed)} ${body}`, link: e.link, source: e.id }
   },
 }
 

@@ -1,0 +1,15 @@
+import { createRequire } from 'node:module'
+const { chromium } = createRequire(import.meta.url)('/opt/npm-tools/node_modules/playwright')
+const b = await chromium.launch({ args: ['--no-sandbox', '--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] })
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } })
+const logs = []
+p.on('console', (m) => m.type() === 'error' && logs.push(m.text()))
+p.on('pageerror', (e) => logs.push('pageerror ' + e.message))
+await p.addInitScript(() => localStorage.setItem('pankos.fx', 'full'))
+await p.goto('http://127.0.0.1:5173/#trophy')
+await p.waitForTimeout(2500)
+await p.mouse.move(900, 600)
+await p.waitForTimeout(800)
+await p.screenshot({ path: 'shots/gl-trophy.png' })
+console.log(logs.join('\n') || 'no errors', await p.evaluate(() => !!document.querySelector('.trophy-3d canvas')))
+await b.close()

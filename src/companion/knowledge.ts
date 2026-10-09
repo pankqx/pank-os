@@ -3,7 +3,7 @@ import { profile, links } from '../content/profile'
 import { milestones } from '../content/achievements'
 
 // The companion's ONLY source of facts. Built from the same content files the site renders.
-export interface KnowledgeEntry { id: string; title: string; keywords: string[]; text: string; link?: string }
+export interface KnowledgeEntry { id: string; title: string; keywords: string[]; text: string; link?: string; facets?: Record<'summary' | 'built' | 'limits' | 'planned' | 'stack', string> }
 
 const STATUS: Record<string, string> = { shipped: 'completed', 'in-progress': 'in progress', experimental: 'experimental', concept: 'a concept only', archived: 'archived' }
 
@@ -66,6 +66,13 @@ export function buildKnowledge(): KnowledgeEntry[] {
         (p.tradeoffs.length ? `Honest limits: ${p.tradeoffs[0]} ` : '') +
         `Stack: ${p.stack.join(', ')}.`,
       link: `#lab/${p.slug}`,
+      facets: {
+        summary: `${p.name} is ${STATUS[p.status]}. ${p.idea}${p.built.length ? '' : ' Nothing is implemented yet.'}`,
+        built: p.built.length ? `Per the repo, implemented: ${p.built.slice(0, 4).join('; ')}.` : 'Nothing is implemented yet — the repository has no code to describe.',
+        limits: p.tradeoffs.length ? `Honest limits: ${p.tradeoffs.join(' ')}` : 'The repo lists no limits.',
+        planned: p.planned.length ? `Planned (the repo’s own list): ${p.planned.join('; ')}.` : 'Nothing is planned on record.',
+        stack: `Stack: ${p.stack.join(', ')}.`,
+      },
     })
   }
   out.push({
