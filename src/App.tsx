@@ -6,6 +6,7 @@ import { ErrorBoundary } from './lib/ErrorBoundary'
 import type { CharacterId } from './content/characters'
 
 const World = lazy(() => import('./world/World'))
+const DevCharacters = lazy(() => import('./character/DevCharacters'))
 type Stage = 'opening' | 'choice' | 'world'
 const KEY = 'pankos.character'
 
@@ -39,6 +40,8 @@ export function App() {
   useEffect(() => {
     document.body.dataset.stage = stage
   }, [stage])
+
+  if (typeof location !== 'undefined' && location.search.includes('dev=characters')) return <Suspense fallback={null}><DevCharacters /></Suspense>
 
   return (
     <ErrorBoundary label="the experience">
