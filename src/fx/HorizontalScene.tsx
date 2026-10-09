@@ -35,7 +35,7 @@ export function HorizontalScene({ id, label, children, className = '', tail = 0.
     const o = outer.current!, t = track.current!
     let travel = 0
     const size = () => {
-      travel = Math.max(0, t.scrollWidth - window.innerWidth)
+      travel = Math.max(0, t.scrollWidth - o.clientWidth)
       o.style.height = `${travel + window.innerHeight * (1 + tail)}px`
     }
     size()

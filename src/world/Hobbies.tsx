@@ -12,7 +12,9 @@ export function Hobbies() {
     if (!el) return
     const pieces = Array.from(el.querySelectorAll<HTMLElement>('.piece'))
     const W = () => el.clientWidth, H = () => el.clientHeight
-    const st = pieces.map((_, i) => ({ x: ((i * 173) % 90) / 100, y: ((i * 61) % 80) / 100, r: ((i * 37) % 24) - 12, vx: 0, vy: 0 }))
+    const cols = W() < 700 ? 2 : 4, rowsN = Math.ceil(pieces.length / cols)
+    const st = pieces.map((_, i) => ({ x: ((i % cols) + 0.1 + ((i * 37) % 10) / 40) / (cols - 0.6), y: (Math.floor(i / cols) + ((i * 53) % 10) / 30) / Math.max(1, rowsN - 0.7), r: ((i * 37) % 24) - 12, vx: 0, vy: 0 }))
+    st.forEach((q) => { q.x = Math.min(1, q.x); q.y = Math.min(1, q.y) })
     const place = () => pieces.forEach((p, i) => {
       const s = st[i]
       p.style.transform = `translate(${(s.x * (W() - p.offsetWidth)).toFixed(1)}px, ${(s.y * (H() - p.offsetHeight)).toFixed(1)}px) rotate(${s.r.toFixed(1)}deg)`

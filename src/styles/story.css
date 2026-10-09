@@ -133,7 +133,8 @@
 .fin-intro .display { font-size: clamp(54px, 9vw, 160px); }
 .fin-intro .outline { color: transparent; -webkit-text-stroke: 1.5px var(--yellow); margin-top: 6px; }
 .fin-intro .hint { color: var(--yellow); margin-top: 26px; font-size: 12px; animation: nudge 1.6s ease-in-out infinite; }
-.fin-arrival { position: relative; width: 100vw; height: 100%; flex: 0 0 auto; }
+.fin-arrival { position: relative; width: calc(100vw - 76px); height: 100%; flex: 0 0 auto; }
+@media (max-width: 960px) { .fin-arrival { width: 100vw; } }
 .fin-canvas { position: absolute; inset: 0; pointer-events: none; }
 .fin-figure { position: absolute; left: 10vw; bottom: 0; opacity: 0; }
 .fin-lines { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); width: min(44vw, 600px); }
@@ -302,12 +303,12 @@
 
 /* ===== AlgoPath ===== */
 .algo { background: radial-gradient(900px 600px at 80% 40%, rgba(255, 93, 115, 0.12), transparent 60%), radial-gradient(700px 500px at 10% 80%, rgba(255, 214, 10, 0.08), transparent 60%); }
-.algo-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5vw; align-items: center; }
-.algo .display { font-size: clamp(64px, 11vw, 200px); color: var(--yellow); text-shadow: 6px 6px 0 #b3102a; }
+.algo-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 5vw; align-items: center; }
+.algo h2.display { font-size: clamp(64px, 11vw, 200px); color: var(--yellow); text-shadow: 6px 6px 0 #b3102a; }
 .algo-why { font-size: 19px; color: var(--dim); max-width: 60ch; }
 .algo-stats { list-style: none; padding: 0; margin: 30px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .algo-stats li { border-top: 2px solid var(--yellow); padding-top: 8px; display: grid; }
-.algo-stats b { font-size: clamp(30px, 3.6vw, 56px); color: var(--bone) !important; text-shadow: none !important; }
+.algo .algo-stats b { font-size: clamp(28px, 3vw, 48px); color: var(--bone); text-shadow: none; }
 .algo-stats span { font-size: 11px; color: var(--dim); }
 .algo-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
 .btn-y { background: var(--yellow); color: #111; padding: 14px 18px; text-decoration: none; font-size: 13px; box-shadow: 5px 5px 0 #b3102a; transition: transform 0.2s; }
