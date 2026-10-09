@@ -2,28 +2,22 @@ import { useEffect, useRef } from 'react'
 import { useFx } from '../lib/fx'
 
 /**
- * Thunder cursor: a yellow bolt that shakes with speed and leaves a crackling lightning trail.
+ * Thunder trail: the normal arrow cursor stays; yellow lightning crackles behind it when it moves.
  * Fine pointers only; off with minimum effects. Text fields keep the normal text cursor.
  */
 export function Cursor() {
-  const bolt = useRef<HTMLDivElement>(null)
   const cv = useRef<HTMLCanvasElement>(null)
   const { level } = useFx()
   useEffect(() => {
     if (level === 'min' || !matchMedia('(pointer: fine)').matches) return
-    const root = document.documentElement
-    root.classList.add('has-cursor')
     const c = cv.current!, g = c.getContext('2d')!
     const size = () => { const d = Math.min(devicePixelRatio || 1, 2); c.width = innerWidth * d; c.height = innerHeight * d; g.setTransform(d, 0, 0, d, 0, 0) }
     size(); addEventListener('resize', size)
     const pts: { x: number; y: number; t: number }[] = []
-    let x = -100, y = -100, px = x, py = y, shake = 0, hot = false, raf = 0, text = false, seen = false
+    let x = -100, y = -100, px = x, py = y, shake = 0, raf = 0
     const move = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return
-      x = e.clientX; y = e.clientY; seen = true
-      const tgt = e.target as HTMLElement
-      hot = !!tgt.closest?.('a, button, [role="link"], label, .piece, .artifact')
-      text = !!tgt.closest?.('input, textarea')
+      x = e.clientX; y = e.clientY
       pts.push({ x, y, t: performance.now() })
       if (pts.length > 24) pts.shift()
     }
@@ -44,11 +38,6 @@ export function Cursor() {
       const v = Math.hypot(x - px, y - py)
       px = x; py = y
       shake = Math.min(40, shake * 0.82 + v * 0.35)
-      const sx = (Math.random() - 0.5) * shake * 0.35, sy = (Math.random() - 0.5) * shake * 0.35
-      const el = bolt.current!
-      el.style.transform = `translate3d(${x + sx}px, ${y + sy}px, 0) rotate(${(Math.random() - 0.5) * shake * 0.6}deg) scale(${hot ? 1.5 : 1})`
-      el.style.opacity = text || !seen ? '0' : '1'
-      el.classList.toggle('charged', shake > 8 || hot)
       // lightning trail
       g.clearRect(0, 0, innerWidth, innerHeight)
       while (pts.length && now - pts[0].t > 220) pts.shift()
@@ -69,14 +58,11 @@ export function Cursor() {
       }
     }
     raf = requestAnimationFrame(tick)
-    return () => { cancelAnimationFrame(raf); removeEventListener('pointermove', move); removeEventListener('pointerdown', down); removeEventListener('resize', size); root.classList.remove('has-cursor') }
+    return () => { cancelAnimationFrame(raf); removeEventListener('pointermove', move); removeEventListener('pointerdown', down); removeEventListener('resize', size); }
   }, [level])
   return (
     <>
       <canvas ref={cv} className="cursor-trail" aria-hidden="true" />
-      <div ref={bolt} className="cursor-bolt" aria-hidden="true">
-        <svg viewBox="0 0 24 32" width="22" height="30"><path d="M3 1 L15 1 L10 12 L19 12 L5 31 L9 17 L1 17 Z" /></svg>
-      </div>
     </>
   )
 }

@@ -1,5 +1,5 @@
 export type ProjectStatus = 'shipped' | 'in-progress' | 'experimental' | 'concept' | 'archived'
-export type ArtKey = 'algopath' | 'eventzee' | 'paroh' | 'twin' | 'flow' | 'peece' | 'brownie' | 'none'
+export type ArtKey = 'prontopy' | 'eventzee' | 'paroh' | 'twin' | 'flow' | 'peece' | 'brownie' | 'none'
 
 export interface Project {
   slug: string
@@ -32,7 +32,7 @@ export interface Post {
   excerpt: string
   /** paragraphs; a string starting with '## ' is a heading, '> ' a pull quote, '![caption](src)' an image */
   body: string[]
-  cover?: string
+  scene?: import('../art/Scenes').SceneKey // drawn cover
   project?: string // project slug
   readingJoke?: string
   status: 'published' | 'draft' | 'sample'

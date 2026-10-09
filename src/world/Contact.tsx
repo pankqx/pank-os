@@ -1,20 +1,14 @@
-import { useState } from 'react'
 import { links } from '../content/profile'
-import { LinePortrait } from '../fx/LinePortrait'
+import { Scene } from '../art/Scenes'
 import { Electric } from '../fx/Electric'
 
 export function Contact() {
-  const [photo, setPhoto] = useState(true)
   return (
     <section id="contact" className="chapter contact" aria-labelledby="contact-h">
       <div className="contact-inner">
         <figure className="portrait">
-          {photo ? (
-            <img src={`${import.meta.env.BASE_URL}portrait.jpg`} alt="Portrait of K S Pankaj" onError={() => setPhoto(false)} />
-          ) : (
-            <div className="portrait-lines"><LinePortrait src={`${import.meta.env.BASE_URL}art/portrait-lines.svg`} label="Line drawing of me" /><Electric bolts={2} rate={140} /></div>
-          )}
-          <figcaption className="mono dim">me, drawn in lines, waiting for your message</figcaption>
+            <div className="portrait-lines"><Scene kind="orbit" label="Everything I do, orbiting a lightning bolt" /><Electric bolts={2} rate={140} /></div>
+          <figcaption className="mono dim">everything I do, orbiting one idea: build it</figcaption>
         </figure>
         <div>
           <p className="mono dim">CHAPTER VI — THE BOUNDARY</p>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { Post } from '../content/types'
 import { posts } from '../content/posts'
 import { FireBackdrop } from '../fx/FireBackdrop'
+import { Scene } from '../art/Scenes'
 
 function Block({ text }: { text: string }) {
   if (text.startsWith('## ')) return <h3 className="display essay-h">{text.slice(3)}</h3>
@@ -30,7 +31,7 @@ export function PostPage({ post }: { post: Post }) {
     <div className="dossier essay" role="dialog" aria-modal="true" aria-labelledby="essay-h" ref={box}>
       <div className="essay-hero">
         <FireBackdrop />
-        {post.cover && <img className="essay-cover" src={post.cover} alt="" />}
+        {post.scene && <Scene kind={post.scene} className="essay-cover" />}
         <div className="essay-title">
           <a ref={close} href="#transmissions" className="mono dos-close">✕ close · esc</a>
           <p className="mono">{post.date} · {post.category}{post.readingJoke ? ` · ${post.readingJoke}` : ''}</p>

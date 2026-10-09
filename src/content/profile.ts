@@ -18,7 +18,7 @@ export const profile = {
   skills: ['Python', 'Kotlin', 'Java', 'C#', 'JavaScript / TypeScript', 'React', 'Node / Express', 'ASP.NET Core MVC', 'Android', 'PostgreSQL', 'MySQL', 'Firestore', 'MongoDB', 'Docker', 'Git', 'Canva', 'Storytelling'],
   makes: [
     { what: 'Websites that feel like places', note: 'like this one — opening scene, characters, a python with an appetite' },
-    { what: 'Digital products', note: 'tools people open twice: AlgoPath, Paroh, The Brownie Press' },
+    { what: 'Digital products', note: 'tools people open twice: ProntoPy, Paroh, The Brownie Press' },
     { what: 'Stories', note: 'short-film scripts, blogs, photo essays — and this site' },
   ],
 } as const

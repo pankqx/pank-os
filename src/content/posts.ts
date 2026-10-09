@@ -1,7 +1,5 @@
 import type { Post } from './types'
 
-const art = (f: string) => `${import.meta.env.BASE_URL}art/${f}`
-
 // Stories Pankaj told me (2026-10-10), written up in his voice as first drafts. Edit freely — they're yours.
 export const posts: Post[] = [
   {
@@ -10,7 +8,7 @@ export const posts: Post[] = [
     date: '2026-10-10',
     category: 'Story',
     excerpt: 'Before my MCA, the government college I studied at needed to get through NAAC accreditation. The teachers were brilliant at teaching and not at Canva. So I became the chief editor, the IT team and the help desk.',
-    cover: art('stand.webp'),
+    scene: 'script',
     readingJoke: 'reading time: 4 min · actual project time: 13 months',
     status: 'published',
     body: [
@@ -30,7 +28,7 @@ export const posts: Post[] = [
     date: '2026-10-10',
     category: 'Story',
     excerpt: 'At school I won second prize for drama at the DCL competition at Christ University. I have no photos. I have one principal who called me the rockstar of the school.',
-    cover: art('goa.webp'),
+    scene: 'orbit',
     readingJoke: 'reading time: 2 min · evidence: my memory',
     status: 'published',
     body: [
@@ -46,7 +44,7 @@ export const posts: Post[] = [
     date: '2026-10-10',
     category: 'Lesson',
     excerpt: 'DAT Community was entirely my idea. I spread it, I gathered the people. It didn’t survive — most people chose quick profit over long-term growth.',
-    cover: art('smile.webp'),
+    scene: 'graph',
     readingJoke: 'reading time: 3 min · lessons: kept',
     status: 'published',
     body: [
@@ -64,7 +62,7 @@ export const posts: Post[] = [
     date: '2026-10-10',
     category: 'Lesson',
     excerpt: 'I traded intraday. I made money first, which was the worst thing that could have happened. Then I let my feelings place the trades.',
-    cover: art('kick.webp'),
+    scene: 'chart',
     readingJoke: 'reading time: 2 min · cheaper than the lesson',
     status: 'published',
     body: [
@@ -78,7 +76,7 @@ export const posts: Post[] = [
 
 export const unfinished = [
   { title: 'Flow & Magic', note: 'a repository with a licence and a dream' },
-  { title: 'AlgoPath public launch', note: 'private beta, polishing' },
+  { title: 'ProntoPy public launch', note: 'private beta, polishing' },
   { title: 'Paroh on phones', note: 'Android path documented, not a store release' },
   { title: 'PEECE online mode', note: 'specified in docs, not built' },
   { title: 'My reading list', note: 'still reading it' },

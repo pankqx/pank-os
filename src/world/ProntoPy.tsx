@@ -13,8 +13,8 @@ const STATS = [
 const CODE = ['def two_sum(nums, target):', '    seen = {}', '    for i, x in enumerate(nums):', '        if target - x in seen:', '            return [seen[target - x], i]', '        seen[x] = i']
 
 /** The product I'm proudest of right now, given the stage it deserves. */
-export function AlgoPath() {
-  const p = projectBySlug('algopath')!
+export function ProntoPy() {
+  const p = projectBySlug('prontopy')!
   const box = useRef<HTMLDivElement>(null)
   const [on, setOn] = useState(false)
   const [typed, setTyped] = useState(0)
@@ -34,11 +34,11 @@ export function AlgoPath() {
   const done = typed >= full.length
 
   return (
-    <section id="algopath" className="chapter algo" aria-labelledby="algo-h" ref={box}>
+    <section id="prontopy" className="chapter algo" aria-labelledby="algo-h" ref={box}>
       <div className="algo-grid">
         <div>
           <p className="mono dim">NOW BUILDING — MY FAVOURITE PRODUCT</p>
-          <h2 id="algo-h" className="display">AlgoPath</h2>
+          <h2 id="algo-h" className="display">ProntoPy</h2>
           <p className="serif lead">{p.kicker}</p>
           <p className="serif algo-why">{p.why}</p>
           <ul className="algo-stats">
@@ -51,12 +51,12 @@ export function AlgoPath() {
           </ul>
           <div className="algo-cta">
             <a className="mono btn-y" href={p.cta!.href}>{p.cta!.label} →</a>
-            <a className="mono btn-o" href="#lab/algopath">how it works</a>
+            <a className="mono btn-o" href="#lab/prontopy">how it works</a>
           </div>
           <p className="mono dim sm">{p.statusNote}</p>
         </div>
         <div className="algo-term" aria-label="Animated example: a solution being typed and accepted">
-          <div className="term-bar mono"><i /><i /><i /> two_sum.py — AlgoPath judge · example run</div>
+          <div className="term-bar mono"><i /><i /><i /> two_sum.py — ProntoPy judge · example run</div>
           <pre className="mono">{shown}<span className="caret-t" /></pre>
           <div className={`verdict-box mono ${done ? 'ok' : ''}`}>{done ? '✓ Accepted · 57/57 tests · 0.03s' : 'running tests…'}{done && <Electric bolts={3} />}</div>
         </div>

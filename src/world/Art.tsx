@@ -174,7 +174,7 @@ function AlgoArt() {
 
 export function Art({ kind }: { kind: ArtKey }) {
   switch (kind) {
-    case 'algopath': return <AlgoArt />
+    case 'prontopy': return <AlgoArt />
     case 'eventzee': return <EventzeeArt />
     case 'paroh': return <ParohArt />
     case 'twin': return <TwinArt />

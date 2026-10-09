@@ -4,8 +4,9 @@ import { FireBackdrop } from '../fx/FireBackdrop'
 import { Electric } from '../fx/Electric'
 import { onFrame, clamp } from '../fx/ticker'
 import { useFx } from '../lib/fx'
+import { Scene } from '../art/Scenes'
 
-const STEPS = 7 // stop-motion: each beat moves in 7 held poses
+const STEPS = 10 // stop-motion: each beat moves in 7 held poses
 const hash = (n: number) => { const s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s) }
 
 /** Chapter I opener: me, as red-ink stop-motion, telling you a short (true-ish) story. Scroll drives the frames. */
@@ -14,6 +15,7 @@ export function StopMotion() {
   const fig = useRef<HTMLDivElement>(null)
   const flash = useRef<HTMLDivElement>(null)
   const [beat, setBeat] = useState(0)
+  const [kq, setKq] = useState(0)
   const { level } = useFx()
   const still = level === 'min'
 
@@ -37,6 +39,7 @@ export function StopMotion() {
       if (step === lastStep && b === lastB) return
       lastStep = step
       const k = step / (STEPS - 1)
+      setKq(Math.min(1, k * 1.25))
       const be = beats[b]
       const lerp = (i: number) => be.from[i] + (be.to[i] - be.from[i]) * k
       const j = (n: number) => (hash(b * 31 + step * 7 + n) - 0.5)
@@ -50,7 +53,7 @@ export function StopMotion() {
     return (
       <section id="person" className="stopmo is-still" aria-label="Chapter I: a short story about me">
         {beats.map((b) => (
-          <figure key={b.line} className="stopmo-still"><img src={b.img} alt={b.alt} loading="lazy" /><figcaption><b className="display">{b.line}</b> <span className="serif">{b.sub}</span></figcaption></figure>
+          <figure key={b.line} className="stopmo-still"><Scene kind={b.scene} k={1} label={b.alt} /><figcaption><b className="display">{b.line}</b> <span className="serif">{b.sub}</span></figcaption></figure>
         ))}
       </section>
     )
@@ -61,7 +64,7 @@ export function StopMotion() {
         <FireBackdrop focus={be.focus ?? [0.5, 0.5]} seed={beat + 1} />
         <p className="mono stopmo-kicker">CHAPTER I — A SHORT STORY ABOUT ME · {String(beat + 1).padStart(2, '0')}/{String(beats.length).padStart(2, '0')}</p>
         <div className="stopmo-fig" ref={fig}>
-          {beats.map((b, i) => <img key={i} src={b.img} alt={i === beat ? b.alt : ''} aria-hidden={i !== beat} style={{ opacity: i === beat ? 1 : 0 }} />)}
+          <Scene kind={be.scene} k={kq} label={be.alt} />
           {be.zap && <Electric bolts={5} />}
         </div>
         {be.sfx && <div key={'s' + beat} className="sfx display" aria-hidden="true">{be.sfx}</div>}

@@ -30,14 +30,22 @@ Legend: ✅ done and checked · 🟡 done, partly verified · ⬜ not started ·
 - ✅ All black-and-white photo prints removed. His photos are now red-ink "poster" cut-outs (`scripts/redink.py`) on a boiling red splatter + speed-line background
 - ✅ Chapter I opens with a scroll-driven stop-motion story told in first person (fly → kick → Goa → rizz → enough showing off), with SFX, flashes and yellow electricity
 - ✅ First-person rewrite; yellow highlighter headline with gaps; BSc removed; "things I make"; team player / collaboration; draggable hobby pieces with jokes (trading lesson, no amounts)
-- ✅ AlgoPath section (marketing) + AlgoPath dossier (from its README; repo stays private)
+- ✅ ProntoPy section (marketing) + ProntoPy dossier (from its README; repo stays private)
 - ✅ Blog posts open as photo-essay pages (`#post/slug`): NAAC freelance, school drama prize (marked unverified), DAT Community, trading lesson
 - ✅ Characters renamed Roman and Reenu; Reenu redrawn (open hair, jhumkas, coral saree) inspired by his sister, with permission; figure centre-left with fire, electricity and crackers; the intro explains how to use the guide
 - ✅ Thunder cursor (yellow bolt that shakes with speed and leaves lightning)
 - ✅ Python head is now a snake head that enters from the left and eats the name
 - ✅ Lab: whole card clickable, python-shaped scroller with numbered stops; dossiers have step-by-step "how it works" and real screenshots (PEECE, Paroh design references, Brownie Press)
 - ✅ Royal Trophy (3D gold cup / SVG fallback) "in the making"; shorter ending; line-drawn portrait
-- ⛔ Screenshots missing for: EventZee, Paroh Twin, AlgoPath, QuizApp, Leaflet, zextractor, Flow & Magic (concept)
+- ⛔ Screenshots missing for: EventZee, Paroh Twin, ProntoPy, QuizApp, Leaflet, zextractor, Flow & Magic (concept)
+
+## v4 — no photos (2026-10-10)
+- ✅ Every photo of me removed (story, blog covers, contact). Replaced by drawn scenes in `src/art/Scenes.tsx`: short-film script, Obsidian-style idea graph, trading chart (feelings.exe), chess, code + bug, orbit
+- ✅ Stop-motion story no longer says my name; marquee slowed down
+- ✅ Yellow line hides behind content and only shows in the empty space between things
+- ✅ Lab strip: one eased scroll loop (buttons, keys, python, mouse drag with inertia); no scroll-snap, no card tilt
+- ✅ Cursor: normal arrow, yellow lightning trail behind it
+- ✅ AlgoPath renamed to ProntoPy here and in the app repo (storage keys kept so progress survives). ⛔ Renaming the GitHub repo itself must be done in its Settings
 
 ## Partly verified
 - 🟡 Visual QA: headless Chromium at 1440×900, 1200×800 and 390×844; opening, choice, all chapters, dossier, deep link, companion chat, keyboard (Enter/arrows/1–5/strip), reduced motion, WebGL trophy room and its fallback; console clean. Not tested on real phones, Safari or Firefox.

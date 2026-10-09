@@ -8,7 +8,7 @@ import { Nav } from './Nav'
 import { sections, type SectionId } from './sections'
 import { Prologue } from './Prologue'
 import { StopMotion } from './StopMotion'
-import { AlgoPath } from './AlgoPath'
+import { ProntoPy } from './ProntoPy'
 import { PostPage } from './PostPage'
 import { posts } from '../content/posts'
 import { YellowLine } from '../fx/YellowLine'
@@ -99,7 +99,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
         <StopMotion />
         <Prologue />
         <Marquee text="midnight dramas ✦ ice cream ✦ beaches ✦ love ✦ experiments ✦ noise ✦" />
-        <AlgoPath />
+        <ProntoPy />
         <Marquee text="signals ✦ peace ✦ unfinished thoughts ✦ hope ✦ job ✦" reverse />
         <Lab />
         <Marquee text="rizz ✦ sense of humour ✦ idgaf ✦ midnight dramas ✦" />

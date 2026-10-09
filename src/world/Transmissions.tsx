@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { posts, unfinished, rejectedTitles } from '../content/posts'
+import { Scene } from '../art/Scenes'
 
 const ENDPOINT = import.meta.env.VITE_NEWSLETTER_ENDPOINT as string | undefined
 
@@ -39,7 +40,7 @@ export function Transmissions() {
             {list.map((p, i) => (
               <li key={p.slug}>
                 <a className="post-card" href={`#post/${p.slug}`} style={{ ['--i' as string]: i }}>
-                  {p.cover && <span className="post-cover" aria-hidden="true"><img src={p.cover} alt="" loading="lazy" /></span>}
+                  {p.scene && <span className="post-cover" aria-hidden="true"><Scene kind={p.scene} /></span>}
                   <span className="post-meta mono"><time dateTime={p.date}>{p.date}</time> · {p.category}</span>
                   <span className="serif post-title">{p.title}</span>
                   <span className="serif post-excerpt">{p.excerpt}</span>

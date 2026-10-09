@@ -53,9 +53,9 @@
 .strip-bar button:hover { border-color: var(--acid); color: var(--acid); }
 .strip-progress { width: 140px; height: 2px; background: var(--faint); }
 .strip-progress i { display: block; height: 100%; background: var(--acid); transform-origin: left; transition: transform 0.15s linear; }
-.strip { display: flex; gap: 24px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding: 8px var(--gutter) 28px; scrollbar-width: thin; scrollbar-color: var(--faint) transparent; }
+.strip { display: flex; gap: 24px; overflow-x: auto; overscroll-behavior-x: contain; user-select: none; cursor: grab; padding: 8px var(--gutter) 28px; scrollbar-width: thin; scrollbar-color: var(--faint) transparent; }
 .strip:focus-visible { outline-offset: -2px; }
-.artifact { flex: 0 0 min(86vw, 880px); scroll-snap-align: start; display: grid; grid-template-columns: 1.1fr 0.9fr; border: 1px solid var(--faint); min-height: 480px; background: var(--ash); }
+.artifact { flex: 0 0 min(86vw, 880px); display: grid; grid-template-columns: 1.1fr 0.9fr; border: 1px solid var(--faint); min-height: 480px; background: var(--ash); }
 .artifact:nth-child(even) { grid-template-columns: 0.9fr 1.1fr; }
 .artifact:nth-child(even) .artifact-art { order: 2; }
 .artifact-art { position: relative; display: grid; place-items: center; padding: 20px; overflow: hidden; border-right: 1px solid var(--faint); }

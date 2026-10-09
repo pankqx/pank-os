@@ -1,12 +1,12 @@
-// The stop-motion opener of Chapter I. First person, jokes intended.
-const art = (f: string) => `${import.meta.env.BASE_URL}art/${f}`
-export interface Beat { img: string; alt: string; line: string; sub: string; sfx?: string; from: [number, number, number, number]; to: [number, number, number, number]; zap?: boolean; focus?: [number, number] }
-// from/to: [x vw-center offset %, y %, rotate deg, scale]
+// The stop-motion opener of Chapter I. First person, jokes intended. Drawn scenes, no photos.
+import type { SceneKey } from '../art/Scenes'
+export interface Beat { scene: SceneKey; alt: string; line: string; sub: string; sfx?: string; from: [number, number, number, number]; to: [number, number, number, number]; zap?: boolean; focus?: [number, number] }
+// from/to: [x vw offset, y vh offset, rotate deg, scale]
 export const beats: Beat[] = [
-  { img: art('stand.webp'), alt: 'Me, arms crossed', line: 'Hi. I’m Pankaj.', sub: 'Someone told me to make a normal portfolio.', from: [0, 4, 0, 0.92], to: [0, 0, 0, 1], focus: [0.5, 0.55] },
-  { img: art('fly.webp'), alt: 'Me, mid-air', line: 'I said “sure”.', sub: 'Then I left the ground.', sfx: 'WHOOSH', from: [-60, 18, -14, 0.9], to: [42, -10, 10, 1.05], focus: [0.4, 0.5] },
-  { img: art('kick.webp'), alt: 'Me, flying kick', line: 'A bug appeared in production.', sub: 'I handled it professionally.', sfx: 'WHAM!', from: [55, 0, 8, 0.85], to: [-6, 0, -3, 1.08], zap: true, focus: [0.5, 0.48] },
-  { img: art('goa.webp'), alt: 'Me in sunglasses', line: 'Victory lap to Goa.', sub: 'Sunglasses: on. Humility: loading…', sfx: '✦ SHINE ✦', from: [30, 10, 4, 0.82], to: [10, 0, 0, 1.06], focus: [0.6, 0.45] },
-  { img: art('smile.webp'), alt: 'Me, smiling', line: 'Rizz level: compiling…', sub: '…build succeeded. 0 warnings.', sfx: 'RIZZ.EXE', from: [-20, 8, -3, 0.9], to: [-4, 0, 1, 1.12], zap: true, focus: [0.42, 0.5] },
-  { img: art('stand.webp'), alt: 'Me, arms crossed again', line: 'Okay. Enough showing off.', sub: 'Let me show you the inside ↓', from: [0, 0, 0, 1], to: [0, 0, 0, 0.94], focus: [0.5, 0.55] },
+  { scene: 'script', alt: 'A short-film script being typed at 2:47 AM, with a clapperboard', line: 'It starts at 2:47 AM.', sub: 'I write short films. This one is about a portfolio that refused to be normal.', sfx: 'ACTION!', from: [-30, 10, -8, 0.85], to: [0, 0, 0, 1], focus: [0.55, 0.5] },
+  { scene: 'graph', alt: 'An Obsidian-style graph of ideas connected to projects and hobbies', line: 'My brain is a graph.', sub: 'Every idea links to three others. Two of them become projects.', from: [20, 6, 6, 0.8], to: [0, 0, 0, 1.05], zap: true, focus: [0.5, 0.5] },
+  { scene: 'chart', alt: 'A candlestick chart that climbs, then crashes, labelled feelings.exe', line: 'I tried trading.', sub: 'The chart went up. Then my feelings started placing the orders.', sfx: 'CRASH', from: [-40, -6, -4, 0.9], to: [2, 0, 2, 1.05], focus: [0.45, 0.5] },
+  { scene: 'chess', alt: 'A chess knight leaping while a sacrificed queen falls off the board', line: 'So now I play chess.', sub: 'Sacrifice the queen. On purpose. Mostly.', sfx: 'CHECK!', from: [40, 8, 8, 0.85], to: [0, 0, -2, 1.05], focus: [0.55, 0.5] },
+  { scene: 'code', alt: 'A bug being kicked out of a laptop', line: 'And I write code.', sub: 'A bug appeared in production. I handled it professionally.', sfx: 'WHAM!', from: [-10, 10, -3, 0.9], to: [0, 0, 1, 1.08], zap: true, focus: [0.5, 0.48] },
+  { scene: 'orbit', alt: 'Everything I do, orbiting a lightning bolt', line: 'Okay. Enough showing off.', sub: 'Let me show you the inside ↓', from: [0, 0, 0, 0.9], to: [0, 0, 0, 1], zap: true, focus: [0.5, 0.5] },
 ]

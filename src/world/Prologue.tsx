@@ -20,7 +20,7 @@ export function Prologue() {
             Hi, I’m Pankaj. Half developer, half storyteller, full-time collector of unfinished ideas. I write short-film scripts at midnight, code until the bug blinks first, and lose chess games with tremendous confidence.
           </p>
           <p className="serif">
-            I make <em>websites that feel like places</em> and <em>digital products people open twice</em>. Right now I’m doing an MCA in Mangaluru, building <a href="#algopath">AlgoPath</a>, and turning my mistakes into documentation — which is why the Trophy Room is empty and the blog is honest.
+            I make <em>websites that feel like places</em> and <em>digital products people open twice</em>. Right now I’m doing an MCA in Mangaluru, building <a href="#prontopy">ProntoPy</a>, and turning my mistakes into documentation — which is why the Trophy Room is empty and the blog is honest.
           </p>
           <p className="serif">
             I like working in a team more than I like working alone. The best things I’ve made started as somebody else’s question. If you have one, <a href="#contact">ask me</a>.

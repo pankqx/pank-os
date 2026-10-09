@@ -6,15 +6,15 @@ const gh = (r: string) => `https://github.com/pankqx/${r}`
 // "built" = described by the repo as implemented. "planned" = the repo's own roadmap. Nothing else.
 export const projects: Project[] = [
   {
-    slug: 'algopath',
-    name: 'AlgoPath',
+    slug: 'prontopy',
+    name: 'ProntoPy',
     kicker: 'Learn DSA in Python from your first loop to FAANG-level problems — Python runs right inside your browser.',
     status: 'in-progress',
     statusNote: 'Private beta. The repo is private while I polish it — ask me for access.',
     featured: true,
-    art: 'algopath',
+    art: 'prontopy',
     idea: 'A free, minimal, browser-only platform for Data Structures & Algorithms in Python. No server and no sign-up: Python runs inside the browser through Pyodide, so even the compiler works offline.',
-    why: 'Most DSA courses assume you can already think like an interviewer. AlgoPath starts from zero and teaches the thinking, then throws real interview problems at you — with a story, a hero and a boss fight at the end of each module so you keep coming back.',
+    why: 'Most DSA courses assume you can already think like an interviewer. ProntoPy starts from zero and teaches the thinking, then throws real interview problems at you — with a story, a hero and a boss fight at the end of each module so you keep coming back.',
     built: [
       '52 modules, 400+ lessons and 900+ problems across three tracks: Python, DSA and AI & Data Science',
       'LeetCode-style judge: run sample tests or submit against hidden and stress tests (catches Time Limit Exceeded)',
@@ -31,7 +31,7 @@ export const projects: Project[] = [
       'Problems are original rewrites; curated lists are credited to their curators.',
     ],
     tradeoffs: ['Browser storage only — progress lives on one device unless you export it.', 'Data-science libraries download on first use unless bundled for offline.'],
-    evidence: 'AlgoPath README (private repo pankqx/PythonDSA).',
+    evidence: 'ProntoPy README (private repo pankqx/prontopy).',
     how: [
       'Pick a track (Python, DSA or AI & Data Science) and a module — each one is a realm with a boss at the end.',
       'Read a lesson in plain English, step through a visual trace, take a quick quiz.',
@@ -39,7 +39,7 @@ export const projects: Project[] = [
       'Stuck? Climb the hint ladder one rung at a time instead of jumping to the answer.',
       'Come back tomorrow: your streak, XP and spaced-repetition reviews are waiting.',
     ],
-    cta: { label: 'Want early access? Email me', href: 'mailto:pankqx@gmail.com?subject=AlgoPath%20access' },
+    cta: { label: 'Want early access? Email me', href: 'mailto:pankqx@gmail.com?subject=ProntoPy%20access' },
   },
   {
     slug: 'eventzee',
