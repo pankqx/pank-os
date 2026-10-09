@@ -23,8 +23,8 @@ export function Choice({ onChoose, previous }: { onChoose: (id: CharacterId) => 
   }
 
   const onKey = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') pick2('ash')
-    if (e.key === 'ArrowRight') pick2('rhea')
+    if (e.key === 'ArrowLeft') pick2('roman')
+    if (e.key === 'ArrowRight') pick2('reenu')
   }
   const pick2 = (id: CharacterId) => document.getElementById(`choice-${id}`)?.focus()
 
@@ -37,7 +37,7 @@ export function Choice({ onChoose, previous }: { onChoose: (id: CharacterId) => 
       </header>
 
       <div className="choice-grid" role="group" aria-label="Choose an AI character">
-        {(['ash', 'rhea'] as CharacterId[]).map((id, i) => {
+        {(['roman', 'reenu'] as CharacterId[]).map((id, i) => {
           const c = characters[id]
           return (
             <button

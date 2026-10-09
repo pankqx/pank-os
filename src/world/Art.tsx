@@ -161,8 +161,20 @@ function BrownieArt() {
   )
 }
 
+function AlgoArt() {
+  const cells = Array.from({ length: 7 * 15 }, (_, i) => { const h = Math.sin(i * 12.9898) * 43758.5453; return h - Math.floor(h) })
+  return (
+    <div className="art art-algo" role="img" aria-label="Illustration: a streak heatmap and an Accepted verdict">
+      <div className="algo-heat">{cells.map((v, i) => <i key={i} style={{ opacity: v < 0.3 ? 0.12 : v }} />)}</div>
+      <div className="algo-stamp display">ACCEPTED ✓</div>
+      <p className="mono dim cap">illustration · streak heatmap + judge verdict</p>
+    </div>
+  )
+}
+
 export function Art({ kind }: { kind: ArtKey }) {
   switch (kind) {
+    case 'algopath': return <AlgoArt />
     case 'eventzee': return <EventzeeArt />
     case 'paroh': return <ParohArt />
     case 'twin': return <TwinArt />

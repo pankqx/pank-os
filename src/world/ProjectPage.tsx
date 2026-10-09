@@ -43,6 +43,20 @@ export function ProjectPage({ project: p }: { project: Project }) {
 
         {p.art !== 'none' && <div className="dos-art"><Art kind={p.art} /></div>}
 
+        {p.how && (
+          <section className="dos-how">
+            <h3 className="mono">HOW IT WORKS — STEP BY STEP</h3>
+            <ol>{p.how.map((h, i) => <li key={i}><span className="display">{String(i + 1).padStart(2, '0')}</span><p className="serif">{h}</p></li>)}</ol>
+          </section>
+        )}
+
+        {p.gallery && (
+          <section className="dos-gallery">
+            <h3 className="mono">PICTURES</h3>
+            <div className="gal">{p.gallery.map((g) => <figure key={g.src}><img src={g.src} alt={g.caption} loading="lazy" /><figcaption className="mono dim">{g.caption}</figcaption></figure>)}</div>
+          </section>
+        )}
+
         <div className="dos-cols">
           <section className="dos-block wide">
             <h3 className="mono">THE IDEA</h3>
@@ -61,7 +75,8 @@ export function ProjectPage({ project: p }: { project: Project }) {
         </div>
 
         <footer className="dos-foot mono">
-          <a href={p.repo} target="_blank" rel="noreferrer">GitHub repository ↗</a>
+          {p.repo ? <a href={p.repo} target="_blank" rel="noreferrer">GitHub repository ↗</a> : <span>repository: private</span>}
+          {p.cta && <a href={p.cta.href}>{p.cta.label} ↗</a>}
           {p.live && <a href={p.live} target="_blank" rel="noreferrer">Live deployment ↗</a>}
           <span className="dim">evidence: {p.evidence}</span>
         </footer>

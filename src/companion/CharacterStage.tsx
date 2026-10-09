@@ -5,6 +5,9 @@ import type { Conversation } from './useConversation'
 import { activeProviderLabel } from './provider'
 import { sttSupported, ttsSupported } from './voice'
 import { clearMemory } from './memory'
+import { FireBackdrop } from '../fx/FireBackdrop'
+import { Electric } from '../fx/Electric'
+import { Fireworks, type FireworksHandle } from '../fx/Fireworks'
 
 const SUGGEST = ['What has he built?', 'Tell me about EventZee', 'Has he won anything?', 'Is Flow & Magic real?', 'How do I contact him?']
 
@@ -31,12 +34,23 @@ interface Props {
 
 export function CharacterStage({ conv, mode, onClose, onSwitch, hideCharacter }: Props) {
   const { cfg, state, lines } = conv
-  const other = characters[cfg.id === 'ash' ? 'rhea' : 'ash']
+  const other = characters[cfg.id === 'roman' ? 'reenu' : 'roman']
   const lastBot = [...lines].reverse().find((l) => l.role === 'assistant')
   const typed = useTyped(state === 'THINKING' ? cfg.style.thinking[0] : lastBot?.text ?? cfg.introduction)
   const [showLog, setShowLog] = useState(false)
   const [showMem, setShowMem] = useState(false)
   const input = useRef<HTMLInputElement>(null)
+  const fw = useRef<FireworksHandle>(null)
+  const figRef = useRef<HTMLButtonElement>(null)
+  // crackers every few seconds around the character, and on every poke
+  useEffect(() => {
+    if (hideCharacter) return
+    const id = window.setInterval(() => {
+      const r = figRef.current?.getBoundingClientRect()
+      if (r && r.width) fw.current?.burst(r.left + r.width * (0.15 + Math.random() * 0.7), r.top + r.height * (0.1 + Math.random() * 0.3), Math.random() > 0.6)
+    }, 2600)
+    return () => clearInterval(id)
+  }, [hideCharacter])
   const log = useRef<HTMLDivElement>(null)
   useEffect(() => { log.current?.scrollTo({ top: log.current.scrollHeight }) }, [lines, showLog])
 
@@ -52,6 +66,7 @@ export function CharacterStage({ conv, mode, onClose, onSwitch, hideCharacter }:
           </div>
         </div>
         <h2 className="display stage-name">{cfg.name}</h2>
+        <p className="mono stage-how">{cfg.introduction}</p>
         <p className="mono dim stage-tag">{cfg.tagline} · {activeProviderLabel()}</p>
 
         <div className="bubble" aria-live="polite">
@@ -90,9 +105,14 @@ export function CharacterStage({ conv, mode, onClose, onSwitch, hideCharacter }:
         )}
       </div>
       {!hideCharacter && (
-        <button className="stage-figure" onClick={conv.poke} aria-label={`Poke ${cfg.name} (she or he reacts)`} tabIndex={-1}>
-          <InkCharacter config={cfg} state={state} height={mode === 'overlay' ? '94vh' : '88vh'} />
-        </button>
+        <>
+          <div className="stage-bg" aria-hidden="true"><FireBackdrop intensity={0.7} focus={[0.36, 0.5]} seed={cfg.id === 'reenu' ? 7 : 3} /></div>
+          <Fireworks ref={fw} />
+          <button ref={figRef} className="stage-figure" onClick={(e) => { conv.poke(); const r = e.currentTarget.getBoundingClientRect(); fw.current?.burst(e.clientX || r.left + r.width / 2, e.clientY || r.top + r.height / 3, true) }} aria-label={`Poke ${cfg.name}`} tabIndex={-1}>
+            <InkCharacter config={cfg} state={state} height={mode === 'overlay' ? '94vh' : '88vh'} />
+            <Electric bolts={5} />
+          </button>
+        </>
       )}
     </div>
   )

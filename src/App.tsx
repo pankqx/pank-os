@@ -13,7 +13,7 @@ const KEY = 'pankos.character'
 function stored(): CharacterId | null {
   try {
     const v = localStorage.getItem(KEY)
-    return v === 'ash' || v === 'rhea' ? v : null
+    return v === 'roman' || v === 'reenu' ? v : v === 'ash' ? 'roman' : v === 'rhea' ? 'reenu' : null
   } catch {
     return null
   }
@@ -22,7 +22,7 @@ function stored(): CharacterId | null {
 export function App() {
   const deepLink = typeof location !== 'undefined' && location.hash.length > 1
   const [stage, setStage] = useState<Stage>(deepLink ? 'world' : 'opening')
-  const [character, setCharacter] = useState<CharacterId>(stored() ?? 'ash')
+  const [character, setCharacter] = useState<CharacterId>(stored() ?? 'roman')
   const [wipe, setWipe] = useState(false)
 
   const go = useCallback((next: Stage) => {

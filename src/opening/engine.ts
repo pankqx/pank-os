@@ -31,7 +31,7 @@ export interface PythonConfig {
   taper: number
   palette: string[]
 }
-export const defaultPython: PythonConfig = { segments: 84, spacing: 0.034, headRadius: 0.13, taper: 0.62, palette: ['#c8ff2e', '#ff4b2b'] }
+export const defaultPython: PythonConfig = { segments: 90, spacing: 0.03, headRadius: 0.085, taper: 0.7, palette: ['#c8ff2e', '#ff4b2b'] }
 
 export interface Pointer { x: number; y: number; active: boolean }
 
@@ -103,19 +103,25 @@ export class AsciiOpening {
     this.nameRect = { cx: this.width / 2, cy, w: this.width * 0.8, h: total }
   }
 
-  // ---- python path -------------------------------------------------------------
-  private lissa(tau: number): [number, number] {
-    const W = this.width, H = this.height
-    return [W * (0.5 + 0.4 * Math.sin(tau * 0.85 + 1.0) + 0.06 * Math.sin(tau * 2.3)), H * (0.5 + 0.34 * Math.sin(tau * 1.31) + 0.05 * Math.cos(tau * 2.9))]
-  }
-  private sweep(tau: number): [number, number] {
-    const s = smooth((tau - 4.4) / 1.4)
-    return [lerp(-this.width * 0.15, this.width * 1.15, s), this.nameRect.cy + Math.sin(tau * 5) * this.nameRect.h * 0.28]
-  }
+  // ---- python path: enters from the left, then eats the name left → right ----------------
   private pos(tau: number): [number, number] {
-    const w = smooth((tau - 4.1) / 0.6) * (1 - smooth((tau - 5.7) / 0.6))
-    const a = this.lissa(tau), b = this.sweep(tau)
-    return [lerp(a[0], b[0], w), lerp(a[1], b[1], w)]
+    const W = this.width, H = this.height
+    const low = H * 0.82
+    if (tau < 3.0) {
+      const k = smooth((tau - 1.0) / 2.0)
+      return [lerp(-W * 0.45, W * 0.14, k), low + Math.sin(tau * 4.2) * H * 0.045]
+    }
+    const k = clamp((tau - 3.0) / 2.6)
+    const e = k * k * (3 - 2 * k) * 0.6 + k * 0.4
+    const rise = smooth((tau - 3.0) / 0.55)
+    return [lerp(W * 0.14, W * 1.4, e), lerp(low + Math.sin(3.0 * 4.2) * H * 0.045, this.nameRect.cy, rise) + Math.sin(tau * 7) * this.nameRect.h * 0.2 * rise]
+  }
+  /** has this name cell been eaten at time t? */
+  private eaten(px: number, x: number, y: number, t: number, headX: number, R: number) {
+    if (t < 3.05) return false
+    if (t < 5.5) return px < headX - R * 0.2
+    const h = Math.sin(x * 91.3 + y * 17.7) * 43758.5453
+    return h - Math.floor(h) > smooth((t - 5.5) / 0.9)
   }
 
   /** Draws one frame. `fx`: 'full' | 'lite'. Returns nothing; caller owns rAF. */
@@ -130,7 +136,7 @@ export class AsciiOpening {
     this.ticks++
 
     // Python coverage field (computed sparsely into a small buffer of segment data).
-    const pyAmp = smooth((t - 1.2) / 1.0) * (1 - smooth((t - 6.0) / 0.9))
+    const pyAmp = smooth((t - 1.0) / 0.5) * (1 - smooth((t - 5.9) / 0.5))
     const N = this.py.segments
     const R0 = Math.min(W, H) * this.py.headRadius
     const sx = new Float32Array(N), sy = new Float32Array(N), sr = new Float32Array(N)
@@ -144,11 +150,12 @@ export class AsciiOpening {
     const hl = Math.hypot(hx, hy) || 1
     const fwd: [number, number] = [hx / hl, hy / hl]
 
-    const nameAmt = smooth((t - 3.0) / 1.6)
+    const nameAmt = smooth((t - 1.2) / 1.4)
     const calm = smooth((t - 6.0) / 0.9)
     const bg = lerp(1, 0.3, calm)
     const emerge = smooth(t / 1.6)
-    const showName = t >= 3.0
+    const showName = t >= 1.2
+    const chomp = t > 3.0 && t < 5.6 ? 0.55 + 0.45 * Math.sin(t * 16) : 0.25
 
     let lastFill = ''
     const put = (ch_: string, x: number, y: number, color: string) => {
@@ -171,8 +178,19 @@ export class AsciiOpening {
 
         // python coverage
         let cov = 0, segI = -1
+        let head = 0
         if (pyAmp > 0.01) {
-          for (let i = 0; i < N; i += fx === 'lite' ? 2 : 1) {
+          // head: a big wedge ellipse oriented along travel, with chomping jaws
+          const dx0 = px - sx[0], dy0 = py_ - sy[0]
+          const u = dx0 * fwd[0] + dy0 * fwd[1], v = -dx0 * fwd[1] + dy0 * fwd[0]
+          const HR = sr[0] * pyAmp * 1.25
+          const taper = 1 - Math.max(0, u) / (HR * 2.4)
+          const q = (u * u) / (HR * HR * 3.2) + (v * v) / (HR * HR * taper * taper * 1.1)
+          if (q < 1 && u > -HR * 0.9) {
+            const jaw = chomp * (u - HR * 0.15) * 0.55
+            if (!(u > HR * 0.15 && Math.abs(v) < jaw)) head = 1 - q
+          }
+          for (let i = 3; i < N; i += fx === 'lite' ? 2 : 1) {
             const dx = px - sx[i], dy = py_ - sy[i]
             const r = sr[i] * pyAmp
             if (Math.abs(dx) > r || Math.abs(dy) > r) continue
@@ -187,7 +205,12 @@ export class AsciiOpening {
         const mi = y * cols + x
         const inName = showName && this.mask[mi] === 1
 
-        // 1) python on top
+        // 1) python on top — head first
+        if (head > 0.02) {
+          const edge = head < 0.18
+          put(edge ? 'X' : head > 0.6 ? '@' : '#', px + ox, py_ + oy, edge ? '#c8ff2e' : `rgba(200,255,46,${0.55 + head * 0.45})`)
+          continue
+        }
         if (cov > 0.04) {
           const f = segI / (N - 1)
           const scale = ((x + ((y >> 1) & 1)) & 1) === 0 ? 0 : -1.2
@@ -200,9 +223,14 @@ export class AsciiOpening {
         }
 
         // 2) name (ASCII assembling), then crisp type takes over in `calm`
+        if (inName && this.eaten(px, x, y, t, sx[0], sr[0])) {
+          // crumbs just behind the jaws
+          if (t < 5.5 && px > sx[0] - sr[0] * 2.2 && hash(x + this.ticks, y) > 0.6) put(SCRAMBLE[(x + this.ticks) % SCRAMBLE.length], px + ox, py_ + oy + (sx[0] - px) * 0.15, 'rgba(255,75,43,0.8)')
+          continue
+        }
         if (inName) {
           const thr = hash(x * 3.1, y * 1.7) * 0.7 + (x / cols) * 0.3
-          const rev = nameAmt - thr
+          const rev = t > 5.5 ? 1 : nameAmt - thr
           if (rev > 0) {
             // proximity to snake → disturbance
             let near = 0
@@ -242,9 +270,9 @@ export class AsciiOpening {
       const perp: [number, number] = [-fwd[1], fwd[0]]
       const r = sr[0] * pyAmp
       for (const s of [-1, 1]) {
-        put('O', sx[0] + fwd[0] * r * 0.25 + perp[0] * r * 0.45 * s, sy[0] + fwd[1] * r * 0.25 + perp[1] * r * 0.45 * s, '#ff4b2b')
+        put('O', sx[0] + fwd[0] * r * 0.7 + perp[0] * r * 0.62 * s, sy[0] + fwd[1] * r * 0.7 + perp[1] * r * 0.62 * s, '#ff4b2b')
       }
-      if (Math.sin(t * 9) > 0.2) put('~', sx[0] + fwd[0] * r * 1.1, sy[0] + fwd[1] * r * 1.1, '#ff4b2b')
+      if (Math.sin(t * 9) > 0.2 && chomp < 0.4) { for (let k = 1; k <= 3; k++) put(k === 3 ? '<' : '-', sx[0] + fwd[0] * r * (1.9 + k * 0.25), sy[0] + fwd[1] * r * (1.9 + k * 0.25), '#ff4b2b') }
     }
 
     // crisp composed type

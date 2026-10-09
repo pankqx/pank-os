@@ -195,7 +195,7 @@
 .badge[data-kind='COMPLETED'], .badge[data-kind='ORGANISED'], .badge[data-kind='FOUNDED'] { color: var(--acid); border-color: var(--acid); }
 
 /* ===== chapter V ===== */
-.contact { background: #050606; border-top-color: transparent; min-height: 90vh; display: grid; align-items: center; }
+.contact { background: #050606; border-top-color: transparent; display: grid; align-items: center; padding-bottom: 60px; }
 .contact-inner { display: grid; grid-template-columns: minmax(220px, 360px) 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; max-width: 1200px; }
 .portrait { margin: 0; }
 .portrait img { width: 100%; filter: grayscale(1) contrast(1.1); display: block; }

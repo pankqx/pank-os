@@ -5,6 +5,7 @@ import { CharacterStage } from '../companion/CharacterStage'
 import type { Conversation } from '../companion/useConversation'
 import { clamp, smooth } from '../fx/ticker'
 import { useFx } from '../lib/fx'
+import { Electric } from '../fx/Electric'
 
 const GLYPHS = '01#%@*+=-:.<>/\\'
 
@@ -111,6 +112,7 @@ function Arrival({ conv, onSwitch }: { conv: Conversation; onSwitch: () => void 
       </div>
       <div className="fin-figure" ref={figure}>
         <InkCharacter ref={ink} config={conv.cfg} state={conv.state} height="92vh" label={`${conv.cfg.name}, an AI character, full height`} />
+        <Electric bolts={4} />
       </div>
       <div className="fin-chat" ref={chat}>
         <CharacterStage conv={conv} mode="inline" onSwitch={onSwitch} hideCharacter />
@@ -121,7 +123,7 @@ function Arrival({ conv, onSwitch }: { conv: Conversation; onSwitch: () => void 
 
 export function Finale({ conv, onSwitch }: { conv: Conversation; onSwitch: () => void }) {
   return (
-    <HorizontalScene id="meet" label="Finale: meet the AI character" className="finale" tail={0.35}>
+    <HorizontalScene id="meet" label="Finale: meet the AI character" className="finale" tail={0.06}>
       <div className="fin-intro">
         <p className="mono dim">EPILOGUE — ONE MORE THING</p>
         <h2 className="display">You’ve met the human.</h2>

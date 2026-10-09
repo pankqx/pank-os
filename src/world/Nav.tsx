@@ -11,7 +11,7 @@ interface Props {
 
 export function Nav({ active, character, onSwitchCharacter, onReplayIntro }: Props) {
   const { level, setLevel } = useFx()
-  const other: CharacterId = character === 'ash' ? 'rhea' : 'ash'
+  const other: CharacterId = character === 'roman' ? 'reenu' : 'roman'
   const next = level === 'full' ? 'lite' : level === 'lite' ? 'min' : 'full'
   const names = { full: 'FULL', lite: 'LITE', min: 'STILL' }
   return (

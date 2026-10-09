@@ -8,6 +8,7 @@ import { Nav } from './Nav'
 import { sections, type SectionId } from './sections'
 import { Prologue } from './Prologue'
 import { StopMotion } from './StopMotion'
+import { AlgoPath } from './AlgoPath'
 import { PostPage } from './PostPage'
 import { posts } from '../content/posts'
 import { YellowLine } from '../fx/YellowLine'
@@ -43,7 +44,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
     io.observe(el)
     return () => io.disconnect()
   }, [])
-  const other = character === 'ash' ? 'rhea' : 'ash'
+  const other = character === 'roman' ? 'reenu' : 'roman'
 
   // scroll to section on hash change (deep links)
   useEffect(() => {
@@ -97,11 +98,13 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
         <YellowLine />
         <StopMotion />
         <Prologue />
-        <Marquee text="builds ✦ breaks ✦ writes it down ✦ repeats ✦" />
+        <Marquee text="midnight dramas ✦ ice cream ✦ beaches ✦ love ✦ experiments ✦ noise ✦" />
+        <AlgoPath />
+        <Marquee text="signals ✦ peace ✦ unfinished thoughts ✦ hope ✦ job ✦" reverse />
         <Lab />
-        <Marquee text="signals ✦ notes ✦ unfinished thoughts ✦" reverse />
+        <Marquee text="rizz ✦ sense of humour ✦ idgaf ✦ midnight dramas ✦" />
         <Transmissions />
-        <Marquee text="no trophies beyond this point ✦ evidence required ✦" tape />
+        <Marquee text="royal trophy loading ✦ evidence required ✦" tape />
         <Trophy />
         <Marquee text="someone else is here ✦ someone else is here ✦" reverse />
         <Finale conv={conv} onSwitch={() => onSwitchCharacter(other)} />

@@ -12,8 +12,8 @@ export default function DevCharacters() {
       <div style={{ gridColumn: '1/-1', display: 'flex', gap: 8 }} className="mono">
         {STATES.map((x) => <button key={x} onClick={() => setS(x)} style={{ border: '1px solid #444', padding: '4px 8px', color: s === x ? '#c8ff2e' : '#ece7da' }}>{x}</button>)}
       </div>
-      <InkCharacter config={characters.ash} state={s} height="86vh" />
-      <InkCharacter config={characters.rhea} state={s} height="86vh" />
+      <InkCharacter config={characters.roman} state={s} height="86vh" />
+      <InkCharacter config={characters.reenu} state={s} height="86vh" />
     </main>
   )
 }

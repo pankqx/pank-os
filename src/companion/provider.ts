@@ -28,7 +28,7 @@ export const mockProvider: ChatProvider = {
       return { text: `${character.name} here — an AI character. Ask about a project, how this site was built, or how to reach Pankaj.`, source: 'script' }
     }
     if (/\b(i am|i'm|im|my name|i like|i love|i build|i'm building|i work)\b/i.test(q)) {
-      const ask = character.id === 'rhea' ? ' What are you working on right now?' : ''
+      const ask = character.id === 'reenu' ? ' What are you working on right now?' : ''
       return { text: `Noted — I'll take your word for it, and I won't store it unless you've switched memory on.${ask}`, source: 'script' }
     }
     const hits = retrieve(q, knowledge, 1)

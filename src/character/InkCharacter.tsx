@@ -116,72 +116,85 @@ function Mouth({ id }: { id: string }) {
   )
 }
 
-/* ------------------------------ RHEA ------------------------------ */
-function Rhea({ id, accent }: { id: string; accent: string }) {
-  const face = 'M300 255 C370 255 410 322 410 420 C410 520 372 600 330 630 C315 640 285 640 270 630 C228 600 190 520 190 420 C190 322 230 255 300 255 Z'
-  const hoodOuter = 'M300 88 C432 88 522 190 527 380 C532 560 510 690 486 780 C420 820 180 820 114 780 C90 690 68 560 73 380 C78 190 168 88 300 88 Z'
-  const hoodInner = 'M300 206 C382 206 442 272 449 382 C456 502 440 600 410 664 C384 722 336 752 300 756 C264 752 216 722 190 664 C160 600 144 502 151 382 C158 272 218 206 300 206 Z'
+/* ------------------------------ REENU ------------------------------ */
+const GOLD = '#e8b54a'
+const SKIN2 = '#f2dcc6'
+function Reenu({ id, accent }: { id: string; accent: string }) {
+  const face = 'M300 262 C366 262 404 326 404 418 C404 506 372 580 334 614 C318 628 282 628 266 614 C228 580 196 506 196 418 C196 326 234 262 300 262 Z'
   return (
     <>
-      <ellipse cx="300" cy="420" rx="300" ry="380" fill={`url(#${id}-halo)`} />
-      {/* body */}
-      <path d="M30 900 C40 800 100 742 175 722 C225 708 255 704 300 705 C345 704 375 708 425 722 C500 742 560 800 570 900 Z" fill={CLOTH} />
-      <path d="M30 900 C40 800 100 742 175 722 C225 708 255 704 300 705 C345 704 375 708 425 722 C500 742 560 800 570 900 Z" fill={`url(#${id}-cloth)`} />
-      {/* neck */}
-      <path d="M262 600 L256 720 Q300 742 344 720 L338 600 Z" fill={SKIN} />
-      <path d="M262 600 L256 720 Q300 742 344 720 L338 600 Z" fill={`url(#${id}-hatch)`} opacity="0.75" />
+      <ellipse cx="300" cy="430" rx="300" ry="390" fill={`url(#${id}-halo)`} />
+      {/* long open hair, behind everything */}
       <g data-part="head">
-        {/* hair behind face */}
-        <path data-part="sway" d="M196 330 C170 430 168 560 190 700 L240 700 C220 600 214 470 228 360 Z M404 330 C430 430 432 560 410 700 L360 700 C380 600 386 470 372 360 Z" fill="#1d1f1e" />
-        {/* face */}
-        <path d={face} fill={SKIN} />
-        <g mask={`url(#${id}-mR)`}><path d={face} fill={`url(#${id}-hatch)`} /></g>
-        <g mask={`url(#${id}-mTop)`}><path d={face} fill={`url(#${id}-cross)`} /></g>
-        <path d={face} fill="none" stroke={INK} strokeWidth="2.5" />
-        {/* freckles */}
-        <g fill={INK} opacity="0.55">
-          {[[262, 480], [272, 488], [252, 492], [338, 482], [328, 490], [348, 494], [280, 470], [322, 470]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r="1.6" />)}
+        <path data-part="sway" d="M300 196 C182 196 150 300 152 420 C150 560 128 700 104 900 L496 900 C472 700 450 560 448 420 C450 300 418 196 300 196 Z" fill="#141615" />
+        <g data-part="sway" fill="none" stroke="#3b3e3b" strokeWidth="1.6" opacity="0.9">
+          <path d="M170 380 C164 540 150 700 132 880" /><path d="M190 420 C184 580 176 720 168 890" /><path d="M430 380 C436 540 450 700 468 880" /><path d="M410 420 C416 580 424 720 432 890" />
         </g>
-        {/* brows */}
-        <path data-part="brow-l" d="M212 392 Q246 374 283 386" fill="none" stroke={INK} strokeWidth="5.5" strokeLinecap="round" />
-        <path data-part="brow-r" d="M317 386 Q354 374 388 392" fill="none" stroke={INK} strokeWidth="5.5" strokeLinecap="round" />
-        <Eye x={252} y={433} lashes id={id} />
-        <Eye x={348} y={433} lashes id={id} />
+      </g>
+      {/* body: coral blouse + saree pallu with gold border */}
+      <path d="M40 900 C52 806 104 748 178 728 C226 716 260 712 300 713 C340 712 374 716 422 728 C496 748 548 806 560 900 Z" fill="#c9465a" />
+      <path d="M40 900 C52 806 104 748 178 728 C226 716 260 712 300 713 C340 712 374 716 422 728 C496 748 548 806 560 900 Z" fill={`url(#${id}-cloth)`} opacity="0.5" />
+      <path d="M232 716 C250 770 280 790 300 792 C320 790 350 770 368 716" fill={SKIN2} />
+      <path d="M232 716 C250 770 280 790 300 792 C320 790 350 770 368 716" fill="none" stroke={GOLD} strokeWidth="6" strokeDasharray="2 7" strokeLinecap="round" />
+      <path d="M232 716 C250 770 280 790 300 792 C320 790 350 770 368 716" fill="none" stroke={GOLD} strokeWidth="2" />
+      {/* pallu over her left shoulder */}
+      <path d="M392 722 C430 730 470 742 500 770 L380 900 L300 900 Z" fill="#e8707f" />
+      <path d="M500 770 L380 900" stroke={GOLD} strokeWidth="10" />
+      <path d="M392 722 L300 900" stroke={GOLD} strokeWidth="5" opacity="0.8" />
+      <g fill={GOLD} opacity="0.85">{[0, 1, 2, 3, 4, 5].map((i) => <circle key={i} cx={470 - i * 20} cy={800 + i * 18} r="3" />)}</g>
+      {/* neck + chain */}
+      <path d="M266 600 L262 720 Q300 744 338 720 L334 600 Z" fill={SKIN2} />
+      <path d="M266 600 L262 720 Q300 744 338 720 L334 600 Z" fill={`url(#${id}-hatch)`} opacity="0.45" />
+      <path d="M262 712 Q300 760 338 712" fill="none" stroke={GOLD} strokeWidth="2.4" />
+      <circle cx="300" cy="742" r="5" fill={GOLD} />
+      <g data-part="head">
+        <path d={face} fill={SKIN2} />
+        <g mask={`url(#${id}-mR)`}><path d={face} fill={`url(#${id}-hatch)`} opacity="0.55" /></g>
+        <path d={face} fill="none" stroke={INK} strokeWidth="2.3" />
+        {/* blush */}
+        <ellipse cx="246" cy="492" rx="26" ry="13" fill={accent} opacity="0.28" />
+        <ellipse cx="354" cy="492" rx="26" ry="13" fill={accent} opacity="0.28" />
+        {/* brows: thin arches */}
+        <path data-part="brow-l" d="M212 396 Q244 374 282 388" fill="none" stroke={INK} strokeWidth="4" strokeLinecap="round" />
+        <path data-part="brow-r" d="M318 388 Q356 374 388 396" fill="none" stroke={INK} strokeWidth="4" strokeLinecap="round" />
+        <Eye x={250} y={436} lashes id={id} />
+        <Eye x={350} y={436} lashes id={id} />
+        {/* eyeliner wings */}
+        <path d="M214 434 L200 424" stroke={INK} strokeWidth="3.4" strokeLinecap="round" />
+        <path d="M386 434 L400 424" stroke={INK} strokeWidth="3.4" strokeLinecap="round" />
         {/* nose */}
-        <path d="M301 442 C298 470 289 492 292 505 C298 513 309 511 315 504" fill="none" stroke={INK} strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M301 448 C299 474 291 494 294 505 C299 511 308 510 313 505" fill="none" stroke={INK} strokeWidth="2.2" strokeLinecap="round" />
+        {/* lips (coral) */}
+        <path d="M268 561 Q284 551 300 556 Q316 551 332 561 Q300 580 268 561 Z" fill={accent} opacity="0.85" />
         <Mouth id="" />
-        {/* bangs + strands */}
+        {/* centre-parted front hair framing the face */}
         <g data-part="sway">
-          <path d="M200 350 C220 270 290 238 400 300 C370 292 340 300 318 322 C330 300 300 292 282 300 C270 316 252 330 236 360 C232 340 236 322 244 306 C226 318 210 334 200 350 Z" fill="#1d1f1e" />
-          <g fill="none" stroke="#5a5d58" strokeWidth="1.4" opacity="0.8">
-            <path d="M232 300 C262 278 312 270 372 296" /><path d="M222 330 C248 296 290 284 330 300" /><path d="M206 360 C198 450 196 560 212 690" /><path d="M394 360 C404 450 404 560 390 690" />
+          <path d="M300 214 C238 214 200 268 192 340 C186 400 188 470 178 560 C170 640 160 720 168 820 Q190 790 204 760 C200 640 206 520 214 420 C220 352 250 290 300 252 Z" fill="#181a19" />
+          <path d="M300 214 C362 214 400 268 408 340 C414 400 412 470 422 560 C430 640 440 720 432 820 Q410 790 396 760 C400 640 394 520 386 420 C380 352 350 290 300 252 Z" fill="#181a19" />
+          <g fill="none" stroke="#454845" strokeWidth="1.4">
+            <path d="M296 222 C250 240 214 300 206 380" /><path d="M304 222 C350 240 386 300 394 380" /><path d="M196 460 C190 560 178 650 166 730" /><path d="M404 460 C410 560 422 650 434 730" />
           </g>
         </g>
+        {/* jhumkas */}
+        {[[196, 520], [404, 520]].map(([x, y]) => (
+          <g key={x} data-part="jhumka">
+            <circle cx={x} cy={y} r="6" fill={GOLD} />
+            <path d={`M${x - 16} ${y + 34} Q${x} ${y + 2} ${x + 16} ${y + 34} Z`} fill={GOLD} stroke="#8a6420" strokeWidth="1.5" />
+            {[-12, -6, 0, 6, 12].map((dx) => <circle key={dx} cx={x + dx} cy={y + 40} r="2.6" fill={GOLD} />)}
+          </g>
+        ))}
       </g>
-      {/* hood */}
-      <path d={`${hoodOuter} ${hoodInner}`} fillRule="evenodd" fill="#101211" />
-      <path d={`${hoodOuter} ${hoodInner}`} fillRule="evenodd" fill={`url(#${id}-cloth)`} />
-      <g fill="none" stroke="#2c2f2d" strokeWidth="3">
-        <path d="M150 300 C118 380 112 520 134 690" /><path d="M450 300 C482 380 488 520 466 690" /><path d="M210 170 C250 140 350 140 390 170" />
-        <path d="M120 250 C104 300 96 380 98 440" />
-      </g>
-      <path d={hoodInner} fill="none" stroke="#2c2f2d" strokeWidth="6" />
-      {/* drawstrings */}
-      <g stroke={SKIN} strokeWidth="3" strokeLinecap="round" opacity="0.85">
-        <path d="M270 748 C262 790 256 830 258 868" /><path d="M330 748 C338 790 344 830 342 868" />
-      </g>
-      <rect x="252" y="866" width="12" height="20" rx="3" fill={accent} /><rect x="336" y="866" width="12" height="20" rx="3" fill={accent} />
-      {/* rim light (left) */}
-      <path d="M300 90 C170 90 80 190 75 380 C70 560 98 700 128 788" fill="none" stroke={accent} strokeWidth="5" strokeLinecap="round" filter={`url(#${id}-glow)`} />
-      <path d="M196 330 C176 420 170 520 186 640" fill="none" stroke={accent} strokeWidth="2.4" opacity="0.7" filter={`url(#${id}-glow)`} />
+      {/* rim light */}
+      <path d="M300 198 C190 198 152 300 152 420 C150 560 128 700 106 896" fill="none" stroke={accent} strokeWidth="4" strokeLinecap="round" filter={`url(#${id}-glow)`} />
+      <path d="M404 418 C404 506 374 578 336 612" fill="none" stroke="#ffd60a" strokeWidth="2.4" opacity="0.8" filter={`url(#${id}-glow)`} />
     </>
   )
 }
 
-/* ------------------------------ ASH ------------------------------ */
+/* ------------------------------ ROMAN ------------------------------ */
 const curls: [number, number, number][] = [[188, 330, 30], [200, 280, 36], [228, 236, 38], [268, 205, 40], [312, 196, 42], [356, 210, 40], [392, 246, 36], [414, 292, 32], [420, 336, 26], [244, 270, 30], [300, 240, 34], [350, 260, 30], [282, 280, 26], [326, 286, 24]]
 
-function Ash({ id, accent }: { id: string; accent: string }) {
+function Roman({ id, accent }: { id: string; accent: string }) {
   const face = 'M300 248 C376 248 416 318 416 422 C416 516 386 590 346 626 C326 642 274 642 254 626 C214 590 184 516 184 422 C184 318 224 248 300 248 Z'
   return (
     <>
@@ -248,7 +261,7 @@ export const InkCharacter = forwardRef<InkHandle, Props>(function InkCharacter({
   useEffect(() => {
     const root = svg.current!
     const q = (s: string) => Array.from(root.querySelectorAll<SVGGraphicsElement>(`[data-part="${s}"]`))
-    const head = q('head')[0], pupils = q('pupil'), lids = q('lid'), sway = q('sway'), glint = q('glint')[0]
+    const heads = q('head'), jhumkas = q('jhumka'), pupils = q('pupil'), lids = q('lid'), sway = q('sway'), glint = q('glint')[0]
     const browL = q('brow-l')[0], browR = q('brow-r')[0]
     const inner = q('mouth-in')[0], lipLow = q('lip-low')[0]
     const body = root.querySelector<SVGGElement>('[data-part="breath"]')!
@@ -283,7 +296,8 @@ export const InkCharacter = forwardRef<InkHandle, Props>(function InkCharacter({
       const breath = still ? 0 : Math.sin(t * 1.25) * 3
       body.setAttribute('transform', `translate(0 ${breath.toFixed(2)})`)
       const tilt = lx * 4 + (s === 'LISTENING' ? 5 : 0) + (s === 'REACTING' ? Math.sin(t * 9) * 2 : 0)
-      head.setAttribute('transform', `rotate(${tilt.toFixed(2)} 300 660) translate(${(lx * 6).toFixed(1)} ${(ly * 3).toFixed(1)})`)
+      heads.forEach((h) => h.setAttribute('transform', `rotate(${tilt.toFixed(2)} 300 660) translate(${(lx * 6).toFixed(1)} ${(ly * 3).toFixed(1)})`))
+      jhumkas.forEach((j, i) => { const b = j.getBBox(); j.setAttribute('transform', `rotate(${(Math.sin(t * 2.4 + i) * 6 - lx * 8).toFixed(2)} ${b.x + b.width / 2} ${b.y + 4})`) })
       pupils.forEach((p) => p.setAttribute('transform', `translate(${(lx * 9).toFixed(2)} ${(ly * 6).toFixed(2)})`))
       sway.forEach((g) => g.setAttribute('transform', `rotate(${(Math.sin(t * 0.9) * 0.8 - lx * 1.2).toFixed(2)} 300 260)`))
       // blink
@@ -313,7 +327,7 @@ export const InkCharacter = forwardRef<InkHandle, Props>(function InkCharacter({
     return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener('pointermove', onMove) }
   }, [track, level, config.id])
 
-  const C = config.id === 'rhea' ? Rhea : Ash
+  const C = config.id === 'reenu' ? Reenu : Roman
   return (
     <svg ref={svg} className={className} viewBox="0 0 600 900" style={{ height, width: 'auto', aspectRatio: '600 / 900', display: 'block' }} role="img" aria-label={label ?? `${config.name}, an AI character (illustration)`}>
       <Defs id={id} accent={config.accent} />

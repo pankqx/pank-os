@@ -9,7 +9,7 @@ interface Props { conv: Conversation; open: boolean; setOpen: (v: boolean) => vo
 /** Floating button + full-screen stage where the character is as big as the screen. */
 export default function Companion({ conv, open, setOpen, onSwitchCharacter, hidden }: Props) {
   const cfg = conv.cfg
-  const other: CharacterId = cfg.id === 'ash' ? 'rhea' : 'ash'
+  const other: CharacterId = cfg.id === 'roman' ? 'reenu' : 'roman'
   useEffect(() => {
     if (!open) return
     conv.greet()

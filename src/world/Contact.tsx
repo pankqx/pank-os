@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { links } from '../content/profile'
-import { AsciiDevelop } from '../fx/AsciiDevelop'
+import { LinePortrait } from '../fx/LinePortrait'
+import { Electric } from '../fx/Electric'
 
 export function Contact() {
   const [photo, setPhoto] = useState(true)
@@ -11,14 +12,14 @@ export function Contact() {
           {photo ? (
             <img src={`${import.meta.env.BASE_URL}portrait.jpg`} alt="Portrait of K S Pankaj" onError={() => setPhoto(false)} />
           ) : (
-            <AsciiDevelop src={`${import.meta.env.BASE_URL}photos/garden.webp`} alt="Ink drawing of Pankaj standing with arms crossed" cell={8} className="portrait-ink" />
+            <div className="portrait-lines"><LinePortrait src={`${import.meta.env.BASE_URL}art/portrait-lines.svg`} label="Line drawing of me" /><Electric bolts={2} rate={140} /></div>
           )}
-          <figcaption className="mono dim">the human, arms crossed, waiting for your message</figcaption>
+          <figcaption className="mono dim">me, drawn in lines, waiting for your message</figcaption>
         </figure>
         <div>
           <p className="mono dim">CHAPTER VI — THE BOUNDARY</p>
-          <h2 id="contact-h" className="serif contact-title">That’s the edge of the experiment.</h2>
-          <p className="serif lead">Everything beyond this point is just a person with an inbox. Say hello, tell him what’s broken, or ask what the python wanted.</p>
+          <h2 id="contact-h" className="serif contact-title">That’s me. Say hi.</h2>
+          <p className="serif lead">I’m open to internships, collaborations and strange ideas. Tell me what you’re building, what’s broken, or what the python wanted.</p>
           <ul className="contact-links">
             {links.map((l) => (
               <li key={l.label}>
