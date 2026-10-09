@@ -1,4 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Finale } from './Finale'
+import { useConversation } from '../companion/useConversation'
 import type { CharacterId } from '../content/characters'
 import { useHash } from '../lib/useHash'
 import { ErrorBoundary } from '../lib/ErrorBoundary'
@@ -6,6 +8,10 @@ import { Nav } from './Nav'
 import { sections, type SectionId } from './sections'
 import { Prologue } from './Prologue'
 import { FieldGuide } from './FieldGuide'
+import { YellowLine } from '../fx/YellowLine'
+import { Marquee } from '../fx/Marquee'
+import { Cursor } from '../fx/Cursor'
+import { useReveal } from '../fx/useReveal'
 import { Lab } from './Lab'
 import { Transmissions } from './Transmissions'
 import { Trophy } from './Trophy'
@@ -25,6 +31,9 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
   const hash = useHash()
   const [active, setActive] = useState<SectionId>('person')
   const first = useRef(true)
+  const conv = useConversation(character)
+  const [chatOpen, setChatOpen] = useState(false)
+  const other = character === 'ash' ? 'rhea' : 'ash'
 
   // scroll to section on hash change (deep links)
   useEffect(() => {
@@ -64,24 +73,33 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
     return () => window.removeEventListener('keydown', on)
   }, [])
 
+  useReveal(character)
+
   const project = hash.section === 'lab' && hash.sub ? projectBySlug(hash.sub) : undefined
 
   return (
     <>
       <a className="skip-link" href="#person">Skip to content</a>
+      <Cursor />
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project ? true : undefined}>
+        <YellowLine />
         <FieldGuide />
         <Prologue />
+        <Marquee text="builds ✦ breaks ✦ writes it down ✦ repeats ✦" />
         <Lab />
+        <Marquee text="signals ✦ notes ✦ unfinished thoughts ✦" reverse />
         <Transmissions />
+        <Marquee text="no trophies beyond this point ✦ evidence required ✦" tape />
         <Trophy />
+        <Marquee text="someone else is here ✦ someone else is here ✦" reverse />
+        <Finale conv={conv} onSwitch={() => onSwitchCharacter(other)} />
         <Contact />
       </main>
       {project && <ProjectPage project={project} />}
       <ErrorBoundary label="the companion" fallback={null}>
         <Suspense fallback={null}>
-          <Companion character={character} onSwitchCharacter={onSwitchCharacter} />
+          <Companion conv={conv} open={chatOpen} setOpen={setChatOpen} onSwitchCharacter={onSwitchCharacter} />
         </Suspense>
       </ErrorBoundary>
     </>

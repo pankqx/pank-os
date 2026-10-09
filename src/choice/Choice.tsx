@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { characters, type CharacterId } from '../content/characters'
-import { AsciiAvatar } from '../companion/AsciiAvatar'
+import { InkCharacter } from '../character/InkCharacter'
 
 export function Choice({ onChoose, previous }: { onChoose: (id: CharacterId) => void; previous: CharacterId | null }) {
   const [hover, setHover] = useState<CharacterId | null>(null)
   const [picked, setPicked] = useState<CharacterId | null>(null)
-  const [vh, setVh] = useState(() => Math.min(520, Math.round(window.innerHeight * 0.52)))
+  const [vh, setVh] = useState(() => Math.round(window.innerHeight * 0.6))
   const first = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const on = () => setVh(Math.min(520, Math.round(window.innerHeight * (window.innerWidth < 760 ? 0.3 : 0.52))))
+    const on = () => setVh(Math.round(window.innerHeight * (window.innerWidth < 760 ? 0.42 : 0.66)))
     on()
     window.addEventListener('resize', on)
     first.current?.focus()
@@ -55,7 +55,7 @@ export function Choice({ onChoose, previous }: { onChoose: (id: CharacterId) => 
               aria-label={`${c.choiceLabel}: meet ${c.name}, an AI character. ${c.tagline}`}
             >
               <span className="choice-word display">{c.choiceLabel}</span>
-              <AsciiAvatar config={c} state={picked === id ? 'GREETING' : hover === id ? 'REACTING' : 'IDLE'} size={vh} look={hover === id ? (id === 'ash' ? 0.8 : -0.8) : 0} />
+              <InkCharacter config={c} state={picked === id ? 'GREETING' : hover === id ? 'REACTING' : 'IDLE'} height={vh} />
               <span className="choice-meta mono">
                 <b>{c.name}</b> — {c.tagline}
                 {previous === id && <em> · you met last time</em>}
@@ -66,7 +66,7 @@ export function Choice({ onChoose, previous }: { onChoose: (id: CharacterId) => 
       </div>
 
       <footer className="choice-foot mono dim">
-        Both are AI characters with placeholder ASCII faces — not people. You can switch any time. Your pick is remembered on this device only.
+        Both are AI characters, drawn in ink — not people. You can switch any time. Your pick is remembered on this device only.
       </footer>
     </main>
   )

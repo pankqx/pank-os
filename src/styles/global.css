@@ -41,17 +41,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- choice ---------- */
 .choice { position: fixed; inset: 0; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(16px, 3vw, 40px) var(--gutter); gap: 12px; overflow: hidden; }
-.choice-head .display { font-size: clamp(34px, 6.4vw, 96px); max-width: 14ch; margin: 8px 0 14px; }
+.choice-head .display { font-size: clamp(30px, 4.6vw, 72px); max-width: 22ch; margin: 8px 0 10px; }
 .choice-head .mono { font-size: 11px; margin: 0; }
 .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(8px, 2vw, 28px); min-height: 0; transition: grid-template-columns 0.6s var(--ease); }
 .choice[data-picked='ash'] .choice-grid { grid-template-columns: 1fr 0fr; }
 .choice[data-picked='rhea'] .choice-grid { grid-template-columns: 0fr 1fr; }
-.choice-card { position: relative; display: grid; grid-template-rows: 1fr auto; justify-items: center; align-items: end; border: 1px solid var(--faint); overflow: hidden; padding: 0 0 14px; transition: border-color 0.25s, background 0.25s, opacity 0.5s; min-width: 0; background: linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--accent) 7%, transparent)); }
+.choice-card { position: relative; display: grid; grid-template-rows: 1fr auto; justify-items: center; align-items: end; border: 1px solid var(--faint); overflow: hidden; padding: 0 0 14px; cursor: pointer; transition: border-color 0.25s, background 0.25s, opacity 0.5s; min-width: 0; background: linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--accent) 7%, transparent)); }
 .choice-card[data-state='hot'], .choice-card:focus-visible { border-color: var(--accent); background: linear-gradient(180deg, transparent 20%, color-mix(in srgb, var(--accent) 16%, transparent)); }
 .choice-card[data-state='gone'] { opacity: 0; }
 .choice-word { position: absolute; left: 14px; bottom: 44px; font-size: clamp(44px, 9vw, 150px); color: transparent; -webkit-text-stroke: 1.5px var(--accent); z-index: 0; transition: color 0.3s; }
 .choice-card[data-state='hot'] .choice-word, .choice-card[data-state='chosen'] .choice-word { color: var(--accent); }
-.choice-card canvas { z-index: 1; max-width: 100%; }
+.choice-card canvas, .choice-card svg { z-index: 1; max-width: 100%; }
+.choice-card svg { transition: transform 0.6s var(--ease), filter 0.6s; filter: grayscale(0.6) brightness(0.8); transform-origin: bottom; }
+.choice-card[data-state='hot'] svg, .choice-card[data-state='chosen'] svg { filter: none; transform: scale(1.04); }
 .choice-meta { z-index: 1; font-size: 12px; color: var(--dim); padding: 0 12px; text-align: center; }
 .choice-meta b { color: var(--accent); }
 .choice-meta em { color: var(--bone); font-style: normal; }

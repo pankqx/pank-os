@@ -35,7 +35,7 @@ export function Nav({ active, character, onSwitchCharacter, onReplayIntro }: Pro
           ⇄ {characters[other].name}
         </button>
         <button onClick={onReplayIntro}>↺ intro</button>
-        <span className="rail-hint dim">keys 1–5 · ← → in the lab</span>
+        <span className="rail-hint dim">keys 1–6 · ← → in the lab</span>
       </div>
     </nav>
   )

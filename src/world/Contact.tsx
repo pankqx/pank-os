@@ -23,7 +23,7 @@ export function Contact() {
           )}
         </figure>
         <div>
-          <p className="mono dim">CHAPTER V — THE BOUNDARY</p>
+          <p className="mono dim">CHAPTER VI — THE BOUNDARY</p>
           <h2 id="contact-h" className="serif contact-title">That’s the edge of the experiment.</h2>
           <p className="serif lead">Everything beyond this point is just a person with an inbox. Say hello, tell him what’s broken, or ask what the python wanted.</p>
           <ul className="contact-links">
