@@ -5,6 +5,7 @@ import { ErrorBoundary } from '../lib/ErrorBoundary'
 import { Nav } from './Nav'
 import { sections, type SectionId } from './sections'
 import { Prologue } from './Prologue'
+import { FieldGuide } from './FieldGuide'
 import { Lab } from './Lab'
 import { Transmissions } from './Transmissions'
 import { Trophy } from './Trophy'
@@ -70,6 +71,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
       <a className="skip-link" href="#person">Skip to content</a>
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project ? true : undefined}>
+        <FieldGuide />
         <Prologue />
         <Lab />
         <Transmissions />

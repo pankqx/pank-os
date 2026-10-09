@@ -4,11 +4,11 @@ import { projects } from '../content/projects'
 export function Prologue() {
   const real = projects.filter((p) => p.status !== 'concept').length
   return (
-    <section id="person" className="chapter person" aria-labelledby="person-h">
+    <section id="person-notes" className="chapter person" aria-labelledby="person-h">
       <div className="chapter-no display" aria-hidden="true">I</div>
       <div className="person-grid">
         <header className="person-head">
-          <p className="mono dim">CHAPTER I — THE PERSON</p>
+          <p className="mono dim">CHAPTER I — THE PERSON, CONTINUED</p>
           <h2 id="person-h" className="display person-title">
             A human who builds things, then writes down what’s wrong with them.
           </h2>

@@ -6,6 +6,7 @@ import '@fontsource-variable/archivo'
 import '@fontsource-variable/jetbrains-mono'
 import './styles/global.css'
 import './styles/world.css'
+import './styles/story.css'
 import { FxProvider } from './lib/fx'
 import { App } from './App'
 
