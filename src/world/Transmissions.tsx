@@ -1,0 +1,81 @@
+import { useState, type FormEvent } from 'react'
+import { posts, unfinished } from '../content/posts'
+
+const ENDPOINT = import.meta.env.VITE_NEWSLETTER_ENDPOINT as string | undefined
+const cats = ['All', 'Engineering', 'Design', 'Experiment', 'Note'] as const
+
+export function Transmissions() {
+  const [cat, setCat] = useState<(typeof cats)[number]>('All')
+  const [open, setOpen] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
+  const [msg, setMsg] = useState('')
+  const list = posts.filter((p) => p.status !== 'draft' && (cat === 'All' || p.category === cat))
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault()
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return setMsg('That doesn’t look like an email address.')
+    if (!ENDPOINT) return setMsg('The newsletter isn’t connected yet. Nothing was sent or stored.')
+    try {
+      const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) })
+      setMsg(r.ok ? 'Subscribed. (Check your inbox for a confirmation if the provider sends one.)' : `The provider answered ${r.status}. Not subscribed.`)
+    } catch {
+      setMsg('Network error — not subscribed. Try again later.')
+    }
+  }
+
+  return (
+    <section id="transmissions" className="chapter trans" aria-labelledby="trans-h">
+      <header>
+        <p className="mono dim">CHAPTER III — TRANSMISSIONS</p>
+        <h2 id="trans-h" className="display">Signals from inside the experiment.</h2>
+        <p className="serif lead">Notes, experiments and things worth revisiting. Nothing has been published here yet — the entries below are labelled layout samples.</p>
+      </header>
+
+      <div className="trans-grid">
+        <div>
+          <div className="filters mono" role="group" aria-label="Filter by category">
+            {cats.map((c) => (
+              <button key={c} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
+            ))}
+          </div>
+          <ol className="posts">
+            {list.map((p) => (
+              <li key={p.slug} data-open={open === p.slug}>
+                <button className="post-row" aria-expanded={open === p.slug} onClick={() => setOpen(open === p.slug ? null : p.slug)}>
+                  <time className="mono dim" dateTime={p.date}>{p.date}</time>
+                  <span className="serif post-title">{p.title}</span>
+                  <span className="mono dim">{p.category}</span>
+                  {p.status === 'sample' && <span className="ribbon mono">SAMPLE</span>}
+                </button>
+                <div className="post-body" hidden={open !== p.slug}>
+                  <p className="serif">{p.excerpt}</p>
+                  {p.body.map((b) => <p key={b} className="mono dim">{b}</p>)}
+                  {p.project && <a className="mono" href={`#lab/${p.project}`}>→ related project</a>}
+                </div>
+              </li>
+            ))}
+            {!list.length && <li className="mono dim">Nothing in this category yet.</li>}
+          </ol>
+        </div>
+
+        <aside className="unfinished" aria-labelledby="unf-h">
+          <h3 id="unf-h" className="mono">THINGS NOT FINISHED</h3>
+          <ul>
+            {unfinished.map((u) => (
+              <li key={u.title}><span className="serif">{u.title}</span><span className="mono dim"> — {u.note}</span></li>
+            ))}
+          </ul>
+
+          <form className="news" onSubmit={submit} noValidate>
+            <label htmlFor="nl" className="mono">NEWSLETTER</label>
+            <div>
+              <input id="nl" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <button className="mono" type="submit">{ENDPOINT ? 'subscribe' : 'try it'}</button>
+            </div>
+            <p className="mono dim sm" role="status">{msg || (ENDPOINT ? 'Your address goes to the configured provider and nowhere else.' : 'No provider is configured, so this form stores nothing.')}</p>
+          </form>
+        </aside>
+      </div>
+    </section>
+  )
+}
