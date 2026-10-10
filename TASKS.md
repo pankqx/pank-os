@@ -53,6 +53,12 @@ Legend: ✅ done and checked · 🟡 done, partly verified · ⬜ not started ·
 - ✅ Yellow line is now a small worm crawling/hopping through empty space as you scroll
 - ⛔ Repo rename PythonDSA → prontopy must be done by the owner in GitHub settings
 
+## v5 (2026-10-10)
+- ✅ Trophy room removed (and three.js with it)
+- ✅ HIM/HER choice page restored; loading animation unchanged
+- ✅ New opener "One line": a pinned horizontal film where one glowing yellow line draws a clapperboard, an idea graph, a crashing chart, a chess knight, a laptop and a P
+- ✅ Yellow worm: always visible outside the big blocks, sways when idle, wriggles and sheds sparks when you scroll
+
 ## Partly verified
 - 🟡 Visual QA: headless Chromium at 1440×900, 1200×800 and 390×844; opening, choice, all chapters, dossier, deep link, companion chat, keyboard (Enter/arrows/1–5/strip), reduced motion, WebGL trophy room and its fallback; console clean. Not tested on real phones, Safari or Firefox.
 - 🟡 Voice: code written, **not exercised** (headless browser has no mic/speech).

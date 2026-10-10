@@ -11,7 +11,7 @@ export function Contact() {
           <figcaption className="mono dim">everything I do, orbiting one idea: build it</figcaption>
         </figure>
         <div>
-          <p className="mono dim">CHAPTER VI — THE BOUNDARY</p>
+          <p className="mono dim">CHAPTER V — THE BOUNDARY</p>
           <h2 id="contact-h" className="serif contact-title">That’s me. Say hi.</h2>
           <p className="serif lead">I’m open to internships, collaborations and strange ideas. Tell me what you’re building, what’s broken, or what the python wanted.</p>
           <ul className="contact-links">

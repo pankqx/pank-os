@@ -8,7 +8,7 @@ import { ErrorBoundary } from '../lib/ErrorBoundary'
 import { Nav } from './Nav'
 import { sections, type SectionId } from './sections'
 import { Prologue } from './Prologue'
-import { StopMotion } from './StopMotion'
+import { OneLine } from './OneLine'
 import { ProntoPy } from './ProntoPy'
 import { PostPage } from './PostPage'
 import { posts } from '../content/posts'
@@ -18,7 +18,6 @@ import { Cursor } from '../fx/Cursor'
 import { useReveal } from '../fx/useReveal'
 import { Lab } from './Lab'
 import { Transmissions } from './Transmissions'
-import { Trophy } from './Trophy'
 import { Contact } from './Contact'
 import { ProjectPage } from './ProjectPage'
 import { projectBySlug } from '../content/projects'
@@ -98,7 +97,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project || post ? true : undefined}>
         <YellowLine />
-        <StopMotion />
+        <OneLine />
         <Prologue />
         <Marquee text="midnight dramas ✦ ice cream ✦ beaches ✦ love ✦ experiments ✦ noise ✦" />
         <ProntoPy />
@@ -106,8 +105,6 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
         <Lab />
         <Marquee text="rizz ✦ sense of humour ✦ idgaf ✦ midnight dramas ✦" />
         <Transmissions />
-        <Marquee text="royal trophy loading ✦ evidence required ✦" tape />
-        <Trophy />
         <Marquee text="someone else is here ✦ someone else is here ✦" reverse />
         <Finale conv={conv} onSwitch={() => onSwitchCharacter(other)} />
         <Contact />

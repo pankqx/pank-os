@@ -19,6 +19,7 @@ export function YellowLine({ targetSelector = '.world' }: { targetSelector?: str
   const body = useRef<SVGPathElement>(null)
   const glow = useRef<SVGPathElement>(null)
   const head = useRef<SVGGElement>(null)
+  const sparks = useRef<SVGGElement>(null)
   const { level } = useFx()
 
   useEffect(() => {
@@ -80,14 +81,16 @@ export function YellowLine({ targetSelector = '.world' }: { targetSelector?: str
     let rt = 0
     ro.observe(host)
 
-    let cur = 0, vis = 0
-    const WORM = 150
+    let cur = 0, vis = 0, sparkI = 0
+    const WORM = 190
     const off = onFrame((now) => {
       if (!len) return
       const top = host.getBoundingClientRect().top + scrollY
       const target = clamp((scrollY + innerHeight * 0.62 - top) / host.scrollHeight) * len
-      cur += (target - cur) * 0.06 // crawl, don't teleport
-      const wig = Math.sin(now / 140) * 6
+      const vel = (target - cur) * 0.07
+      cur += vel // crawl, don't teleport
+      const speed = Math.min(1, Math.abs(vel) / 25)
+      const wig = Math.sin(now / 120) * (8 + speed * 18) + Math.sin(now / 900) * 22 // idle sway + excited wriggle
       const pos = Math.max(0, cur + wig)
       const dash = `${WORM} ${len + WORM}`
       for (const el of [body.current!, glow.current!]) { el.style.strokeDasharray = dash; el.style.strokeDashoffset = String(-(pos - WORM)) }
@@ -95,9 +98,19 @@ export function YellowLine({ targetSelector = '.world' }: { targetSelector?: str
       const q = path.current!.getPointAtLength(Math.max(0, pos - 6))
       const ang = Math.atan2(p.y - q.y, p.x - q.x) * 180 / Math.PI
       head.current!.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${ang})`)
-      const hide = inside(p.x, p.y, blocks) || inside(p.x, p.y, occupied)
+      const hide = inside(p.x, p.y, blocks)
       vis += ((hide ? 0 : 1) - vis) * 0.15
       svg.current!.style.opacity = vis.toFixed(3)
+      // sparks shed while it moves
+      const sp = sparks.current!.children
+      if (speed > 0.08 && Math.random() < speed) {
+        const c = sp[sparkI++ % sp.length] as SVGCircleElement
+        c.setAttribute('cx', String(p.x + (Math.random() - 0.5) * 16)); c.setAttribute('cy', String(p.y + (Math.random() - 0.5) * 16))
+        c.style.transition = 'none'; c.style.opacity = '1'; c.style.transform = 'translate(0,0)'
+        void c.getBoundingClientRect()
+        c.style.transition = 'opacity 0.9s, transform 0.9s'; c.style.opacity = '0'; c.style.transform = `translate(${(Math.random() - 0.5) * 40}px, ${20 + Math.random() * 30}px)`
+      }
+      head.current!.querySelector('.yl-tongue')?.setAttribute('opacity', Math.sin(now / 90) > 0.2 ? '1' : '0')
     })
     return () => { off(); ro.disconnect(); clearTimeout(t); clearTimeout(rt) }
   }, [targetSelector, level])
@@ -108,6 +121,7 @@ export function YellowLine({ targetSelector = '.world' }: { targetSelector?: str
       <path ref={path} fill="none" stroke="none" />
       <path ref={glow} className="yl-glow" />
       <path ref={body} className="yl-body" />
+      <g ref={sparks}>{Array.from({ length: 14 }, (_, i) => <circle key={i} r={2 + (i % 3)} className="yl-spark" style={{ opacity: 0 }} />)}</g>
       <g ref={head} className="yl-head">
         <ellipse cx="2" cy="0" rx="9" ry="6.5" />
         <circle cx="5" cy="-3" r="1.6" className="yl-eye" /><circle cx="5" cy="3" r="1.6" className="yl-eye" />
