@@ -28,7 +28,7 @@ export function Transmissions() {
       <header>
         <p className="mono dim">CHAPTER III — TRANSMISSIONS</p>
         <h2 id="trans-h" className="display">Signals from inside the experiment.</h2>
-        <p className="serif lead">Stories, lessons and things I got wrong in public. Click one — each opens as its own photo essay.</p>
+        <p className="serif lead">Stories, lessons and things I got wrong in public. Every one opens as its own photo essay.</p>
       </header>
 
       <div className="trans-grid">
@@ -52,13 +52,14 @@ export function Transmissions() {
           </ol>
         </div>
 
-        <aside className="unfinished" aria-labelledby="unf-h">
+        <details className="unfinished backstage">
+          <summary className="mono">BACKSTAGE — rejected titles, unfinished things, newsletter</summary>
           <div className="rejected">
             <h3 className="mono">REJECTED TITLES <span className="dim">(humour)</span></h3>
             <ul>{rejectedTitles.map((t) => <li key={t} className="serif"><s>{t}</s></li>)}</ul>
             <p className="mono blockstatus">status: writer’s block detected — retrying in <span className="count" aria-hidden="true" /></p>
           </div>
-          <h3 id="unf-h" className="mono">THINGS NOT FINISHED</h3>
+          <h3 className="mono">THINGS NOT FINISHED</h3>
           <ul>
             {unfinished.map((u) => <li key={u.title}><span className="serif">{u.title}</span><span className="mono dim"> — {u.note}</span></li>)}
           </ul>
@@ -70,7 +71,7 @@ export function Transmissions() {
             </div>
             <p className="mono dim sm" role="status">{msg || (ENDPOINT ? 'Your address goes to the configured provider and nowhere else.' : 'No provider is configured, so this form stores nothing.')}</p>
           </form>
-        </aside>
+        </details>
       </div>
     </section>
   )

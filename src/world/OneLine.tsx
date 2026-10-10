@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { HorizontalScene, useSceneProgress } from '../fx/HorizontalScene'
 import { clamp } from '../fx/ticker'
 import { useFx } from '../lib/fx'
+import { characters, type CharacterId } from '../content/characters'
+import { InkCharacter } from '../character/InkCharacter'
 
 /**
  * "One line." — the opening chapter. A single glowing yellow line runs through a horizontal film:
@@ -47,32 +49,13 @@ const PANELS: Panel[] = [
     ),
   },
   {
-    word: 'CRASH', kicker: '03 — A LESSON', title: 'It becomes a chart.', sub: 'I traded. It went up. Then my feelings started placing the orders.',
-    d: 'M0 620 L470 620 L520 600 L560 612 L600 562 L640 574 L680 502 L720 522 L760 432 L790 396 L800 410 L830 700 L850 668 L880 712 L900 690 L1000 620',
-    extras: (k) => (
-      <g opacity={k > 0.85 ? 1 : 0} className="ol-fade">
-        <text x="740" y="370" className="ol-label">“I’m a genius.”</text>
-        <text x="760" y="760" className="ol-label red">feelings.exe</text>
-      </g>
-    ),
-  },
-  {
-    word: 'CHECK', kicker: '04 — NOW', title: 'It becomes a knight.', sub: 'So now I play chess instead. I sacrifice the queen. On purpose. Mostly.',
-    d: 'M0 620 C260 620 420 720 570 720 L870 720 L870 690 L840 680 L820 640 L800 560 C790 500 820 460 840 420 C850 390 830 360 790 350 L770 318 L750 352 C700 350 640 390 610 440 L560 500 L575 530 L620 520 C650 520 680 500 700 510 C680 560 640 600 640 660 L620 680 L600 690 L570 690 L570 720 C700 820 900 760 1000 620',
-    extras: (k) => <circle cx="690" cy="430" r="9" className="ol-dot" opacity={k > 0.85 ? 1 : 0} />,
-  },
-  {
-    word: 'BUILD', kicker: '05 — ALWAYS', title: 'It becomes a product.', sub: 'Websites that feel like places. Digital products people open twice.',
-    d: 'M0 620 C260 620 400 690 520 680 L900 680 L860 640 L560 640 L520 680 L560 640 L560 420 L860 420 L860 640 L680 470 L640 530 L680 590 L720 600 L760 460 L800 470 L840 530 L800 590 C860 700 940 680 1000 620',
-  },
-  {
-    word: 'INSIDE', kicker: '06 — HELLO', title: 'It becomes me.', sub: 'Okay, enough showing off. Let me show you the inside ↓',
+    word: 'INSIDE', kicker: '06 — HELLO', title: 'It becomes me.', sub: 'Okay, enough showing off. Come inside.',
     d: 'M0 620 C220 620 400 760 520 760 L520 360 C760 340 800 380 800 460 C800 560 700 580 520 570',
     extras: (k) => <g opacity={k > 0.95 ? 1 : 0} className="ol-fade"><circle cx="520" cy="570" r="12" className="ol-dot spark" /><text x="830" y="520" className="ol-label">P, for Pankaj.</text></g>,
   },
 ]
 
-function PanelArt({ i, panel }: { i: number; panel: Panel }) {
+function PanelArt({ i, panel, character }: { i: number; panel: Panel; character: CharacterId }) {
   const path = useRef<SVGPathElement>(null)
   const glow = useRef<SVGPathElement>(null)
   const head = useRef<SVGGElement>(null)
@@ -124,12 +107,16 @@ function PanelArt({ i, panel }: { i: number; panel: Panel }) {
 
   return (
     <div className="ol-panel" ref={wrap}>
-      <span className="ol-word display" data-speed={i % 2 ? '-0.08' : '0.1'} aria-hidden="true">{panel.word}</span>
       <div className="ol-copy">
-        <p className="mono ol-kicker">{panel.kicker}</p>
         <h3 className="display ol-title">{panel.title}</h3>
         <p className="serif ol-sub"><span>{panel.sub}</span></p>
       </div>
+      {i === PANELS.length - 1 && (
+        <div className="ol-guide">
+          <p className="serif ol-bubble">“Hi, I’m {characters[character].name}. I live in here. Follow me — I’ll do the talking, he’ll do the building.”</p>
+          <InkCharacter config={characters[character]} state="GREETING" height="74vh" label={`${characters[character].name}, an AI character`} />
+        </div>
+      )}
       <svg className="ol-svg" viewBox={narrow ? '420 280 560 560' : '0 0 1000 1000'} preserveAspectRatio={narrow ? 'xMidYMid meet' : 'xMidYMid slice'} aria-hidden="true">
         <path ref={glow} d={panel.d} pathLength={1} className="ol-glow" />
         <path ref={path} d={panel.d} pathLength={1} className="ol-path" />
@@ -152,15 +139,15 @@ function Progress() {
     <div className="ol-progress mono" aria-hidden="true">
       <span ref={num}>00</span> / {String(PANELS.length - 1).padStart(2, '0')}
       <i><b ref={bar} /></i>
-      <em>scroll ↓ — the line goes sideways</em>
+      <em>keep scrolling</em>
     </div>
   )
 }
 
-export function OneLine() {
+export function OneLine({ character = 'roman' }: { character?: CharacterId }) {
   return (
     <HorizontalScene id="person" label="Chapter I: one line that becomes everything I make" className="oneline" overlay={<Progress />} tail={0.1}>
-      {PANELS.map((p, i) => <PanelArt key={p.word} i={i} panel={p} />)}
+      {PANELS.map((p, i) => <PanelArt key={p.word} i={i} panel={p} character={character} />)}
     </HorizontalScene>
   )
 }
