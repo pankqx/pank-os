@@ -5,7 +5,7 @@ import { CharacterStage } from '../companion/CharacterStage'
 import type { Conversation } from '../companion/useConversation'
 import { clamp, smooth } from '../fx/ticker'
 import { useFx } from '../lib/fx'
-import { Electric } from '../fx/Electric'
+import { NeuronField } from '../fx/NeuronField'
 
 const GLYPHS = '01#%@*+=-:.<>/\\'
 
@@ -104,6 +104,7 @@ function Arrival({ conv, onSwitch }: { conv: Conversation; onSwitch: () => void 
 
   return (
     <div className="fin-arrival" ref={frame}>
+      <NeuronField brain={figure} accent={conv.cfg.accent} />
       <canvas ref={canvas} className="fin-canvas" aria-hidden="true" />
       <div className="fin-lines serif" ref={lines} aria-hidden="true">
         <p>Oh — you scrolled all the way.</p>
@@ -111,8 +112,9 @@ function Arrival({ conv, onSwitch }: { conv: Conversation; onSwitch: () => void 
         <p>I’m {conv.cfg.name}. An AI, not a person — but I read every repo.</p>
       </div>
       <div className="fin-figure" ref={figure}>
+        <span className="stage-ghost display" aria-hidden="true">{conv.cfg.name}</span>
         <InkCharacter ref={ink} config={conv.cfg} state={conv.state} height="92vh" label={`${conv.cfg.name}, an AI character, full height`} />
-        <Electric bolts={4} />
+        <span className="nameplate mono">THIS IS <b>{conv.cfg.name.toUpperCase()}</b> · AI GUIDE</span>
       </div>
       <div className="fin-chat" ref={chat}>
         <CharacterStage conv={conv} mode="inline" onSwitch={onSwitch} hideCharacter />

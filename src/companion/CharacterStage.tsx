@@ -6,10 +6,11 @@ import { activeProviderLabel } from './provider'
 import { sttSupported, ttsSupported } from './voice'
 import { clearMemory } from './memory'
 import { FireBackdrop } from '../fx/FireBackdrop'
-import { Electric } from '../fx/Electric'
+import { NeuronField } from '../fx/NeuronField'
+import { BaitCard } from './BaitCard'
 import { Fireworks, type FireworksHandle } from '../fx/Fireworks'
 
-const SUGGEST = ['What has he built?', 'Tell me about EventZee', 'Has he won anything?', 'Is Flow & Magic real?', 'How do I contact him?']
+const SUGGEST = ['Wanna know Pankaj’s GF? 👀', 'What has he built?', 'Explain ProntoPy simply', 'Why did he quit trading?', 'Has he won anything?', 'How do I contact him?']
 
 /** Typewriter for the speech bubble (instant with reduced motion). */
 function useTyped(text: string) {
@@ -74,6 +75,7 @@ export function CharacterStage({ conv, mode, onClose, onSwitch, hideCharacter }:
           {lastBot?.link && state !== 'THINKING' && <a className="mono" href={lastBot.link} onClick={onClose}>→ show me</a>}
         </div>
         {conv.note && <p className="note mono" role="status">{conv.note}</p>}
+        {lastBot?.bait && state !== 'THINKING' && <BaitCard />}
 
         <div className="suggest mono">
           {SUGGEST.map((s) => <button key={s} onClick={() => conv.send(s)} disabled={state === 'THINKING'}>{s}</button>)}
@@ -106,11 +108,12 @@ export function CharacterStage({ conv, mode, onClose, onSwitch, hideCharacter }:
       </div>
       {!hideCharacter && (
         <>
-          <div className="stage-bg" aria-hidden="true"><FireBackdrop intensity={0.7} focus={[0.36, 0.5]} seed={cfg.id === 'reenu' ? 7 : 3} /></div>
+          <div className="stage-bg" aria-hidden="true"><FireBackdrop intensity={0.55} focus={[0.36, 0.5]} seed={cfg.id === 'reenu' ? 7 : 3} /><NeuronField brain={figRef} accent={cfg.accent} /></div>
           <Fireworks ref={fw} />
           <button ref={figRef} className="stage-figure" onClick={(e) => { conv.poke(); const r = e.currentTarget.getBoundingClientRect(); fw.current?.burst(e.clientX || r.left + r.width / 2, e.clientY || r.top + r.height / 3, true) }} aria-label={`Poke ${cfg.name}`} tabIndex={-1}>
+            <span className="stage-ghost display" aria-hidden="true">{cfg.name}</span>
             <InkCharacter config={cfg} state={state} height={mode === 'overlay' ? '94vh' : '88vh'} />
-            <Electric bolts={5} />
+            <span className="nameplate mono">THIS IS <b>{cfg.name.toUpperCase()}</b> · AI GUIDE · poke me</span>
           </button>
         </>
       )}

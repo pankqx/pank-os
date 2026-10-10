@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Finale } from './Finale'
+import { GfPrompt } from './GfPrompt'
 import { useConversation } from '../companion/useConversation'
 import type { CharacterId } from '../content/characters'
 import { useHash } from '../lib/useHash'
@@ -93,6 +94,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
     <>
       <a className="skip-link" href="#person">Skip to content</a>
       <Cursor />
+      <GfPrompt />
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project || post ? true : undefined}>
         <YellowLine />

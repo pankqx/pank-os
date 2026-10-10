@@ -5,7 +5,7 @@ import { getReply, type ChatMessage } from './provider'
 import { clearMemory, hasConsent, loadMemory, saveMemory, setConsent } from './memory'
 import { listen, speak, stopSpeaking } from './voice'
 
-export interface Line extends ChatMessage { link?: string }
+export interface Line extends ChatMessage { link?: string; bait?: boolean }
 
 /** All conversation logic in one place, shared by the overlay and the finale stage. */
 export function useConversation(character: CharacterId) {
@@ -61,7 +61,7 @@ export function useConversation(character: CharacterId) {
     try {
       const r = await getReply(history, cfg, ac.signal)
       clearTimeout(to)
-      setLines([...history, { role: 'assistant', text: r.text, link: r.link }])
+      setLines([...history, { role: 'assistant', text: r.text, link: r.link, bait: r.bait }])
       if (r.fellBack) setNote('The hosted model was unreachable, so the built-in script answered.')
       fire('REPLY_READY')
       say(r.text)

@@ -23,6 +23,10 @@ export const profile = {
   ],
 } as const
 
+/** WhatsApp number (from the résumé) used by the "wanna know his GF?" bit — visitors message Pankaj themselves. */
+export const whatsapp = '918550855771'
+export const instagram = '' // e.g. 'pankqx' — leave empty to hide the Instagram option
+
 export const links = [
   { label: 'Email', href: 'mailto:pankqx@gmail.com', handle: 'pankqx@gmail.com' },
   { label: 'GitHub', href: 'https://github.com/pankqx', handle: 'github.com/pankqx' },
