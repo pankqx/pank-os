@@ -21,7 +21,7 @@ const node = (x: number, y: number, r: number) => `L${x - r} ${y} a${r} ${r} 0 1
 
 const PANELS: Panel[] = [
   {
-    word: 'LINE', kicker: '00 — PROLOGUE', title: 'One line.', sub: 'Everything I make starts the same way — with a single line.',
+    word: 'LINE', kicker: '00 — PROLOGUE', title: 'I wasn’t trying to build a portfolio.', sub: 'I was trying to understand what I could become.',
     d: 'M0 620 L330 620 L370 560 L410 700 L450 580 L480 620 L560 620 L640 520 L730 600 L640 680 L780 690 L900 690 L900 640 L1000 620',
   },
   {
@@ -52,6 +52,12 @@ const PANELS: Panel[] = [
     extras: (k) => <g opacity={k > 0.95 ? 1 : 0} className="ol-fade"><circle cx="520" cy="570" r="12" className="ol-dot spark" /><text x="830" y="520" className="ol-label">P, for Pankaj.</text></g>,
   },
 ]
+
+/** word-by-word reveal with uneven, thinking-out-loud pacing */
+const PACE = [0, 0.32, 0.5, 1.0, 1.18, 1.62, 1.8, 2.7, 2.9, 3.05, 3.35, 3.5, 3.7, 3.85, 4.1]
+function words(text: string, from: number) {
+  return text.split(' ').map((w, n) => <span key={n} className="mw" aria-hidden="true" style={{ animationDelay: `${0.5 + (PACE[from + n] ?? (from + n) * 0.3)}s` }}>{w}</span>)
+}
 
 function PanelArt({ i, panel }: { i: number; panel: Panel }) {
   const path = useRef<SVGPathElement>(null)
@@ -106,8 +112,12 @@ function PanelArt({ i, panel }: { i: number; panel: Panel }) {
   return (
     <div className="ol-panel" ref={wrap}>
       <div className="ol-copy">
-        <h3 className="display ol-title">{panel.title}</h3>
-        <p className="serif ol-sub"><span>{panel.sub}</span></p>
+        {i === 0 && <p className="mono ol-marker">MANUSCRIPT_001 / UNSAVED THOUGHT<b className="caret" /></p>}
+        {i === 0
+          ? <h3 className="serif ol-title ol-thought" aria-label={panel.title}>{words(panel.title, 0)}</h3>
+          : <h3 className="display ol-title">{panel.title}</h3>}
+        <p className="serif ol-sub">{i === 0 ? <span aria-label={panel.sub}>{words(panel.sub, 7)}</span> : <span>{panel.sub}</span>}</p>
+        {i === PANELS.length - 1 && <p className="mono ol-anno">SUBJECT: HUMAN · DISCIPLINE: EXPERIMENTATION · STATUS: STILL BECOMING</p>}
       </div>
       <svg className="ol-svg" viewBox={narrow ? '420 280 560 560' : '0 0 1000 1000'} preserveAspectRatio={narrow ? 'xMidYMid meet' : 'xMidYMid slice'} aria-hidden="true">
         <path ref={glow} d={panel.d} pathLength={1} className="ol-glow" />

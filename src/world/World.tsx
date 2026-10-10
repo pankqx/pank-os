@@ -12,6 +12,7 @@ import { ProntoPy } from './ProntoPy'
 import { PostPage } from './PostPage'
 import { posts } from '../content/posts'
 import { ScrollLife } from '../fx/ScrollLife'
+import { PowerPipe } from '../fx/PowerPipe'
 import { Marquee } from '../fx/Marquee'
 import { Cursor } from '../fx/Cursor'
 import { useReveal } from '../fx/useReveal'
@@ -95,6 +96,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project || post ? true : undefined}>
         <ScrollLife />
+        <PowerPipe />
         <OneLine />
         <Prologue />
         <ProntoPy />

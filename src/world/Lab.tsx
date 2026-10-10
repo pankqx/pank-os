@@ -84,11 +84,8 @@ export function Lab() {
         <div className="strip-bar mono">
           <button className="orb-prev" onClick={() => by(-1)} aria-label="Previous artifact">←</button>
           <span className="dim strip-hint">click any card to open it · drag the python below · ← → keys</span>
-          <button className="orb" onClick={() => by(1)} aria-label="Next artifact">
-            <span className="rock" aria-hidden="true"><i /><i /><i /></span>
-            <span className="orb-text">next</span>
-          </button>
         </div>
+        <div className="strip-row">
         <div className="strip" ref={strip} tabIndex={0} role="region" aria-label="Project artifacts, scrolls horizontally">
           {featured.map((p, i) => (
             <article key={p.slug} className="artifact" data-art={p.art} style={{ ['--n' as string]: i }} role="link" tabIndex={0} aria-label={`${p.name} — open the full story`}
@@ -123,6 +120,11 @@ export function Lab() {
               <a className="open mono" href="https://github.com/pankqx" target="_blank" rel="noreferrer">everything on GitHub ↗</a>
             </div>
           </article>
+        </div>
+          <button className="orb" onClick={() => by(1)} aria-label="Next artifact">
+            <span className="rock" aria-hidden="true"><i /><i /><i /></span>
+            <span className="orb-text">next</span>
+          </button>
         </div>
         <SnakeScroller strip={strip} to={to} count={featured.length + 1} labels={[...featured.map((p) => p.name), 'Archive']} />
       </div>
