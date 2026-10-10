@@ -21,7 +21,7 @@ const node = (x: number, y: number, r: number) => `L${x - r} ${y} a${r} ${r} 0 1
 
 const PANELS: Panel[] = [
   {
-    word: 'LINE', kicker: '00 — PROLOGUE', title: 'I wasn’t trying to build a portfolio.', sub: 'I was trying to understand what I could become.',
+    word: 'LINE', kicker: '00 — PROLOGUE', title: 'One line.', sub: 'Everything I make starts the same way — with a single line.',
     d: 'M0 620 L330 620 L370 560 L410 700 L450 580 L480 620 L560 620 L640 520 L730 600 L640 680 L780 690 L900 690 L900 640 L1000 620',
   },
   {
@@ -47,17 +47,30 @@ const PANELS: Panel[] = [
     ),
   },
   {
-    word: 'INSIDE', kicker: '06 — HELLO', title: 'It becomes me.', sub: 'Okay, enough showing off. Come inside.',
+    word: 'CRASH', kicker: '03 — A LESSON', title: 'It becomes a chart.', sub: 'I traded. It went up. Then my feelings started placing the orders.',
+    d: 'M0 620 L470 620 L520 600 L560 612 L600 562 L640 574 L680 502 L720 522 L760 432 L790 396 L800 410 L830 700 L850 668 L880 712 L900 690 L1000 620',
+    extras: (k) => (
+      <g opacity={k > 0.85 ? 1 : 0} className="ol-fade">
+        <text x="740" y="370" className="ol-label">“I’m a genius.”</text>
+        <text x="760" y="760" className="ol-label red">feelings.exe</text>
+      </g>
+    ),
+  },
+  {
+    word: 'CHECK', kicker: '04 — NOW', title: 'It becomes a knight.', sub: 'So now I play chess instead. I sacrifice the queen. On purpose. Mostly.',
+    d: 'M0 620 C260 620 420 720 570 720 L870 720 L870 690 L840 680 L820 640 L800 560 C790 500 820 460 840 420 C850 390 830 360 790 350 L770 318 L750 352 C700 350 640 390 610 440 L560 500 L575 530 L620 520 C650 520 680 500 700 510 C680 560 640 600 640 660 L620 680 L600 690 L570 690 L570 720 C700 820 900 760 1000 620',
+    extras: (k) => <circle cx="690" cy="430" r="9" className="ol-dot" opacity={k > 0.85 ? 1 : 0} />,
+  },
+  {
+    word: 'BUILD', kicker: '05 — ALWAYS', title: 'It becomes a product.', sub: 'Websites that feel like places. Digital products people open twice.',
+    d: 'M0 620 C260 620 400 690 520 680 L900 680 L860 640 L560 640 L520 680 L560 640 L560 420 L860 420 L860 640 L680 470 L640 530 L680 590 L720 600 L760 460 L800 470 L840 530 L800 590 C860 700 940 680 1000 620',
+  },
+  {
+    word: 'INSIDE', kicker: '06 — HELLO', title: 'It becomes me.', sub: 'Okay, enough showing off. Let me show you the inside ↓',
     d: 'M0 620 C220 620 400 760 520 760 L520 360 C760 340 800 380 800 460 C800 560 700 580 520 570',
     extras: (k) => <g opacity={k > 0.95 ? 1 : 0} className="ol-fade"><circle cx="520" cy="570" r="12" className="ol-dot spark" /><text x="830" y="520" className="ol-label">P, for Pankaj.</text></g>,
   },
 ]
-
-/** word-by-word reveal with uneven, thinking-out-loud pacing */
-const PACE = [0, 0.32, 0.5, 1.0, 1.18, 1.62, 1.8, 2.7, 2.9, 3.05, 3.35, 3.5, 3.7, 3.85, 4.1]
-function words(text: string, from: number) {
-  return text.split(' ').map((w, n) => <span key={n} className="mw" aria-hidden="true" style={{ animationDelay: `${0.5 + (PACE[from + n] ?? (from + n) * 0.3)}s` }}>{w}</span>)
-}
 
 function PanelArt({ i, panel }: { i: number; panel: Panel }) {
   const path = useRef<SVGPathElement>(null)
@@ -111,13 +124,11 @@ function PanelArt({ i, panel }: { i: number; panel: Panel }) {
 
   return (
     <div className="ol-panel" ref={wrap}>
+      <span className="ol-word display" data-speed={i % 2 ? '-0.08' : '0.1'} aria-hidden="true">{panel.word}</span>
       <div className="ol-copy">
-        {i === 0 && <p className="mono ol-marker">MANUSCRIPT_001 / UNSAVED THOUGHT<b className="caret" /></p>}
-        {i === 0
-          ? <h3 className="serif ol-title ol-thought" aria-label={panel.title}>{words(panel.title, 0)}</h3>
-          : <h3 className="display ol-title">{panel.title}</h3>}
-        <p className="serif ol-sub">{i === 0 ? <span aria-label={panel.sub}>{words(panel.sub, 7)}</span> : <span>{panel.sub}</span>}</p>
-        {i === PANELS.length - 1 && <p className="mono ol-anno">SUBJECT: HUMAN · DISCIPLINE: EXPERIMENTATION · STATUS: STILL BECOMING</p>}
+        <p className="mono ol-kicker">{panel.kicker}</p>
+        <h3 className="display ol-title">{panel.title}</h3>
+        <p className="serif ol-sub"><span>{panel.sub}</span></p>
       </div>
       <svg className="ol-svg" viewBox={narrow ? '420 280 560 560' : '0 0 1000 1000'} preserveAspectRatio={narrow ? 'xMidYMid meet' : 'xMidYMid slice'} aria-hidden="true">
         <path ref={glow} d={panel.d} pathLength={1} className="ol-glow" />
@@ -141,7 +152,7 @@ function Progress() {
     <div className="ol-progress mono" aria-hidden="true">
       <span ref={num}>00</span> / {String(PANELS.length - 1).padStart(2, '0')}
       <i><b ref={bar} /></i>
-      <em>keep scrolling</em>
+      <em>scroll ↓ — the line goes sideways</em>
     </div>
   )
 }
