@@ -53,7 +53,6 @@
 
 /* ===== yellow line ===== */
 .world { position: relative; overflow-x: clip; }
-.yellow-wire { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 6; mix-blend-mode: screen; }
 .world > section, .world > .marquee { position: relative; z-index: 1; }
 .chapter { background: transparent; }
 
@@ -474,3 +473,10 @@
   .ol-progress { left: var(--gutter); bottom: 72px; }
   .ol-progress em { display: none; }
 }
+
+/* calm scroll life */
+.scroll-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--yellow); transform-origin: left; transform: scaleX(0); z-index: 60; pointer-events: none; opacity: 0.85; }
+.rv { opacity: 0; transform: translateY(26px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.rv.in { opacity: 1; transform: none; }
+.artifact.rv, .artifact.rv.in { transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }

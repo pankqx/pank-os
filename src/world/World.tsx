@@ -12,7 +12,7 @@ import { OneLine } from './OneLine'
 import { ProntoPy } from './ProntoPy'
 import { PostPage } from './PostPage'
 import { posts } from '../content/posts'
-import { YellowWire } from '../fx/YellowWire'
+import { ScrollLife } from '../fx/ScrollLife'
 import { Marquee } from '../fx/Marquee'
 import { Cursor } from '../fx/Cursor'
 import { useReveal } from '../fx/useReveal'
@@ -96,7 +96,7 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
       <GfPrompt />
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project || post ? true : undefined}>
-        <YellowWire />
+        <ScrollLife />
         <OneLine />
         <Prologue />
         <Marquee text="midnight dramas ✦ ice cream ✦ beaches ✦ love ✦ experiments ✦ noise ✦" />
