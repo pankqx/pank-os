@@ -10,7 +10,7 @@ import { NeuronField } from '../fx/NeuronField'
 import { BaitCard } from './BaitCard'
 import { Fireworks, type FireworksHandle } from '../fx/Fireworks'
 
-const SUGGEST = ['Wanna know Pankaj’s GF? 👀', 'What has he built?', 'Explain ProntoPy simply', 'Why did he quit trading?', 'Has he won anything?', 'How do I contact him?']
+const SUGGEST = ['What has he built?', 'Explain ProntoPy simply', 'Why did he quit trading?', 'Has he won anything?', 'How do I contact him?']
 
 /** Typewriter for the speech bubble (instant with reduced motion). */
 function useTyped(text: string) {

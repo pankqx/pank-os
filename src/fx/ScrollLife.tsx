@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { onFrame, clamp } from './ticker'
 import { useFx } from '../lib/fx'
 
-const TARGETS = '.chapter h2, .chapter h3, .chapter .lead, .chapter .mono.dim, .artifact, .post-card, .ledger li, .makes li, .contact-links > *, .hobby-board, .algo-term, .rejected, .cheer, .reel-top'
+const TARGETS = '.chapter h2, .chapter h3, .chapter .lead, .chapter .mono.dim, .artifact, .post-card, .ledger li, .makes li, .contact-links > *, .hobby-board, .algo-term, .rejected, .cheer'
 
 /** Calm scroll life: content rises into place as it enters, and a hairline yellow progress bar fills along the top. */
 export function ScrollLife() {
