@@ -53,7 +53,7 @@
 
 /* ===== yellow line ===== */
 .world { position: relative; overflow-x: clip; }
-.yellow-line { position: absolute; left: 0; top: 0; width: 100%; pointer-events: none; z-index: 0; overflow: visible; }
+.yellow-wire { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 6; mix-blend-mode: screen; }
 .world > section, .world > .marquee { position: relative; z-index: 1; }
 .chapter { background: transparent; }
 
@@ -116,7 +116,7 @@
 .stage-foot { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 10px; color: var(--dim); }
 .stage-foot label { display: flex; gap: 5px; align-items: center; }
 .stage-foot button { text-decoration: underline; }
-.stage .mem { display: flex; gap: 12px; align-items: center; font-size: 11px; color: var(--dim); }
+.stage .mem { display: flex; gap: 12px; align-items: center; font-size: 15px; color: var(--dim); }
 .stage .mem p { margin: 0; }
 .stage-log { max-height: 26vh; overflow-y: auto; display: grid; gap: 8px; border-top: 1px solid var(--faint); padding-top: 10px; }
 .stage-log .line { font-size: 13px; }
@@ -437,12 +437,6 @@
 .comp-overlay .stage-copy { background: rgba(6, 4, 4, 0.78); padding: 24px; box-shadow: 0 0 0 1px rgba(255, 214, 10, 0.15); }
 .stage-name { font-size: clamp(56px, 7vw, 150px) !important; }
 
-/* worm */
-.yellow-line .yl-body { fill: none; stroke: var(--yellow); stroke-width: 5px; stroke-linecap: round; }
-.yellow-line .yl-glow { fill: none; stroke: rgba(255, 214, 10, 0.35); stroke-width: 14px; stroke-linecap: round; filter: blur(4px); }
-.yellow-line .yl-head ellipse { fill: var(--yellow); stroke: #111; stroke-width: 1.5px; }
-.yellow-line .yl-eye { fill: #b3102a; }
-.yellow-line .yl-tongue { fill: none; stroke: #ff2d4b; stroke-width: 1.6px; animation: tongue 0.9s steps(2) infinite; }
 
 /* ===== One line (chapter I opener) ===== */
 .oneline .hscene-sticky { background: radial-gradient(1100px 700px at 70% 60%, rgba(255, 214, 10, 0.07), transparent 60%), #070708; }
@@ -456,18 +450,18 @@
 @keyframes halo { to { transform: scale(1.6); opacity: 0.3; } }
 .ol-trail { fill: var(--yellow); }
 .ol-fade { transition: opacity 0.6s var(--ease); }
-.ol-mono { font-family: var(--font-mono); font-size: 22px; fill: var(--bone); }
-.ol-label { font-family: var(--font-mono); font-size: 20px; fill: var(--bone); }
+.ol-mono { font-family: var(--font-mono); font-size: 28px; fill: var(--bone); }
+.ol-label { font-family: var(--font-mono); font-size: 26px; fill: var(--bone); }
 .ol-label.red { fill: #ff4b2b; }
 .ol-dot { fill: var(--yellow); transition: opacity 0.4s; }
 .ol-dot.spark { filter: drop-shadow(0 0 12px var(--yellow)); animation: halo 0.6s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
 .ol-word { position: absolute; left: 4%; bottom: -4vh; font-size: clamp(140px, 24vw, 420px); color: transparent; -webkit-text-stroke: 1.5px rgba(236, 231, 218, 0.09); white-space: nowrap; pointer-events: none; }
-.ol-copy { position: absolute; z-index: 2; left: calc(var(--gutter) + 10px); top: 15vh; max-width: min(520px, 42%); opacity: calc(0.15 + var(--k) * 1.2); transform: translateY(calc((1 - var(--k)) * 40px)); }
-.ol-kicker { font-size: 11px; color: var(--yellow); letter-spacing: 0.14em; margin: 0 0 12px; }
-.ol-title { font-size: clamp(46px, 6.6vw, 120px); color: var(--bone); margin: 0 0 18px; }
-.ol-sub { font-size: clamp(19px, 1.8vw, 27px); line-height: 1.5; margin: 0; }
+.ol-copy { position: absolute; z-index: 2; left: calc(var(--gutter) + 10px); top: 15vh; max-width: min(640px, 46%); opacity: calc(0.15 + var(--k) * 1.2); transform: translateY(calc((1 - var(--k)) * 40px)); }
+.ol-kicker { font-size: 15px; color: var(--yellow); letter-spacing: 0.14em; margin: 0 0 12px; }
+.ol-title { font-size: clamp(52px, 7.4vw, 136px); color: var(--bone); margin: 0 0 18px; }
+.ol-sub { font-size: clamp(22px, 2.3vw, 34px); line-height: 1.5; margin: 0; }
 .ol-sub span { background: linear-gradient(var(--yellow), var(--yellow)) no-repeat 0 100% / calc(var(--k) * 100%) 30%; padding: 0 2px; }
-.ol-progress { position: absolute; z-index: 4; left: calc(76px + var(--gutter)); bottom: 26px; display: flex; gap: 14px; align-items: center; font-size: 11px; color: var(--dim); }
+.ol-progress { position: absolute; z-index: 4; left: calc(76px + var(--gutter)); bottom: 26px; display: flex; gap: 14px; align-items: center; font-size: 15px; color: var(--dim); }
 .ol-progress span { color: var(--yellow); }
 .ol-progress i { width: 220px; height: 2px; background: var(--faint); display: block; }
 .ol-progress b { display: block; height: 100%; background: var(--yellow); transform-origin: left; transform: scaleX(0); }
@@ -480,6 +474,3 @@
   .ol-progress { left: var(--gutter); bottom: 72px; }
   .ol-progress em { display: none; }
 }
-.yellow-line .yl-spark { fill: var(--yellow); }
-.yellow-line .yl-body { stroke-width: 6px; }
-.yellow-line .yl-head ellipse { transform: scale(1.25); }

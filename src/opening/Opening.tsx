@@ -71,7 +71,7 @@ export function Opening({ onDone }: { onDone: () => void }) {
       else slow = Math.max(0, slow - 1)
       if (slow > 25) { slow = 0; downgrade() }
       e.render(ctx, Math.min(t, DURATION), pointer, lite ? 'lite' : 'full')
-      if (t > DURATION + 0.5) { finish(); return }
+      if (t > DURATION + 2.6) { finish(); return }
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)

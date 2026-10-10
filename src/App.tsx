@@ -20,8 +20,15 @@ function stored(): CharacterId | null {
 }
 
 export function App() {
-  const deepLink = typeof location !== 'undefined' && location.hash.length > 1
-  const [stage, setStage] = useState<Stage>(deepLink ? 'world' : 'opening')
+  // only a direct link to a project/post skips the intro; plain section hashes never do
+  const [stage, setStage] = useState<Stage>(() => {
+    if (typeof location === 'undefined') return 'opening'
+    const direct = /^#(lab|post)\/.+/.test(location.hash)
+    if (!direct && location.hash.length > 1) history.replaceState(null, '', location.pathname + location.search)
+    try { history.scrollRestoration = 'manual' } catch { /* ignore */ }
+    if (!direct) window.scrollTo(0, 0)
+    return direct ? 'world' : 'opening'
+  })
   const [character, setCharacter] = useState<CharacterId>(stored() ?? 'roman')
   const [wipe, setWipe] = useState(false)
 

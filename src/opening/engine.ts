@@ -151,7 +151,7 @@ export class AsciiOpening {
     const fwd: [number, number] = [hx / hl, hy / hl]
 
     const nameAmt = smooth((t - 1.2) / 1.4)
-    const calm = smooth((t - 6.0) / 0.9)
+    const calm = smooth((t - 5.3) / 1.0)
     const bg = lerp(1, 0.3, calm)
     const emerge = smooth(t / 1.6)
     const showName = t >= 1.2
