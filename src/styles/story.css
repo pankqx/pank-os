@@ -515,7 +515,7 @@
 .strip-bar { align-items: center; justify-content: space-between; gap: 16px; }
 .strip-bar .strip-hint { flex: 1; text-align: center; }
 .strip-bar .orb-prev { width: 40px; height: 40px; border-radius: 50%; }
-.strip-bar .orb { position: relative; width: 104px; height: 104px; display: grid; place-items: center; border: 0 !important; background: none !important; cursor: pointer; animation: orb-float 4.5s ease-in-out infinite; }
+.orb { position: relative; width: 118px; height: 118px; display: grid; place-items: center; border: 0 !important; background: none !important; cursor: pointer; animation: orb-float 4.5s ease-in-out infinite; }
 .orb::before { content: ''; position: absolute; inset: -14px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 10, 0.5), rgba(255, 214, 10, 0.12) 45%, transparent 70%); animation: orb-pulse 2.2s ease-in-out infinite; }
 .orb .rock { position: absolute; inset: 8px; border-radius: 58% 42% 55% 45% / 46% 58% 42% 54%; background: radial-gradient(circle at 32% 28%, #7a6a52 0, #3c3326 38%, #17120c 78%); box-shadow: inset -8px -10px 18px rgba(0, 0, 0, 0.7), inset 5px 5px 10px rgba(255, 214, 10, 0.35), 0 0 22px rgba(255, 214, 10, 0.7), 0 0 60px rgba(255, 150, 10, 0.35); animation: rock-spin 14s linear infinite; }
 .orb .rock i { position: absolute; border-radius: 50%; background: radial-gradient(circle at 60% 60%, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.1) 70%); box-shadow: inset 1px 1px 2px rgba(255, 214, 10, 0.35); }
@@ -567,7 +567,6 @@
 .strip-row { display: flex; align-items: center; }
 .strip-row .strip { flex: 1 1 auto; min-width: 0; }
 .strip-row .orb { flex: 0 0 118px; margin-right: calc(var(--gutter) + 6px); }
-.strip-wrap .strip-bar .orb { display: none; }
 @media (min-width: 961px) { .strip-row .artifact { flex: 0 0 calc((100% - var(--gutter) * 2 - 24px) / 2); min-width: 520px; } }
 @media (max-width: 960px) { .strip-row .orb { flex-basis: 84px; margin-right: 6px; } .strip-row .orb .orb-text { font-size: 10px; } }
 
