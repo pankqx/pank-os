@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { HorizontalScene, useSceneProgress } from '../fx/HorizontalScene'
 import { clamp } from '../fx/ticker'
 import { useFx } from '../lib/fx'
-import { characters, type CharacterId } from '../content/characters'
-import { InkCharacter } from '../character/InkCharacter'
 
 /**
  * "One line." — the opening chapter. A single glowing yellow line runs through a horizontal film:
@@ -55,7 +53,7 @@ const PANELS: Panel[] = [
   },
 ]
 
-function PanelArt({ i, panel, character }: { i: number; panel: Panel; character: CharacterId }) {
+function PanelArt({ i, panel }: { i: number; panel: Panel }) {
   const path = useRef<SVGPathElement>(null)
   const glow = useRef<SVGPathElement>(null)
   const head = useRef<SVGGElement>(null)
@@ -111,12 +109,6 @@ function PanelArt({ i, panel, character }: { i: number; panel: Panel; character:
         <h3 className="display ol-title">{panel.title}</h3>
         <p className="serif ol-sub"><span>{panel.sub}</span></p>
       </div>
-      {i === PANELS.length - 1 && (
-        <div className="ol-guide">
-          <p className="serif ol-bubble">“Hi, I’m {characters[character].name}. I live in here. Follow me — I’ll do the talking, he’ll do the building.”</p>
-          <InkCharacter config={characters[character]} state="GREETING" height="74vh" label={`${characters[character].name}, an AI character`} />
-        </div>
-      )}
       <svg className="ol-svg" viewBox={narrow ? '420 280 560 560' : '0 0 1000 1000'} preserveAspectRatio={narrow ? 'xMidYMid meet' : 'xMidYMid slice'} aria-hidden="true">
         <path ref={glow} d={panel.d} pathLength={1} className="ol-glow" />
         <path ref={path} d={panel.d} pathLength={1} className="ol-path" />
@@ -144,10 +136,10 @@ function Progress() {
   )
 }
 
-export function OneLine({ character = 'roman' }: { character?: CharacterId }) {
+export function OneLine() {
   return (
     <HorizontalScene id="person" label="Chapter I: one line that becomes everything I make" className="oneline" overlay={<Progress />} tail={0.1}>
-      {PANELS.map((p, i) => <PanelArt key={p.word} i={i} panel={p} character={character} />)}
+      {PANELS.map((p, i) => <PanelArt key={p.word} i={i} panel={p} />)}
     </HorizontalScene>
   )
 }

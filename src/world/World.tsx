@@ -12,7 +12,6 @@ import { OneLine } from './OneLine'
 import { ProntoPy } from './ProntoPy'
 import { PostPage } from './PostPage'
 import { posts } from '../content/posts'
-import { Beat } from './Beat'
 import { ScrollLife } from '../fx/ScrollLife'
 import { Marquee } from '../fx/Marquee'
 import { Cursor } from '../fx/Cursor'
@@ -98,14 +97,11 @@ export default function World({ character, onSwitchCharacter, onReplayIntro }: P
       <Nav active={active} character={character} onSwitchCharacter={onSwitchCharacter} onReplayIntro={onReplayIntro} />
       <main className="world" aria-hidden={project || post ? true : undefined}>
         <ScrollLife />
-        <OneLine character={character} />
+        <OneLine />
         <Prologue />
-        <Beat character={character} side="right" lines={{ roman: 'That was the short version. The long version has a python in it, and a chess blunder. Anyway — the real work is next.', reenu: 'That was the polite introduction. The honest one is next: what he actually built, and what he broke on the way.' }} />
         <ProntoPy />
-        <Beat character={character} side="left" mood="REACTING" lines={{ roman: 'Everything in here was checked against the repo it came from. I watched him do it. It took a while.', reenu: 'Every claim in here is real, checked against the code. I made him. Take your time, go one at a time.' }} />
         <Lab />
         <Marquee text="rizz ✦ sense of humour ✦ idgaf ✦ midnight dramas ✦" />
-        <Beat character={character} side="right" lines={{ roman: 'Now the writing. He fails in public on purpose. It is the only honest way to learn, apparently.', reenu: 'Now the stories. Some are funny, some are true, a few are both. Read the ones with a picture first.' }} />
         <Transmissions />
         <Finale conv={conv} onSwitch={() => onSwitchCharacter(other)} />
         <Contact />
