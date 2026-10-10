@@ -303,7 +303,7 @@
 /* ===== ProntoPy ===== */
 .algo { background: radial-gradient(900px 600px at 80% 40%, rgba(255, 93, 115, 0.12), transparent 60%), radial-gradient(700px 500px at 10% 80%, rgba(255, 214, 10, 0.08), transparent 60%); }
 .algo-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 5vw; align-items: center; }
-.algo h2.display { font-size: clamp(54px, 8.4vw, 160px); color: var(--yellow); text-shadow: 6px 6px 0 #b3102a; }
+.algo h2.display { font-size: clamp(46px, 6.6vw, 124px); color: var(--yellow); text-shadow: 6px 6px 0 #b3102a; }
 .algo-why { font-size: 19px; color: var(--dim); max-width: 60ch; }
 .algo-stats { list-style: none; padding: 0; margin: 30px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .algo-stats li { border-top: 2px solid var(--yellow); padding-top: 8px; display: grid; }
