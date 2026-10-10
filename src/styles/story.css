@@ -387,3 +387,28 @@
 @media (max-width: 960px) { .essay .essay-hero { grid-template-columns: 1fr; } .essay-cover { width: 70vw; height: 70vw; order: 0; } .post-card { grid-template-columns: 84px 1fr; } .post-cover { height: 110px; } .post-cover .scene { width: 90px; height: 90px; } .gal img { height: 240px; } }
 
 @media (max-width: 960px) { .fin-chat .suggest, .fin-chat .stage-foot { display: none; } .fin-chat { padding-bottom: 64px; } }
+
+/* ===== gateway game ===== */
+.gate { position: fixed; inset: 0; overflow: hidden; background: #060404; touch-action: none; }
+.gate .fire-bg { position: absolute; inset: 0; opacity: 0.85; }
+.gate-canvas { position: absolute; inset: 0; z-index: 2; }
+.gate-head { position: absolute; z-index: 3; left: var(--gutter); top: clamp(18px, 5vh, 54px); max-width: 760px; pointer-events: none; }
+.gate-head .mono { font-size: 11px; color: var(--yellow); letter-spacing: 0.12em; margin: 0; }
+.gate-head .display { font-size: clamp(40px, 7vw, 112px); color: var(--bone); text-shadow: 5px 5px 0 #b3102a; margin: 8px 0 10px; }
+.gate-head .serif { font-size: clamp(18px, 1.8vw, 26px); margin: 0; }
+.gate-meter { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 12px; pointer-events: auto; }
+.gate-meter i { width: 160px; height: 4px; background: rgba(255, 255, 255, 0.2); display: block; }
+.gate-meter b { display: block; height: 100%; background: var(--yellow); transform-origin: left; transition: transform 0.3s; }
+.gate-meter button { border: 1px solid var(--bone); padding: 6px 10px; font-size: 11px; }
+.gate-meter button:hover { border-color: var(--yellow); color: var(--yellow); }
+.portal { position: absolute; z-index: 3; top: 62%; width: 26vmin; height: 26vmin; margin: -13vmin 0 0 -13vmin; border-radius: 50%; display: grid; place-items: center; animation: portalIn 0.6s var(--ease) both; }
+.portal-roman { left: 20%; } .portal-reenu { left: 80%; }
+@keyframes portalIn { from { transform: scale(0.2); opacity: 0; } }
+.portal-face { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; display: grid; place-items: start center; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, #000), #000 70%); box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 60%, transparent); }
+.portal-face svg { margin-top: 2vmin; }
+.portal-name { position: absolute; bottom: -12vmin; font-size: clamp(34px, 5vw, 72px); color: var(--accent); text-shadow: 4px 4px 0 #000; }
+.portal-tag { position: absolute; bottom: -15vmin; font-size: 11px; color: var(--bone); white-space: nowrap; }
+.portal:hover .portal-face, .portal[data-on='true'] .portal-face { box-shadow: 0 0 80px var(--accent); }
+.gate-foot { position: absolute; z-index: 3; left: var(--gutter); bottom: 14px; font-size: 10px; color: var(--dim); margin: 0; }
+.gate[data-picked]:not([data-picked='']) .gate-canvas { filter: brightness(1.6); transition: filter 0.6s; }
+@media (max-width: 760px) { .portal { width: 34vmin; height: 34vmin; margin: -17vmin 0 0 -17vmin; top: 70%; } .portal-name { bottom: -11vmin; } .portal-tag { display: none; } }

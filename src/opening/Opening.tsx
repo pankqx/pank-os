@@ -66,12 +66,12 @@ export function Opening({ onDone }: { onDone: () => void }) {
       if (stopped) return
       const dt = now - last
       last = now
-      const t = (now - t0) / 1000
+      const t = ((now - t0) / 1000) * (DURATION / 4.4) // whole intro ≈5 s incl. load
       if (dt > 34) slow++
       else slow = Math.max(0, slow - 1)
       if (slow > 25) { slow = 0; downgrade() }
       e.render(ctx, Math.min(t, DURATION), pointer, lite ? 'lite' : 'full')
-      if (t > DURATION + 0.6) { finish(); return }
+      if (t > DURATION + 0.5) { finish(); return }
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)

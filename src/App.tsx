@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { Opening } from './opening/Opening'
-import { Choice } from './choice/Choice'
+import { Gateway } from './choice/Gateway'
 import { Wipe } from './choice/Wipe'
 import { ErrorBoundary } from './lib/ErrorBoundary'
 import type { CharacterId } from './content/characters'
@@ -46,7 +46,7 @@ export function App() {
   return (
     <ErrorBoundary label="the experience">
       {stage === 'opening' && <Opening onDone={() => go('choice')} />}
-      {stage === 'choice' && <Choice previous={stored()} onChoose={choose} />}
+      {stage === 'choice' && <Gateway onChoose={choose} />}
       {stage === 'world' && (
         <Suspense fallback={<div className="boot mono">LOADING THE WORLD…</div>}>
           <World character={character} onSwitchCharacter={setCharacter} onReplayIntro={() => go('opening')} />
