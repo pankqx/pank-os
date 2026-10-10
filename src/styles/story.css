@@ -54,8 +54,6 @@
 /* ===== yellow line ===== */
 .world { position: relative; overflow-x: clip; }
 .yellow-line { position: absolute; left: 0; top: 0; width: 100%; pointer-events: none; z-index: 0; overflow: visible; }
-.yellow-line path { fill: none; stroke: var(--yellow); stroke-width: 3; filter: drop-shadow(0 0 6px rgba(255, 214, 10, 0.5)); }
-.yellow-line circle { fill: var(--yellow); filter: drop-shadow(0 0 10px var(--yellow)); transition: opacity 0.25s; }
 .world > section, .world > .marquee { position: relative; z-index: 1; }
 .chapter { background: transparent; }
 
@@ -401,17 +399,17 @@
 .gate-meter b { display: block; height: 100%; background: var(--yellow); transform-origin: left; transition: transform 0.3s; }
 .gate-meter button { border: 1px solid var(--bone); padding: 6px 10px; font-size: 11px; }
 .gate-meter button:hover { border-color: var(--yellow); color: var(--yellow); }
-.portal { position: absolute; z-index: 3; top: 62%; width: 26vmin; height: 26vmin; margin: -13vmin 0 0 -13vmin; border-radius: 50%; display: grid; place-items: center; animation: portalIn 0.6s var(--ease) both; }
+.portal { --pf: 26vmin; position: absolute; z-index: 3; top: 62%; width: 26vmin; height: 26vmin; margin: -13vmin 0 0 -13vmin; border-radius: 50%; display: grid; place-items: center; animation: portalIn 0.6s var(--ease) both; }
 .portal-roman { left: 20%; } .portal-reenu { left: 80%; }
 @keyframes portalIn { from { transform: scale(0.2); opacity: 0; } }
 .portal-face { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; display: grid; place-items: start center; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, #000), #000 70%); box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 60%, transparent); }
-.portal-face svg { margin-top: 2vmin; }
+.portal-face svg { margin-top: calc(var(--pf) * -0.05); }
 .portal-name { position: absolute; bottom: -12vmin; font-size: clamp(34px, 5vw, 72px); color: var(--accent); text-shadow: 4px 4px 0 #000; }
 .portal-tag { position: absolute; bottom: -15vmin; font-size: 11px; color: var(--bone); white-space: nowrap; }
 .portal:hover .portal-face, .portal[data-on='true'] .portal-face { box-shadow: 0 0 80px var(--accent); }
 .gate-foot { position: absolute; z-index: 3; left: var(--gutter); bottom: 14px; font-size: 10px; color: var(--dim); margin: 0; }
 .gate[data-picked]:not([data-picked='']) .gate-canvas { filter: brightness(1.6); transition: filter 0.6s; }
-@media (max-width: 760px) { .portal { width: 34vmin; height: 34vmin; margin: -17vmin 0 0 -17vmin; top: 70%; } .portal-name { bottom: -11vmin; } .portal-tag { display: none; } }
+@media (max-width: 760px) { .portal { --pf: 34vmin; width: 34vmin; height: 34vmin; margin: -17vmin 0 0 -17vmin; top: 70%; } .portal-name { bottom: -11vmin; } .portal-tag { display: none; } }
 
 /* ===== neurons, nameplate, bait ===== */
 .neurons { position: absolute; inset: 0; display: block; pointer-events: none; z-index: 0; }
@@ -438,3 +436,10 @@
 @media (max-width: 960px) { .gf-pop { left: 16px; bottom: 72px; } }
 .comp-overlay .stage-copy { background: rgba(6, 4, 4, 0.78); padding: 24px; box-shadow: 0 0 0 1px rgba(255, 214, 10, 0.15); }
 .stage-name { font-size: clamp(56px, 7vw, 150px) !important; }
+
+/* worm */
+.yellow-line .yl-body { fill: none; stroke: var(--yellow); stroke-width: 5px; stroke-linecap: round; }
+.yellow-line .yl-glow { fill: none; stroke: rgba(255, 214, 10, 0.35); stroke-width: 14px; stroke-linecap: round; filter: blur(4px); }
+.yellow-line .yl-head ellipse { fill: var(--yellow); stroke: #111; stroke-width: 1.5px; }
+.yellow-line .yl-eye { fill: #b3102a; }
+.yellow-line .yl-tongue { fill: none; stroke: #ff2d4b; stroke-width: 1.6px; animation: tongue 0.9s steps(2) infinite; }

@@ -47,6 +47,12 @@ Legend: ✅ done and checked · 🟡 done, partly verified · ⬜ not started ·
 - ✅ Cursor: normal arrow, yellow lightning trail behind it
 - ✅ AlgoPath renamed to ProntoPy here and in the app repo (storage keys kept so progress survives). ⛔ Renaming the GitHub repo itself must be done in its Settings
 
+## v4 (2026-10-10)
+- ✅ Intro ≈5 s; the HIM/HER page is now a "feed the python" mini-game that ends by steering into Roman or Reenu (buttons too)
+- ✅ Character page: neuron light round the borders and through the brain (behind the face), big ghost name + "THIS IS ROMAN" nameplate, funny sidekick answers, GF question → WhatsApp
+- ✅ Yellow line is now a small worm crawling/hopping through empty space as you scroll
+- ⛔ Repo rename PythonDSA → prontopy must be done by the owner in GitHub settings
+
 ## Partly verified
 - 🟡 Visual QA: headless Chromium at 1440×900, 1200×800 and 390×844; opening, choice, all chapters, dossier, deep link, companion chat, keyboard (Enter/arrows/1–5/strip), reduced motion, WebGL trophy room and its fallback; console clean. Not tested on real phones, Safari or Firefox.
 - 🟡 Voice: code written, **not exercised** (headless browser has no mic/speech).

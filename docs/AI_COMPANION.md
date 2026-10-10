@@ -13,3 +13,5 @@
 **Provider abstraction:** implement `ChatProvider.reply(history, ctx, signal)`; the UI does not change. Production use needs a serverless proxy holding the key, input validation and rate limiting. Do not claim free unrestricted production voice.
 
 **v2 presentation:** `useConversation` holds all chat state and is shared by the full-screen overlay (`Companion.tsx`) and the finale (`world/Finale.tsx`). `CharacterStage` renders the big `InkCharacter`, a speech bubble with a typewriter, suggestions, input, voice and memory controls. Clicking the character pokes it (REACTING).
+
+**v4 (2026-10-10):** personal questions get scripted jokes (`RULES` in `provider.ts`) — they never state facts about his private life. "Wanna know Pankaj's GF?" (chip, chat reply and a one-time pop-up) shows `BaitCard`: it opens WhatsApp with a prefilled message *to* Pankaj (`whatsapp` in `content/profile.ts`). The visitor presses send themselves; the site stores and transmits nothing. Visitor analytics are not implemented (would need a privacy-friendly service such as GoatCounter plus a notice).

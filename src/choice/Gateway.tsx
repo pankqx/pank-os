@@ -47,7 +47,7 @@ export function Gateway({ onChoose }: { onChoose: (id: CharacterId) => void }) {
     const target = { x: W * 0.5, y: H * 0.55 }
     let auto = true, autoT = 0
     const keys = new Set<string>()
-    const move = (e: PointerEvent) => { target.x = e.clientX; target.y = e.clientY; auto = false }
+    const move = (e: PointerEvent) => { if ((e.target as HTMLElement).closest?.('button, a')) return; target.x = e.clientX; target.y = e.clientY; auto = false }
     const kd = (e: KeyboardEvent) => { if (e.key.startsWith('Arrow')) { keys.add(e.key); auto = false; e.preventDefault() } }
     const ku = (e: KeyboardEvent) => keys.delete(e.key)
     addEventListener('pointermove', move)
@@ -62,10 +62,10 @@ export function Gateway({ onChoose }: { onChoose: (id: CharacterId) => void }) {
     const burst = (x: number, y: number, n = 26, col = '#ffd60a') => {
       for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, s = 1 + Math.random() * 4; parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, c: Math.random() > 0.3 ? col : '#fff' }) }
     }
-    let count = 0, raf = 0, t = 0
+    let count = 0, raf = 0, t = 0, parked = false
     const portals = () => [
-      { id: 'roman' as CharacterId, x: W * 0.2, y: H * 0.62, r: Math.min(W, H) * 0.13 },
-      { id: 'reenu' as CharacterId, x: W * 0.8, y: H * 0.62, r: Math.min(W, H) * 0.13 },
+      { id: 'roman' as CharacterId, x: W * 0.2, y: H * (W < 760 ? 0.7 : 0.62), r: Math.min(W, H) * (W < 760 ? 0.17 : 0.13) },
+      { id: 'reenu' as CharacterId, x: W * 0.8, y: H * (W < 760 ? 0.7 : 0.62), r: Math.min(W, H) * (W < 760 ? 0.17 : 0.13) },
     ]
 
     const tick = () => {
@@ -96,6 +96,7 @@ export function Gateway({ onChoose }: { onChoose: (id: CharacterId) => void }) {
         b.x = a.x + (ex / el) * gap; b.y = a.y + (ey / el) * gap
       }
       // portals
+      if (openRef.current && !parked) { parked = true; auto = false; target.x = W / 2; target.y = H * 0.5 }
       if (openRef.current) {
         for (const p of portals()) {
           const pulse = 1 + Math.sin(t * 3) * 0.05
@@ -104,7 +105,7 @@ export function Gateway({ onChoose }: { onChoose: (id: CharacterId) => void }) {
           g.fillStyle = gr; g.beginPath(); g.arc(p.x, p.y, p.r * 1.6, 0, 6.283); g.fill()
           g.strokeStyle = '#ffd60a'; g.lineWidth = 3; g.setLineDash([10, 8]); g.lineDashOffset = -t * 40
           g.beginPath(); g.arc(p.x, p.y, p.r * pulse, 0, 6.283); g.stroke(); g.setLineDash([])
-          if (!pickedRef.current && Math.hypot(h.x - p.x, h.y - p.y) < p.r * 0.8) { burst(p.x, p.y, 80); choose(p.id) }
+          if (!pickedRef.current && Math.hypot(h.x - p.x, h.y - p.y) < p.r * 0.6) { burst(p.x, p.y, 80); choose(p.id) }
         }
       }
       // food
@@ -173,7 +174,7 @@ export function Gateway({ onChoose }: { onChoose: (id: CharacterId) => void }) {
       </header>
       {open && (['roman', 'reenu'] as CharacterId[]).map((id) => (
         <button key={id} className={`portal portal-${id}`} onClick={() => choose(id)} data-on={picked === id} aria-label={`Meet ${characters[id].name}, an AI guide`} style={{ ['--accent' as string]: characters[id].accent }}>
-          <span className="portal-face"><InkCharacter config={characters[id]} state={picked === id ? 'GREETING' : 'IDLE'} height="34vh" track={false} /></span>
+          <span className="portal-face"><InkCharacter config={characters[id]} state={picked === id ? 'GREETING' : 'IDLE'} height="calc(var(--pf) * 1.3)" track={false} /></span>
           <span className="portal-name display">{characters[id].name}</span>
           <span className="mono portal-tag">{id === 'roman' ? 'HIM · dry wit' : 'HER · warm & curious'}</span>
         </button>
